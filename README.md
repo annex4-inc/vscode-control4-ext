@@ -1,7 +1,7 @@
 # VS Code Control4 Extension
 Adds support for Control4 driver development
 
-![Sidebar](/images/sideview.png)
+![Sidebar](https://raw.githubusercontent.com/annex4-inc/vscode-control4-ext/master/images/sideview.PNG)
 
 ## Features
 * Language Server for the Control4 API
@@ -23,7 +23,7 @@ Adds support for Control4 driver development
 
 You must install DriverEditor and update the extension settings to point to the path of DriverPackager.exe. See example below.
 
-![Settings](/images/settings.png)
+![Settings](https://raw.githubusercontent.com/annex4-inc/vscode-control4-ext/master/images/settings.PNG)
 
 ## Commands (Ctrl+Shift+P)
 * Rebuild Test Dependencies - Will automatically rebuild a generated.lua file that automatically includes src from node modules.
@@ -62,4 +62,4 @@ local myEnvironmentValue = [[ENV.my_environment_variable]]
 
 ## Figures
 
-![Commands](/images/commands.png)
+![Commands](https://raw.githubusercontent.com/annex4-inc/vscode-control4-ext/master/images/commands.PNG)
