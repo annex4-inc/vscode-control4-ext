@@ -11,6 +11,9 @@
     "ui",
     "workspace"
   ],
+  "extensionDependencies": [
+    "sumneko.lua"
+  ],
   "categories": [
     "Other"
   ],
