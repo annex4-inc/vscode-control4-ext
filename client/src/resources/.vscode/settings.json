@@ -1,19 +1,24 @@
 {
-  "files.associations": {
-      "*.c4c": "json"
-  },
-  "files.exclude": {
-      "**/.git": true,
-      "**/.svn": true,
-      "**/.hg": true,
-      "**/CVS": true,
-      "**/output": true,
-      "**/.DS_Store": true,
-      "**/intermediate": true,
-      "**/node_modules": true
-  },
-  "Lua.diagnostics.globals": [
-      "C4",
-      "JSON"
-  ]
+    "files.associations": {
+        "*.c4c": "json"
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/intermediate": true,
+        "**/node_modules": true,
+        "**/output": true
+    },
+    "Lua.diagnostics.globals": [
+        "Properties",
+        "C4",
+        "JSON"
+    ],
+    "Lua.workspace.library": [
+        ".\\node_modules"
+    ],
+    "Lua.diagnostics.libraryFiles": "Enable"
 }
