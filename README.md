@@ -1,25 +1,29 @@
 # VS Code Control4 Extension
-
-Includes basic auto-completion of Control4 functions and hooks. Will eventually support building a driver with supplied Lua and XML files via Driver Packager.
+Adds support for Control4 driver development
 
 ## Features
-
-* Auto-completion for Control4 hooks and C4 functions.
+* Language Server for the Control4 API
+  * Suggestions for Property names and events
+  * Auto completion of most Control4 function calls
+* WebView components for property, action, command, and event management
+* JSON files for individual control over properties, actions, commands, proxies, events, and the UI components
+* Sidebar view for a highlevel overview of the different settings in the Control4 driver
+* Import .c4z files and have them convert to the new format
+* Supports NPM in order to use packages. Will organize Lua packages based on their dependencies and inject them into driver.lua before encryption.
 
 ## Requirements
 
-None at this time.
+You must install DriverEditor and update the extension settings to point to the path of DriverPackager.exe
 
 ## Extension Settings
+* Auto Increment Version
+* Driver Packager Location
+* Export to Driver Location
+* Author
+* Company
 
-Undefined.
+## Roadmap
+* Add support for OpenSSL driver encryption instead of using DriverPackager.exe
+* Add support for hooks in the language server
 
 ## Known Issues
-
-* Missing many hooks and function calls
-
-## Release Notes
-
-### 1.0.0
-
-Initial release of vscode-control4
