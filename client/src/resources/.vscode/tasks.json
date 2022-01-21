@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "control4",
+      "version": "debug",
+      "problemMatcher": [],
+      "label": "Debug Build",
+      "group": "build",
+      "encryption": false,
+      "template": false
+    },
+    {
+      "type": "control4",
+      "version": "release",
+      "problemMatcher": [],
+      "label": "Release Build",
+      "group": "build",
+      "encryption": true,
+      "template": false
+    }
+  ]
+}

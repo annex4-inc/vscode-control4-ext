@@ -1,0 +1,21 @@
+{
+  "extends": "@tsconfig/svelte/tsconfig.json",
+  "display": "Svelte",
+  "include": [
+    "./**/*",
+  ],
+  "exclude": [
+    "../node_modules/*"
+  ],
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "importsNotUsedAsValues": "error",
+    "isolatedModules": true,
+    "target": "es2017",
+    "sourceMap": true,
+    "strict": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}

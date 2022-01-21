@@ -1,0 +1,4 @@
+intermediate/
+node_modules/
+output/
+environment.json

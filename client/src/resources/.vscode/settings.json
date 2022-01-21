@@ -1,0 +1,19 @@
+{
+  "files.associations": {
+      "*.c4c": "json"
+  },
+  "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/CVS": true,
+      "**/output": true,
+      "**/.DS_Store": true,
+      "**/intermediate": true,
+      "**/node_modules": true
+  },
+  "Lua.diagnostics.globals": [
+      "C4",
+      "JSON"
+  ]
+}

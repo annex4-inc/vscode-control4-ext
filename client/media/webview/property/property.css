@@ -1,0 +1,23 @@
+.properties {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+@media all and (max-width: 800px) {
+    .properties {
+        justify-content: space-around;;
+    }
+}
+
+/* Small screens */
+@media all and (max-width: 500px) {
+    .properties {
+        flex-flow: column;
+    }
+}
+
+.property {
+    margin: auto;
+    width: 240px;
+}

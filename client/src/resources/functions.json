@@ -1,0 +1,2621 @@
+[
+    {
+        "label": "AddDynamicBinding",
+        "insertText": "AddDynamicBinding(idBinding, strType, bIsProvider, strName, strClass, bHidden, bAutoBind)$0",
+        "documentation": "Function called by a DriverWorks driver to add a dynamic binding (a binding added at runtime). &nbsp;This is typically done by security panels or other devices whose number of bindings are unknown when the driver is created. ID of the dynamic binding.",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding",
+            "strType",
+            "bIsProvider",
+            "strName",
+            "strClass",
+            "bHidden",
+            "bAutoBind"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "AddEvent",
+        "insertText": "AddEvent(num, str, str)$0",
+        "documentation": "Function called from DriverWorks driver to add a new Event.",
+        "detail": "2.8.0",
+        "parameters": [
+            "num",
+            "str",
+            "str"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "AddTimer",
+        "insertText": "AddTimer(nInterval, strUnits, bRepeat)$0",
+        "documentation": "Function called from DriverWorks driver to create a C4 timer. This API should not be invoked during OnDriverInit.Optional, defaults to SECONDS. Units of timer measurement. Valid units include: MILLISECONDS, SECONDS, MINUTES and HOURS.",
+        "detail": "1.6.1",
+        "parameters": [
+            "nInterval",
+            "strUnits",
+            "bRepeat"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "AddVariable",
+        "insertText": "AddVariable(strName, strValue, strVarType, bReadOnly, bHidden)$0",
+        "documentation": "Function called from a DriverWorks driver to create a Control4 variable for the driver. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "strName",
+            "strValue",
+            "strVarType",
+            "bReadOnly",
+            "bHidden"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Albums",
+        "insertText": "Albums()$0",
+        "documentation": "mediaId1 = C4:MediaAddAlbumInfo(\"http://127.0.0.1/music/Album1\", \"Funky Music\", Album1)songLocation1=\"http://127.0.0.1/music/song1.mp3\"songLocation2=\"http://127.0.0.1/music/song2.mp3\"songLocation3=\"http://127.0.0.1/music/song3.mp3\"",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "AllowExecute",
+        "insertText": "AllowExecute()$0",
+        "documentation": "Beginning with OS release 2.6.0, default runtime editing of encrypted drivers has been deprecated. This has been done to better protect encrypted drivers from unwanted code review or hacking. The AllowExecute API allows for the runtime editing of encrypted drivers through it's setting. The API defaults to a setting of False. When set to True, the lua command window will not support entry of any data and the lua output window cannot be used as a display. Use of this API allows driver developers to build into their driver the option to enable remote execution permanently or embed the function call within your own debugging functions to allow or disallow executing of commands in Composer. ",
+        "detail": "2.6.0",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Base64Decode",
+        "insertText": "Base64Decode(strToDecode)$0",
+        "documentation": "Function called in a DriverWorks driver to decode the specified string from a Base64-encoded string. This API can be invoked during OnDriverInit.String decoded from Base64 encoding.",
+        "detail": "1.6.1",
+        "parameters": [
+            "strToDecode"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Base64Encode",
+        "insertText": "Base64Encode(strToEncode)$0",
+        "documentation": "Function called in a DriverWorks driver to encode the specified string as a Base64-encoded string. This API can be invoked during OnDriverInit.String encoded in Base64 encoding.",
+        "detail": "1.6.1",
+        "parameters": [
+            "strToEncode"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Bind",
+        "insertText": "Bind(idDeviceProvider, idBindingProvider, idDeviceConsumer, idBindingConsumer, strClass)$0",
+        "documentation": "This API provides the ability to create a binding between two devices: a \"Provider Device\" and a \"Consumer Device.\" The binding creation through this API is the same as manually creating a binding in ComposerPro's Connections area. Note the order of the parameters passed in the API. Each has a \"Provider\" and \"Consumer\" designation. The Provider designation represents the Device ID value of the device providing the data within the binding. To verify if a device driver is a Provider, go to the driver's The Parameters with the Consumer designation represent the device that consumes data from the Provider device. The ",
+        "detail": "2.9.0",
+        "parameters": [
+            "idDeviceProvider",
+            "idBindingProvider",
+            "idDeviceConsumer",
+            "idBindingConsumer",
+            "strClass"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "blowfishEcbDecrypt",
+        "insertText": "blowfishEcbDecrypt()$0",
+        "documentation": "Function to decrypt using Blowfish in ECB mode. ECB mode operates on exactly 64 bits (8 bytes) of data. This API can be invoked during OnDriverInit.string - decrypted data.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "blowfishEcbEncrypt",
+        "insertText": "blowfishEcbEncrypt()$0",
+        "documentation": "Function to encrypt using Blowfish in ECB mode. ECB mode operates on exactly 64 bits (8 bytes) of data. This API can be invoked during OnDriverInit.string - encrypted data.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "CallAsync",
+        "insertText": "CallAsync(function})$0",
+        "documentation": "lua_gen API that makes calling functions asynchronously much easier. ",
+        "detail": "2.7.0",
+        "parameters": [
+            "function("
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "CheckLicense",
+        "insertText": "CheckLicense()$0",
+        "documentation": "This function is used to check for the presence of a Control4 Web Service license type in the system. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Close",
+        "insertText": "Close()$0",
+        "documentation": "Close(flush)This method closes an established connection, or cancels a pending resolve or connection request.&nbsp; If a resolve or connection request is canceled, the OnError callback function will get called. This API should not be invoked during OnDriverInit.flush is a boolean value that indicates whether any queued-up write requests should be sent out prior to closing the connection.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Close",
+        "insertText": "Close()$0",
+        "documentation": "Close()This method stops the server socket, or cancels pending resolve or endpoint selection.&nbsp; If a pending resolve or endpoint selection was canceled, the OnError handler will be called.&nbsp; However, if the server is already accepting connections, the OnError handler will NOT be called and the server simply ceases to accept further connection requests.&nbsp; Note that the server does not manage accepted client connections and will not close any of these connections. it it is up to your implementation to manage client connections and how to act when you stop the TCP server.This method returns a reference to itself, or nil in case of an error.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Connect",
+        "insertText": "Connect()$0",
+        "documentation": "Connect(host, service)This method initiates a connection request to a host and service/port.&nbsp; If a connection request is already in progress, this function returns nil. This API should not be invoked during OnDriverInit.host is the IP address or host name to connect to.&nbsp; It can also be one of these special values:",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Copyright",
+        "insertText": "Copyright()$0",
+        "documentation": "The information in this document is provided in connection with Control4 products. No license, express or implied, by estoppal or otherwise, to any intellectual property rights is granted by or in this document. Except as provided in Control4’s terms and conditions for the license of such products, Control4 Corporation and its affiliates, (“Control4”) assume no liability whatsoever, and Control4 disclaims any express or implied warranty, relating to the sale and/or use of Control4 products including liability or warranties relating to fitness for a particular purpose, merchantability, or infringement of any patent, copyright or other intellectual property right. Control4 products are not intended for use in medical, life saving, or life sustaining applications. Information regarding third-party products is provided solely for educational purposes.&nbsp; Control4 is not responsible for the performance or support of third-party products and does not make any representations or warranties whatsoever regarding the quality, reliability, functionality or compatibility of these products.&nbsp; The reader is advised that third parties can have intellectual property rights that can be relevant to this document and the technologies discussed herein, and is advised to seek the advice of competent legal counsel, without obligation of Control4. ",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "CreateNetworkConnection",
+        "insertText": "CreateNetworkConnection(idBinding, strAddress, strConnectionType)$0",
+        "documentation": "Function that defines a dynamic Network Connection so no Connection XML is required. Further (port-specific configuration) can be accomplished through the use of the NetPortOptions API. Connections are actually made using the NetConnect API. This API should not be invoked during OnDriverInit.id of the Network Binding to create. This binding is used for other",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding",
+            "strAddress",
+            "strConnectionType"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "CreateServer",
+        "insertText": "CreateServer(nPort, strDelimiter, bUseUDP)$0",
+        "documentation": "Creates a Server Socket, that listens on port nPort, and sends messages to the driver upon receipt of the delimiter, strDelimiter (or upon timeout). This API should not be invoked during OnDriverInit.TCP Socket to listen for connections on. See note below for additional port information. ",
+        "detail": "1.6.1",
+        "parameters": [
+            "nPort",
+            "strDelimiter",
+            "bUseUDP"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "CreateTCPClient",
+        "insertText": "CreateTCPClient()$0",
+        "documentation": "Generally, the class cleans up any resources associated with it.&nbsp; For example, when the object is no longer referenced, it will cleans it up.&nbsp; However, there are a few exceptions:&nbsp; When the class is performing an asynchronous operation, e.g. a connect request, it will remain alive until the appropriate event callback function is called.&nbsp; For instance, if you call the Connect() method, the class will remain alive until it either called the OnConnect (and OnResolve) callback function, or the OnError callback function, even if your lua code does not have any reference to the class during that time period.&nbsp; The same applies to the time period between calling one of the Read*() methods and the corresponding OnRead() or OnError() callback, and in between calling the Write() method and the OnWrite() or OnError() callback. This example connects to director on port 5020, sends a null-byte terminated message, and waits for the (null-byte terminated) response.&nbsp; It demonstrates how to delay choosing the endpoint with a 1 second timer, and how to cap the entire procedure with a 5 second timeout.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "CreateTCPServer",
+        "insertText": "CreateTCPServer()$0",
+        "documentation": "This class does not in any way manage or keep track of connected clients.&nbsp; If you explicitly Close() the TCP server or it goes out of scope and gets cleaned up by lua's garbage collector, it does not affect any of the accepted client connections.&nbsp;You can keep track of connected clients by saving them into a map in the OnAccept callback, and setting up a OnDisconnect callback for the connected client connection that removes that client from that map.Generally, the class cleans up any resources associated with it.&nbsp; For example, when the object is no longer referenced, it will clean it up.&nbsp; However, there are a few exceptions:&nbsp; When the class is performing an asynchronous operation, e.g. a listen request, it will remain alive until the appropriate event callback function is called.&nbsp; For instance, if you call the Listen() method, the class will remain alive until it either called the OnListen (and OnResolve) callback function, or the OnError callback function, even if your lua code does not have any reference to the class during that time period.&nbsp; However, once the OnListen callback was called, the class gets cleaned up unless at that point your lua code somehow references this instance. This API should not be invoked during OnDriverInit.This is an example of a chat server that accepts a configurable number of clients and shuts the server down after a configurable number of minutes.&nbsp; It manages all its client connections and shuts them down when the server is being shut down.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "DebugLog",
+        "insertText": "DebugLog(strLogText)$0",
+        "documentation": "Function called from DriverWorks driver to send messages to the following log files: director.log and driver_log.log. This API can be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "strLogText"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Decode",
+        "insertText": "Decode(data, data_encoding)$0",
+        "documentation": "API function which decodes data.data - String of the data which needs to be decoded.&nbsp;The data needs to be encoded according to the data_encoding argument.data_encoding - String which controls how the data argument value is interpreted. Use \"NONE\" for no encoding, \"HEX\" (default) for hexadecimal encoding, or \"BASE64\" for base-64 encoding. This API can be invoked during OnDriverInit.",
+        "detail": "2.10.0",
+        "parameters": [
+            "data",
+            "data_encoding"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Decrypt",
+        "insertText": "Decrypt(cipher, key, iv, data, options)$0",
+        "documentation": "API function which decrypts data. This API can be invoked during OnDriverInit.cipher - String parameter of the cipher to use. For example, \"des-ede3-cbc\".&nbsp; Use key - String parameter of the cryptographic key. If the key is too long for the cipher, the function fails.&nbsp;If the key is too short, it gets padded. The key may be encoded according to the key_encoding value in the options iv - The initialization vector. Use nil or \"\" for none. This is the default value. If iv is too long for the cipher, the function fails.&nbsp; If iv is too short, it gets padded. The value may be encoded according to the iv_encoding value ",
+        "detail": "2.10.0",
+        "parameters": [
+            "cipher",
+            "key",
+            "iv",
+            "data",
+            "options"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "DeleteEvent",
+        "insertText": "DeleteEvent(num)$0",
+        "documentation": "Function called from DriverWorks driver to delete an Event. This API should not be invoked during OnDriverInit.",
+        "detail": "2.8.0",
+        "parameters": [
+            "num"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "DeleteVariable",
+        "insertText": "DeleteVariable(strName)$0",
+        "documentation": "Function called from a DriverWorks driver to delete a Control4 variable for the driver. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "strName"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "DestroyServer",
+        "insertText": "DestroyServer(nPort)$0",
+        "documentation": "Destroys any Server Sockets. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "nPort"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "DisableremoteDebugging",
+        "insertText": "DisableremoteDebugging()$0",
+        "documentation": "Disables remote debugging of DriverWorks Lua scripts. Full instructions on use of remote debugging of DriverWorks drivers may be found in the “Control4 DriverWorks SDK – Getting Started Guide”. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Documentation",
+        "insertText": "Documentation()$0",
+        "documentation": "",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "DriverEditor",
+        "insertText": "DriverEditor()$0",
+        "documentation": "DriverEditor is an integrated software tool incorporating the Control4 C4i Driver Schema and the DriverWorks SDK. DriverEditor is available to Control4 Dealers and Control4 Partner Program participants.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "EnableRemoteDebugging",
+        "insertText": "EnableRemoteDebugging()$0",
+        "documentation": "Enables remote debugging of DriverWorks Lua scripts through an external IDE with a debugger. Full instructions on use of remote debugging of DriverWorks drivers may be found in the “Control4 DriverWorks SDK – Getting Started Guide”. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Encode",
+        "insertText": "Encode(data, data_encoding)$0",
+        "documentation": "API function which encodes data. This API can be invoked during OnDriverInit.data - String of the raw data which needs to be encoded.&nbsp;encoding - Optional string which control how the provided data will be encoded before being returned. Use \"NONE\" for no encoding, \"HEX\" (default) for hexadecimal encoding, or \"BASE64\" for base-64 encoding.",
+        "detail": "2.10.0",
+        "parameters": [
+            "data",
+            "data_encoding"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Encrypt",
+        "insertText": "Encrypt(cipher, key, iv, data, options)$0",
+        "documentation": "API function which encrypts data. cipher - String parameter of the cipher to use. For example, \"des-ede3-cbc\".&nbsp; Use key - String parameter of the cryptographic key. If the key is too long for the cipher, the function fails.&nbsp;If the key is too short, it gets padded. The key may be encoded according to the key_encoding value in the options table.iv - The initialization vector. Use nil or \"\" for none. This is the default value. If iv is too long for the cipher, the function fails.&nbsp; If iv is too short, it gets padded. The value may be encoded according to the iv_encoding value in the options table.data - String parameter of the data to encrypt.&nbsp; May be encoded according to the data_encoding value in the options table.",
+        "detail": "2.10.0",
+        "parameters": [
+            "cipher",
+            "key",
+            "iv",
+            "data",
+            "options"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ErrorLog",
+        "insertText": "ErrorLog(“ERROR light level out of range”})$0",
+        "documentation": "Function called from DriverWorks driver send messages to the following log files: director.log and driver_log.log.",
+        "detail": "1.6.1",
+        "parameters": [
+            "“ERROR: light level out of range”"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "EvaluateExpression",
+        "insertText": "EvaluateExpression(logic, value1, value2)$0",
+        "documentation": "This API has 3 parameters, a logic operator and two operands. . ‘value1’ is the left operand and ‘value2’ is the right operand. EvaluateConditional evaluates the expression and returns a Boolean result. logic - Operator used in the conditionals. The following strings are accepted: ",
+        "detail": "2.10.0",
+        "parameters": [
+            "logic",
+            "value1",
+            "value2"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "FileClose",
+        "insertText": "FileClose(fh)$0",
+        "documentation": "Used to close an opened file handle. This API can be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "fh"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "FileDelete",
+        "insertText": "FileDelete()$0",
+        "documentation": "Used to delete a file on the file system.&nbsp; This call will fail if there is a opened handle to the file.&nbsp; This function takes a file name to delete and returns a bool if the delete succeeded. This API can be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "FileExists",
+        "insertText": "FileExists()$0",
+        "documentation": "Used to see if a file exists on the file system.&nbsp; This function takes a file name and returns a bool if the file exists. This API can be invoked during OnDriverInit.&nbsp;&nbsp;&nbsp; bexist = C4:FileExists(\"1.txt\")",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "FileFreeSpace",
+        "insertText": "FileFreeSpace()$0",
+        "documentation": "Used to see how much free space exists on the file system in bytes. This API can be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "FileGetName",
+        "insertText": "FileGetName()$0",
+        "documentation": "Used to get the name of an opened file handle.&nbsp; This function takes a file handle and returns a string of the file name.&nbsp; An empty string is returned if the file handle is not valid. This API can be invoked during OnDriverInit..",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "FileGetOpenedHandles",
+        "insertText": "FileGetOpenedHandles()$0",
+        "documentation": "Used to retrieve a table of all the opened file handles in your sandbox or nil if none are opened.&nbsp; The table is index = file handle and value=file name. This API can be invoked during OnDriverInit.&nbsp;&nbsp;if (fileHandles) then",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "FileGetPos",
+        "insertText": "FileGetPos(fh)$0",
+        "documentation": "Used to get the current read or write position for the file.&nbsp; This function takes a file handle and returns the current position. This API can be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "fh"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "FileGetSize",
+        "insertText": "FileGetSize()$0",
+        "documentation": "File to get the current size of an opened file handle. This API can be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "FileIsValid",
+        "insertText": "FileIsValid(fh)$0",
+        "documentation": "Used to see if a file is still valid to be written or read from.&nbsp; This is useful to check before or after reading to see if an end of file condition has been reached.&nbsp; This function returns a bool of the file status. This API can be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "fh"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "FileList",
+        "insertText": "FileList()$0",
+        "documentation": "Used to retrieve a table of all the files that are present or nil if none exist. This API can be invoked during OnDriverInit.&nbsp; if (fileNames) then",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "FileOpen",
+        "insertText": "FileOpen()$0",
+        "documentation": "Used to open (if file exists) or create a new file.&nbsp; This function takes a file name, returns a handle.&nbsp; A value of -1 is returned if an error.&nbsp; &nbsp;&nbsp;&nbsp; fh = C4:FileOpen(“somefile.ext”)",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "FileRead",
+        "insertText": "FileRead(fh, 10)$0",
+        "documentation": "Used to read data from a file.&nbsp; Returns an empty string if no bytes are read.&nbsp; This function takes a file handle and number of bytes to be read.&nbsp; If an end of file is reached with this read operation, a string of what data was read is returned and any subsequent calls to FileRead will return an empty string.&nbsp; Use the FileIsValid() call to see if and end of file condition has been reached. This API can be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "fh",
+            "10"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "FileSetPos",
+        "insertText": "FileSetPos(fh, 50)$0",
+        "documentation": "Used to set the position within the file to read or write from.&nbsp; This function takes a file handle and number for the new position. This API can be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "fh",
+            "50"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "FileWrite",
+        "insertText": "FileWrite()$0",
+        "documentation": "Used to write data to a file.&nbsp; This function returns the number of bytes written or -1 if file is not valid (example file has been closed).&nbsp; This function takes a file handle, the number of bytes of the string to be written, and a string of data to be written. This API can be invoked during OnDriverInit.&nbsp;&nbsp;&nbsp; bytesWritten = C4:FileWrite(fh, string.len(foo), foo)",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "FileWriteString",
+        "insertText": "FileWriteString()$0",
+        "documentation": "Function to write a string to an opened file handle.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "FireEvent",
+        "insertText": "FireEvent(strEvent)$0",
+        "documentation": "Function called from DriverWorks driver to Fire a static or Dynamic Event on the driver. This API should not be invoked during OnDriverInit.",
+        "detail": "2.8.0",
+        "parameters": [
+            "strEvent"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "FireEventByID",
+        "insertText": "FireEventByID(num)$0",
+        "documentation": "Function called from DriverWorks driver to Fire a static or Dynamic Event (using the Event's ID Value) on the driver. This API should not be invoked during OnDriverInit.",
+        "detail": "2.8.0",
+        "parameters": [
+            "num"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Generic",
+        "insertText": "Generic()$0",
+        "documentation": "",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetBindingAddress",
+        "insertText": "GetBindingAddress()$0",
+        "documentation": "GetBindingAddress (idBinding)Returns a physical (IP) address of a network binding. ",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetBlobByName",
+        "insertText": "GetBlobByName(strName)$0",
+        "documentation": "Returns the un-encoded string containing the firmware update data of the specified BLOB (Binary Large Object). This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "strName"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetBoundConsumerDevices",
+        "insertText": "GetBoundConsumerDevices()$0",
+        "documentation": "Call to retrieve the devices bound to (the consumers of) a binding provided (an output binding) by this device. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetBoundProviderDevice",
+        "insertText": "GetBoundProviderDevice()$0",
+        "documentation": "Call to retrieve what device is attached to an input binding of the specified device. This API should not be invoked during OnDriverInit.The id of the device to check the bindings on. Note that for devices with a protocol and one or more proxy , the device id should be that of the proxy (not the lua protocol device id). A device id of 0 will use the current device id.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetC4iDir",
+        "insertText": "GetC4iDir()$0",
+        "documentation": "Function that will return the directory path on the controller where Path in string format.",
+        "detail": "2.10.0",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetC4zDir",
+        "insertText": "GetC4zDir()$0",
+        "documentation": "Function that will return the directory path on the controller where Path in string format.",
+        "detail": "2.10.0",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetCapability",
+        "insertText": "GetCapability(strName)$0",
+        "documentation": "Function called from DriverWorks driver to get a capability from the driver’s .c4i file. This API should not be invoked during OnDriverInit.The value of the capability retrieved from the .c4i file",
+        "detail": "1.6.1",
+        "parameters": [
+            "strName"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetControllerNetworkAddress",
+        "insertText": "GetControllerNetworkAddress()$0",
+        "documentation": "Function that ",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetDeviceData",
+        "insertText": "GetDeviceData()$0",
+        "documentation": "This API returns data found in the driver's device data, deviceId - Device ID of the driver.tagName (optional) - tagName is an optional parameter that can be passed to return specific devicedata. For example, if \"version\" is passed, the value for the devicedata's ",
+        "detail": "2.10.0",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetDeviceDisplayName",
+        "insertText": "GetDeviceDisplayName()$0",
+        "documentation": "Returns the name of the device as shown in Composer. This API should not be invoked during OnDriverInit.ID value of a device. (Optional)",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetDeviceID",
+        "insertText": "GetDeviceID()$0",
+        "documentation": "Function called from DriverWorks driver to get this driver’s Device ID. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetDeviceMAC",
+        "insertText": "GetDeviceMAC(idBinding)$0",
+        "documentation": "Returns1.2.3.",
+        "detail": "2.10.0",
+        "parameters": [
+            "idBinding"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetDevices",
+        "insertText": "GetDevices(tFilter, locationFilter)$0",
+        "documentation": "The GetDevices API provides the ability to return a table of devices based on driver names and/or device ID values. Additionally, the use of the location parameter further limits the list returned based on locations found within a project.tFilter: &nbsp;(optional) The tFilter is a table of key/value pairs that specify the filters used within the search. The search can be filtered by .c4i or .c4z driver names and/or device id values. &nbsp;To filter by driver names, add an entry in the table called C4iNames. The value is a string consisting of a comma delimited list of .c4i or .c4z names such as: “control4_sr250.c4i, control4_sr150.c4i”. &nbsp;An example of a table would be: tFilter = {C4iNames = \"control4_sr260.c4i,control4_sr250.c4i,control4_sr150.c4i\"}To filter by device id values rather than driver names, add an entry in the table called DeviceIds. The value is a string consisting of a comma delimited list of ID values representing Proxy IDs or Device IDs such as: “22,23,24”. An example of a table would be: &nbsp;",
+        "detail": "2.10.0",
+        "parameters": [
+            "tFilter",
+            "locationFilter"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetDevicesByC4iName",
+        "insertText": "GetDevicesByC4iName()$0",
+        "documentation": "Function that returns specific devices by .c4i (driver) name. For example, if passed light_ip_control4_ldz-102-w-c4i it will return a list of all Control4 Wireless dimmers in the project. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetDevicesByName",
+        "insertText": "GetDevicesByName(str, str)$0",
+        "documentation": "Function used to obtain the Device ID and the Room ID assigned to a device in the project. This API should not be invoked during OnDriverInit.",
+        "detail": "2.8.0",
+        "parameters": [
+            "str",
+            "str"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetDeviceVariable",
+        "insertText": "GetDeviceVariable(idDevice, idVariable)$0",
+        "documentation": "Function called by a DriverWorks driver to get the value of another device's variable. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "idDevice",
+            "idVariable"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetDeviceVariables",
+        "insertText": "GetDeviceVariables(num)$0",
+        "documentation": "Function used to obtain a Device's variables. This API should not be invoked during OnDriverInit.Parameters",
+        "detail": "2.8.0",
+        "parameters": [
+            "num"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetDiscoveryInfo",
+        "insertText": "GetDiscoveryInfo(idBinding)$0",
+        "documentation": "ReturnsTable that contains the discovery information.",
+        "detail": "2.10.0",
+        "parameters": [
+            "idBinding"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetDriverConfigInfo",
+        "insertText": "GetDriverConfigInfo(str)$0",
+        "documentation": "Function that returns the XML contents of a driver's config.xml file. This API should not be invoked during OnDriverInit.Parameters",
+        "detail": "2.8.0",
+        "parameters": [
+            "str"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetLocalAddress",
+        "insertText": "GetLocalAddress()$0",
+        "documentation": "GetLocalAddress()This method returns a table with the IP address and port of the local endpoint.&nbsp;",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetLocalAddress",
+        "insertText": "GetLocalAddress()$0",
+        "documentation": "GetLocalAddress(This method returns a table with the IP address and port that the server is listening on.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ip (string): The IP address that the server is listening on.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; port (number): The port number that the server is listening on.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetLocale",
+        "insertText": "GetLocale()$0",
+        "documentation": "Function to get the current locale of the system. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetLogDir",
+        "insertText": "GetLogDir()$0",
+        "documentation": "Function that will return the directory path on the controller where log files reside.Path in string format.",
+        "detail": "2.10.0",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetMyNetworkAddress",
+        "insertText": "GetMyNetworkAddress()$0",
+        "documentation": "API that returns the bound address of the \"device.\" For example, in the case of a single network binding, GetMyNetworkAddress returns the address of the device that's connected to the driver. ",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetPrivateKeyPassword",
+        "insertText": "GetPrivateKeyPassword()$0",
+        "documentation": "GetPrivateKeyPasswordThis callback API supports password protection for SSL Certificates that are embedded within a device driver. Implementing&nbsp;GetPrivateKeyPassword&nbsp;within a .C4i file permits a password to be returned for a binding which requires an SSL Certificate. When implemented correctly, this API will return the string value of the SSL Certificate password. Use of this API is recommended in conjunction with encrypted drivers. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Binding ID of the network connection with the password-protected certificate.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetProjectHierarchy",
+        "insertText": "GetProjectHierarchy()$0",
+        "documentation": "This API returns a table. The table is a representation of the project. The table consists of key/value pairs where the key is the ID of the location. The value is a table with entries of all of the location’s children if any. It also contains the locations name and type. Type is an enumeration as follows:",
+        "detail": "2.10.0",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetProjectItems",
+        "insertText": "GetProjectItems()$0",
+        "documentation": "Returns the project as an .XML string. This string can then be parsed to retrieve variable IDs. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetProxyDevices",
+        "insertText": "GetProxyDevices()$0",
+        "documentation": "Function that returns the proxy device id(ids if device has multiple proxies) associated with the current driver. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetProxyDevicesbyID",
+        "insertText": "GetProxyDevicesbyID(idDevice)$0",
+        "documentation": "Returns the Proxy ID value when passed a Device ID value. This API should not be invoked during OnDriverInit.ID value of a device. (Optional) ",
+        "detail": "1.6.1",
+        "parameters": [
+            "idDevice"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetProxyDevicesByID",
+        "insertText": "GetProxyDevicesByID()$0",
+        "documentation": "Function that returns all associated proxies for a device. Return values are in ID format (numerical value). This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetProxyDevicesByName",
+        "insertText": "GetProxyDevicesByName()$0",
+        "documentation": "Function that returns the all proxy devices by proxy name. For example, if passed light.c4i it will return a list of all lights in the project. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "getPushSettings",
+        "insertText": "getPushSettings()$0",
+        "documentation": "A Boolean API that returns the project’s current setting for the “Push Settings from Project” checkbox in Composer Pro’s Project properties screen. True equals a populated checkbox. False equals an un-populated checkbox. This is useful for determining if a driver can push settings to a device (true) or if settings will be sent from the device to the project (false).This API was introduced in conjunction with OS release 2.7.0.",
+        "detail": "2.7.0",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetRemoteAddress",
+        "insertText": "GetRemoteAddress()$0",
+        "documentation": "GetRemoteAddress()This method returns a table with the IP address and port of the remote endpoint.&nbsp;",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetSandboxDir",
+        "insertText": "GetSandboxDir(C4GetSandboxDir(})$0",
+        "documentation": "Return the directory where the LUA driver will store its files.Outputs:",
+        "detail": "2.10.0",
+        "parameters": [
+            "C4:GetSandboxDir("
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetSerialSettings",
+        "insertText": "GetSerialSettings(idBinding)$0",
+        "documentation": "Returns the &lt;serialsettings&gt; string from the driver that is connected to the provided control binding. The control binding should be an RS232 provider binding. Serial Settings Data in string format.",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetSupportedCiphers",
+        "insertText": "GetSupportedCiphers()$0",
+        "documentation": "API function which obtains information about supported cryptographic ciphers. ",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetSupportedDigests",
+        "insertText": "GetSupportedDigests()$0",
+        "documentation": "API function which obtains information about supported cryptographic digests. ",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetSystemType",
+        "insertText": "GetSystemType()$0",
+        "documentation": "Function that returns the controller type used as the primary controller in a project. Returns OS Info of Windows when called from a Virtual Director environement.",
+        "detail": "2.9.0",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetText",
+        "insertText": "GetText(str)$0",
+        "documentation": "Function to get a string translated into the current locale from a “C” 9English)input string. This will only return translated strings if there is a corresponding input -&gt; translation match in the current translated string for the set locale. If no translation is found the input string is returned. This API can be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "str"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetUniqueMAC",
+        "insertText": "GetUniqueMAC()$0",
+        "documentation": "Function to get the unique MAC address of the Director box. This API can be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetVariable",
+        "insertText": "GetVariable(idDevice, idVariable)$0",
+        "documentation": "Function called by a DriverWorks driver to get the value of a variable. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "idDevice",
+            "idVariable"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "GetVersionInfo",
+        "insertText": "GetVersionInfo()$0",
+        "documentation": "GerVersionInfo returns the version of Director currently running. This API can be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "getZigbeeEUID",
+        "insertText": "getZigbeeEUID()$0",
+        "documentation": "Lua function called to retrieve a Zigbee device’s user ID. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Hash",
+        "insertText": "Hash(digest, data, options)$0",
+        "documentation": "Hashes data. This API can be invoked during OnDriverInit.",
+        "detail": "2.10.0",
+        "parameters": [
+            "digest",
+            "data",
+            "options"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "hexdump(strDump)",
+        "insertText": "hexdump(strDump)(strDump)$0",
+        "documentation": "Prints out the values of a string in both hex and ascii representation. &nbsp;All characters that are not ‘A-Z’ or ‘0-9’ are printed as a ‘.’ In the ascii representation. &nbsp;The print goes to the Lua tab on the properties page of the driver. ",
+        "detail": "1.6.1",
+        "parameters": [
+            "strDump"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "HMAC",
+        "insertText": "HMAC(digest, key, data, table)$0",
+        "documentation": "Computes a Hash based Message Authentication Code (HMAC). This API can be invoked during OnDriverInit.",
+        "detail": "2.10.0",
+        "parameters": [
+            "digest",
+            "key",
+            "data",
+            "table"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "hton_1",
+        "insertText": "hton_1(nVal)$0",
+        "documentation": "Converts the numeric value passed in to network byte order. ",
+        "detail": "1.6.1",
+        "parameters": [
+            "nVal"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "InvalidateState",
+        "insertText": "InvalidateState()$0",
+        "documentation": "Function to notify director that data from this driver has been modified and needs to be persisted. Persisting extraneous data through a driver can have performance implications. Device drivers should avoid calling this function spuriously as this will result in the data never being saved. Director will only flush data to the disk after a sufficient period of no changes by any driver. Currently, a save of all persist data for all drivers is very CPU intensive. To view persisted data, see the Persistdata Table in the driver XML and the Properties interface in ComposerPro for values that are being persisted through your driver.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Json:Decode",
+        "insertText": "Json:Decode(json)$0",
+        "documentation": "JSON function that takes data from the JSON formatted string message and decodes it into the Lua table. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "json"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "JsonDecode",
+        "insertText": "JsonDecode(json)$0",
+        "documentation": "This API decodes a JSON string into a Lua object.json – A string containing the JSON to be decoded.",
+        "detail": "2.10.0",
+        "parameters": [
+            "json"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Json:Encode",
+        "insertText": "Json:Encode(value, formatted, encodeArrays, symmetric)$0",
+        "documentation": "JSON function that takes the data in the Lua tCommand table and encodes it into a JSON formatted command string representing a Lua object.&nbsp;On success, this function returns a single value which is as designed. On failure, the function returns two values:This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "value",
+            "formatted",
+            "encodeArrays",
+            "symmetric"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "JsonEncode",
+        "insertText": "JsonEncode(value, formatted, encodeArrays, symmetric)$0",
+        "documentation": "This API creates a JSON-formatted string representing a Lua object.value – The Lua object to be encoded. This must be one of the following types:",
+        "detail": "2.10.0",
+        "parameters": [
+            "value",
+            "formatted",
+            "encodeArrays",
+            "symmetric"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "KeepReflashLock",
+        "insertText": "KeepReflashLock()$0",
+        "documentation": "If a driver takes longer than a minute to upload the firmware data to the device, it should call C4:KeepReflashLock. This request will maintain the reflash lock while updating. &nbsp;If a driver does not call KeepReflashLock, the Reflash Lock will be revoked after approximately one minute. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "KillTimer",
+        "insertText": "KillTimer(idTimer)$0",
+        "documentation": "Function called from DriverWorks driver to kill a C4 timer. ",
+        "detail": "1.6.1",
+        "parameters": [
+            "idTimer"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Listen",
+        "insertText": "Listen()$0",
+        "documentation": "Listen(host, service[, backlog])This method starts a listen request to listen on a particular host/service.&nbsp; Once the host/service has been resolved and an endpoint has been chosen, the OnListen callback function will be called. This indicates that the server is now ready to accept incoming connections.&nbsp; If errors occur, the OnError callback function will be called instead. host is the IP address or host name to listen on.&nbsp; It can also be one of these special values:",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ListGetDeviceContainer",
+        "insertText": "ListGetDeviceContainer()$0",
+        "documentation": "Function to obtain the navigator type of device of the passed in device ID. This call is useful for determining the generic navigator groups device belongs to. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ListGetDeviceName",
+        "insertText": "ListGetDeviceName(int)$0",
+        "documentation": "Function to obtain the name of the given device as it is displayed in the ComposerPro project. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "int"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ListGetItems",
+        "insertText": "ListGetItems(nListID, nStartIndex, nCount)$0",
+        "documentation": "Requests nCount list items, for the ListID passed in, starting at StartIndex This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "nListID",
+            "nStartIndex",
+            "nCount"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ListGetRoomID",
+        "insertText": "ListGetRoomID()$0",
+        "documentation": "Gets the DeviceID of the current ListNavigator room. ",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ListGetSelectedDevice",
+        "insertText": "ListGetSelectedDevice()$0",
+        "documentation": "Function to obtain the currently selected device id for the room containing this driver. ",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ListGoToRoot",
+        "insertText": "ListGoToRoot()$0",
+        "documentation": "Reset the current list back to the main menu. ",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ListIsInNavigation",
+        "insertText": "ListIsInNavigation()$0",
+        "documentation": "Returns a Boolean of whether the list is in navigation or not. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ListIsStarted",
+        "insertText": "ListIsStarted()$0",
+        "documentation": "Returns a Boolean of whether the list is started or not. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ListSendCommand",
+        "insertText": "ListSendCommand(strCommand, Param1, Param2…)$0",
+        "documentation": "Send a List MIB command to Director. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "strCommand",
+            "Param1",
+            "Param2…"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ListSetCapabilities",
+        "insertText": "ListSetCapabilities(nMaxListCacheSize, nMaxListItemLen, nControls})$0",
+        "documentation": "ListSetCapabilities must be called before starting a list with C4:ListStart. &nbsp;This tells Director how many items you wish to retrieve at once, how wide to make the items, and what controls you wish to implement. should not request all list items, but only as many as you wish to hold locally. &nbsp;Your",
+        "detail": "1.6.1",
+        "parameters": [
+            "nMaxListCacheSize",
+            "nMaxListItemLen",
+            "nControl(s"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ListStart",
+        "insertText": "ListStart(strContainer)$0",
+        "documentation": "Returns",
+        "detail": "1.6.1",
+        "parameters": [
+            "strContainer"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ListStop",
+        "insertText": "ListStop()$0",
+        "documentation": "Stop the current DriverWorks List Navigator session.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaAddAlbumInfo",
+        "insertText": "MediaAddAlbumInfo()$0",
+        "documentation": "This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaAddBroadcastAudioInfo",
+        "insertText": "MediaAddBroadcastAudioInfo()$0",
+        "documentation": "This function is used to add a new broadcast audio station media entry. ",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaAddMovieInfo",
+        "insertText": "MediaAddMovieInfo()$0",
+        "documentation": "This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaGetAlbumInfo",
+        "insertText": "MediaGetAlbumInfo()$0",
+        "documentation": "",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaGetAlbumLocation",
+        "insertText": "MediaGetAlbumLocation()$0",
+        "documentation": "This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaGetAllAlbums",
+        "insertText": "MediaGetAllAlbums()$0",
+        "documentation": "This API should not be invoked during OnDriverInit.for key,value in pairs(allAlbums) do",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaGetAllBroadcastAudio",
+        "insertText": "MediaGetAllBroadcastAudio()$0",
+        "documentation": "This function is used to retrieve all the broadcast audio stations associated with this device. ",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaGetAllMovies",
+        "insertText": "MediaGetAllMovies()$0",
+        "documentation": "This API should not be invoked during OnDriverInit.for key,value in pairs(allMovies) do",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaGetBroadcastAudioInfo",
+        "insertText": "MediaGetBroadcastAudioInfo()$0",
+        "documentation": "This function is used to get information about an existing broadcast audio media entry. Table information. The table may have entries for: ",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaGetDeviceContext",
+        "insertText": "MediaGetDeviceContext()$0",
+        "documentation": "Function that returns the what the device context is currently set to.&nbsp; If “0” then all media api’s are using the current driver’s device id. ",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaGetMovieInfo",
+        "insertText": "MediaGetMovieInfo()$0",
+        "documentation": "",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaGetMovieLocation",
+        "insertText": "MediaGetMovieLocation()$0",
+        "documentation": "This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaGetSongInfo",
+        "insertText": "MediaGetSongInfo()$0",
+        "documentation": "This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaGetSongLocation",
+        "insertText": "MediaGetSongLocation()$0",
+        "documentation": "This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaGetSongsforAlbum",
+        "insertText": "MediaGetSongsforAlbum()$0",
+        "documentation": "This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaLinkSongToAlbum",
+        "insertText": "MediaLinkSongToAlbum()$0",
+        "documentation": "This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaModifyAlbumInfo",
+        "insertText": "MediaModifyAlbumInfo()$0",
+        "documentation": "This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaModifyMovieInfo",
+        "insertText": "MediaModifyMovieInfo()$0",
+        "documentation": "This API should not be invoked during OnDriverInit.Table information. The table may have entries for:",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaModifySongInfo",
+        "insertText": "MediaModifySongInfo()$0",
+        "documentation": "This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaRemoveAlbum",
+        "insertText": "MediaRemoveAlbum()$0",
+        "documentation": "This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaRemoveAllAlbums",
+        "insertText": "MediaRemoveAllAlbums()$0",
+        "documentation": "This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaRemoveAllMedia",
+        "insertText": "MediaRemoveAllMedia()$0",
+        "documentation": "Removes all albums songs and movies from the device. ",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaRemoveBroadcastAudio",
+        "insertText": "MediaRemoveBroadcastAudio()$0",
+        "documentation": "This function is used to remove an audio station from the system. ",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaRemoveMovie",
+        "insertText": "MediaRemoveMovie()$0",
+        "documentation": "This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaRemoveSong",
+        "insertText": "MediaRemoveSong()$0",
+        "documentation": "This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaRemovevAllMovies",
+        "insertText": "MediaRemovevAllMovies()$0",
+        "documentation": "This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "MediaSetDeviceContext",
+        "insertText": "MediaSetDeviceContext()$0",
+        "documentation": "Function that sets a device id to be used for media related call.&nbsp; If set to any value other than “0” then adding, modifying, retrieving or removing functionality will use the supplied device id. Note that this API must be called in the ",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Miscellaneous",
+        "insertText": "Miscellaneous()$0",
+        "documentation": "",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Movies",
+        "insertText": "Movies()$0",
+        "documentation": "The examples used in the Movies section of this document will reference the following movie:",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "NetConnect",
+        "insertText": "NetConnect(idBinding, nPort, strIPType, nGrowBytes, strStart, strEnd, bSuppressConnectionEvents)$0",
+        "documentation": "Function used to tell the system to make a connection (static or dynamic). Connections are created using the CreateNetworkConnection API. Further, port-specific configuration can be configured for a connection through the NetPortOptions API. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding",
+            "nPort",
+            "strIPType",
+            "nGrowBytes",
+            "strStart",
+            "strEnd",
+            "bSuppressConnectionEvents"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "NetDisconnect",
+        "insertText": "NetDisconnect(idBinding, nPort)$0",
+        "documentation": "Function called from DriverWorks driver to disconnect from a specific idBinding and nPort. ",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding",
+            "nPort"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "NetPortOptions",
+        "insertText": "NetPortOptions(idBinding, nPort, strIPType, tPortParams)$0",
+        "documentation": "Function to configure a connection's Port settings. &nbsp;The use of this API is contingent upon the use of the CreateNetworkConnection and NetConnect APIs. Connections are created using the CreateNetworkConnection API and Connections are made using the NetConnect API. ",
+        "detail": "2.8.0",
+        "parameters": [
+            "idBinding",
+            "nPort",
+            "strIPType",
+            "tPortParams"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ntoh_1",
+        "insertText": "ntoh_1(nVal)$0",
+        "documentation": "Converts the numeric value passed in to host byte order. ",
+        "detail": "1.6.1",
+        "parameters": [
+            "nVal"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Option",
+        "insertText": "Option()$0",
+        "documentation": "Option(name, value[, ...])This method sets a socket option. Name is a string specifying the option to set.&nbsp; It can be one of the following:",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Option",
+        "insertText": "Option()$0",
+        "documentation": "Option(name, value[, ...])This method sets a socket option.name is a string specifying the option to set.&nbsp; It can be one of the following:",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Overview",
+        "insertText": "Overview()$0",
+        "documentation": "For example, the Lua function UIRequest isn't a Control4 API. However, it is an InBound Driver Function that needs to be implemented in your driver if you intent to use the Control4 API:SendUIRequest. SendUIRequest sends a request to another driver. It uses the proxy or protocol ID value of the driver as a means to target the driver where the request will be sent. The driver receiving the SendUIRequest must have the InBound Driver Function UIRequest configured, which will contain the return values requested by the SendUIRequest call. In this example, the API contains a value of 231. This is the proxy ID value of the driver where the request is being sent. This is followed by a request called &nbsp;GET_MY_DRIVER_DATA. This is an expected request by the driver receiving the SendUIRequest. A table of parameters follows the command.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ParseIso8601DateTime",
+        "insertText": "ParseIso8601DateTime(str, strict)$0",
+        "documentation": "Parses a ISO 8601 date/time stamp to UTC (Coordinated Universal Time). ",
+        "detail": "2.7.0",
+        "parameters": [
+            "str",
+            "strict"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ParseXml",
+        "insertText": "ParseXml()$0",
+        "documentation": "Helper function which turns a XML document into a .lua table of parsed XML data. ",
+        "detail": "2.7.0",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "PBKDF2",
+        "insertText": "PBKDF2(digest, password, salt, iterations, key_length, options)$0",
+        "documentation": "Password-Based Key Derivation Function 2 (PKCS#5). digest - String parameter of the hash function to use, e.g. \"sha256\".&nbsp; Use password - String parameter of the password from which a derived key should be generated.salt - String parameter of a cryptographic salt.&nbsp;This argument may be encoded according to the salt_encoding value in the options table.",
+        "detail": "2.10.0",
+        "parameters": [
+            "digest",
+            "password",
+            "salt",
+            "iterations",
+            "key_length",
+            "options"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "PersistDeleteAll",
+        "insertText": "PersistDeleteAll()$0",
+        "documentation": "Deletes all values. See ",
+        "detail": "2.10.0",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "PersistGetValue",
+        "insertText": "PersistGetValue(name)$0",
+        "documentation": "Returns the value associated with the specified name.name - A string containing the name of the value.",
+        "detail": "2.10.0",
+        "parameters": [
+            "name"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "PersistSetValue",
+        "insertText": "PersistSetValue(name, value)$0",
+        "documentation": "Persists a value associated with the specified name.name - A string containing the name of the value.value - The value to be persisted. The type can be any one of the following:",
+        "detail": "2.10.0",
+        "parameters": [
+            "name",
+            "value"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "print",
+        "insertText": "print(strPrintText)$0",
+        "documentation": "Function called from DriverWorks driver to prints items out the drivers’ properties page console. ",
+        "detail": "1.6.1",
+        "parameters": [
+            "strPrintText"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ReadAtLeast",
+        "insertText": "ReadAtLeast()$0",
+        "documentation": "ReadAtLeast(min)This method requests to read at least as many bytes as specified by the min argument.&nbsp;Once at least this amount of data is available, all available data is passed to the OnRead callback. ",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ReadUntil",
+        "insertText": "ReadUntil()$0",
+        "documentation": "ReadUntil(arg)This method requests to read data until a specific condition is met. arg can be a string, in which case &nbsp;the read request will be satisfied until this string was read from the socket.&nbsp; arg can also be a function, which can arbitrarily decide at what point the read request is satisfied.1. arg (string): All data until (and including) the value of this argument will be passed to the OnRead() callback.2. arg (function): The supplied function should have the following signature: function(data).&nbsp; This function returns up to three values:&nbsp; The first return value is a boolean value and indicates whether the matching condition to satisfy the read request was fulfilled.&nbsp; The second return value is a number of bytes that should be removed from the front of the read buffer, regardless of whether the condition is fulfilled (you should return a value if you returned true as first return value, otherwise the entire data will be discarded).&nbsp; The third return value is optional, and if not nil, will be used to replace the data argument of the OnRead callback handler.&nbsp; This is useful if the matching process is already rather expensive (e.g. parsing an XML document), as it allows you to transfer that information directly to the OnRead() callback handler without having to do the same work again.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ReadUntilOneOf",
+        "insertText": "ReadUntilOneOf()$0",
+        "documentation": "ReadUntilOneOf(str)This method requests to read data until (and including) one of the bytes in the str argument is encountered. str is a string with all bytes that can trigger a match.&nbsp; This argument cannot be an empty string.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ReadUpTo",
+        "insertText": "ReadUpTo()$0",
+        "documentation": "ReadUpTo(max)This method requests to read any available data up to (and including) the number of bytes specified by the max argument.&nbsp; Once data is available, the OnRead callback will be called with whatever data was available, but no more than the limit specified in the max argument. ",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "RecordHistory",
+        "insertText": "RecordHistory(severity, eventType, category, subcategory, description)$0",
+        "documentation": "Helper Function that writes history events to the History Agent database",
+        "detail": "1.6.1",
+        "parameters": [
+            "severity",
+            "eventType",
+            "category",
+            "subcategory",
+            "description"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "RegisterDeviceEvent",
+        "insertText": "RegisterDeviceEvent(deviceId, eventId)$0",
+        "documentation": "This API allows for a driver to register for another driver's event. The device ID passed is the ID of the device that is firing the event of interest. This is followed by the event ID.",
+        "detail": "2.9.0",
+        "parameters": [
+            "deviceId",
+            "eventId"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "RegisterVariableListerner",
+        "insertText": "RegisterVariableListerner(idDevice, idVariable)$0",
+        "documentation": "Function called from a DriverWorks driver to set a listener on a particular device’s variable.When a listener is set on a variable, whenever the variable changes, the Lua OnWatchedVariableChanged call is called.",
+        "detail": "1.6.1",
+        "parameters": [
+            "idDevice",
+            "idVariable"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ReleaseReflashLock",
+        "insertText": "ReleaseReflashLock()$0",
+        "documentation": "Function to terminate the request for firmware data upon completion of update. ",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "RemoveDynamicBinding",
+        "insertText": "RemoveDynamicBinding(idBinding)$0",
+        "documentation": "Function called by a DriverWorks driver to remove a dynamically-created binding. ID of the dynamic binding to remove.",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "RenameDevice",
+        "insertText": "RenameDevice()$0",
+        "documentation": "This API call renames a Device in the project from within a Lua driver. Device ID of the device being renamed.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "RequestReflashLock",
+        "insertText": "RequestReflashLock()$0",
+        "documentation": "Function that requests permission of Director to update the device. The driver receives permission when it receives the OnReflashLockGranted call. ",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "RoomGetID",
+        "insertText": "RoomGetID()$0",
+        "documentation": "Function to get the ID value of the room containing the driver. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "RoomSelectNav",
+        "insertText": "RoomSelectNav(int)$0",
+        "documentation": "Function to force the selection of onscreen for the selected room. ",
+        "detail": "1.6.1",
+        "parameters": [
+            "int"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "RreadUntilOneNotOf",
+        "insertText": "RreadUntilOneNotOf()$0",
+        "documentation": "This method requests to read data until (and including) any byte that is no in the str argument is encountered. str is a string with all bytes that will not trigger a match.&nbsp; This argument cannot be an empty string.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "SendBroadcast",
+        "insertText": "SendBroadcast(payload, port)$0",
+        "documentation": "Function that enables a Lua driver to send network broadcast messages. The function opens a UDP connection, sets the SO_BROADCAST socket option and then sends a specified payload to the directed broadcast address. For example, 192.168.1.255. If the directed broadcast address is unavailable for any reason then the limited broadcast address is used instead, for example: 255.255.255.255.payload - String of the message to be broadcast.port - Number identifying the port to which the payload is broadcast.",
+        "detail": "2.10.0",
+        "parameters": [
+            "payload",
+            "port"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "SendDataToUI",
+        "insertText": "SendDataToUI(xml)$0",
+        "documentation": "Function to send data to subscribed navigators. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "xml"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "SendIR",
+        "insertText": "SendIR(idBinding, idIRCode)$0",
+        "documentation": "Function called from DriverWorks driver to send an IR Code. This API should not be invoked during OnDriverInit.IR Binding ID to send the IR Code.",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding",
+            "idIRCode"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "SendIRStart",
+        "insertText": "SendIRStart(idBinding, idBinding, idIRCode)$0",
+        "documentation": "Causes Director to start sending the specified IR Code out the specified binding. &nbsp;This is typically used on button press events. This API should not be invoked during OnDriverInit.Proxy Binding ID.",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding",
+            "idBinding",
+            "idIRCode"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "SendIRStop",
+        "insertText": "SendIRStop(idBinding, idBinding, idIRCode)$0",
+        "documentation": "Causes Director to stop sending the specified IR Code out the specified binding. &nbsp;This is typically used on button release events. This API can be invoked during OnDriverInit.Proxy Binding ID.",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding",
+            "idBinding",
+            "idIRCode"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "SendToDevice",
+        "insertText": "SendToDevice(idDevice, strCommand, tParams, logCommand)$0",
+        "documentation": "Function called from DriverWorks driver to send a Control4 CommandMessage to the specified Control4 device driver. SendToDevice's return value is the value returned by the device driver's ExecuteCommand. The default value returned is nil. Return values are limited to string values.",
+        "detail": "1.6.1",
+        "parameters": [
+            "idDevice",
+            "strCommand",
+            "tParams",
+            "logCommand"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "SendToNetwork",
+        "insertText": "SendToNetwork(idBinding, nPort, strData)$0",
+        "documentation": "Function which sends an HTTP request to a network binding / port. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding",
+            "nPort",
+            "strData"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "SendToProxy",
+        "insertText": "SendToProxy(idBinding, strCommand, strParam)$0",
+        "documentation": "oror",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding",
+            "strCommand",
+            "strParam"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "SendToSerial",
+        "insertText": "SendToSerial(idBinding, strData)$0",
+        "documentation": "Simple function which sends the command out serial port on binding 1 and adds the \\r terminator to the end of the command being sent. This API should not be invoked during OnDriverInit.Binding ID of the serial interface to send on.",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding",
+            "strData"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "SendUIRequest",
+        "insertText": "SendUIRequest(int, string, tParams)$0",
+        "documentation": "Function that sends a request to another driver. It uses the proxy or protocol ID value of the driver as a means to target the driver where the request will be sent. The driver receiving the SendUIRequest must have an a UIRequest function configured which will contain the return values requested by the SendUIRequest call. ",
+        "detail": "2.9.0",
+        "parameters": [
+            "int",
+            "string",
+            "tParams"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "SendWOL",
+        "insertText": "SendWOL(macAddress, port)$0",
+        "documentation": "Function that enables a Lua driver to broadcast a Wake-On-Lan magic packet. macAdress - The MAC address of the device. This can be formatted in one of two ways: Using a colon character (:) to delineate the six numeric values. For example: 00:0a:95:9d:68:16 or using no delimiter: 000a959d6816port &nbsp;- Optional. Number identifying the port the WOL magic packet is broadcast. If omitted, the WOL default port 9 is used.",
+        "detail": "2.10.0",
+        "parameters": [
+            "macAddress",
+            "port"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "SendZigbeePacket",
+        "insertText": "SendZigbeePacket(strPacket, nProfileID, nClusterID, nGroupID, nSourceEndpoint, ndestinationEndpoint)$0",
+        "documentation": "The ability to Send and Receive data from ZigBee devices is supported in DriverWorks. This functionality supports both the current Control 4 (EmberNet) as well as ZigBee Pro 1.1 transports. This API should not be invoked during OnDriverInit.This function sends a raw Zigbee packet to a Zigbee Binding. ",
+        "detail": "1.6.1",
+        "parameters": [
+            "strPacket",
+            "nProfileID",
+            "nClusterID",
+            "nGroupID",
+            "nSourceEndpoint",
+            "ndestinationEndpoint"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ServerCloseClient",
+        "insertText": "ServerCloseClient(nHandle)$0",
+        "documentation": "Close a previously open Server Socket connection. This API should not be invoked during OnDriverInit.Server Socket handle received in OnServerConnectionStatusChanged.",
+        "detail": "1.6.1",
+        "parameters": [
+            "nHandle"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ServerSend",
+        "insertText": "ServerSend(nHandle, strData)$0",
+        "documentation": "This function is used to send data over an open Server Socket connection. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "nHandle",
+            "strData"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "SetBindingAddress",
+        "insertText": "SetBindingAddress(idBinding, &nbspstrIPaddress})$0",
+        "documentation": "Function that allows a TCP/IP device, with an existing connection, to use a different IP Address for connection purposes. This API can be used with both statically created connections (XML) as well as dynamically created ones. It is recommended that the NetConnect API is called after SetBindingAddress. This API should not be invoked during OnDriverInit. &nbsp;",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding",
+            "&nbsp;strIPaddress"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "SetBindingStatus",
+        "insertText": "SetBindingStatus(idBinding, &nbspstrStatus})$0",
+        "documentation": "Function that enables a Lua driver to explicitly set the \"connected\" state for a connection binding. This can particularly useful for connection bindings that aren't persistent (i.e., always connected), such as HTTP. Such non-persistent connections are marked as Offline (yellow) in the Network Tools windows in Composer. The C4:SetBindingStatus function enables a driver to manage the \"connected\" state of a connection binding, effectively overriding the default behavior provided by Director.strStatus – A string that specifies the status to set. This can be one of the following values:",
+        "detail": "2.10.0",
+        "parameters": [
+            "idBinding",
+            "&nbsp;strStatus"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "SetDeviceVariable",
+        "insertText": "SetDeviceVariable(DeviceID, variableID, strValue)$0",
+        "documentation": "Function called from a DriverWorks driver to set the value of another driver or device's variable. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "DeviceID",
+            "variableID",
+            "strValue"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "SetPropertyAttribs",
+        "insertText": "SetPropertyAttribs(string, int)$0",
+        "documentation": "Function to modify the visibility of properties as viewed from Composer. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "string",
+            "int"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "SetTimer",
+        "insertText": "SetTimer(nDelay, fCallback, bRepeat)$0",
+        "documentation": "Creates and starts timer. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "nDelay",
+            "fCallback",
+            "bRepeat"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "SetVariable",
+        "insertText": "SetVariable(strName, strValue)$0",
+        "documentation": "Function called from a DriverWorks driver to set the value of the current driver's variable. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "strName",
+            "strValue"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Songs",
+        "insertText": "Songs()$0",
+        "documentation": "",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "TCP",
+        "insertText": "TCP()$0",
+        "documentation": "The following is a sample of a Driver's Connection XML. It shows the XML entries required for a static TCP type connection:",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "TEADecrypt",
+        "insertText": "TEADecrypt(strBuf, strKey)$0",
+        "documentation": "Decrypt the input string with Corrected Block TEA (XXTEA) Algorithm, using the specified key. This API can be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "strBuf",
+            "strKey"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "TEAEncrypt",
+        "insertText": "TEAEncrypt(strBuf, strKey)$0",
+        "documentation": "Encrypt the input string with Corrected Block TEA (XXTEA) Algorithm, using the specified key. This API can be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "strBuf",
+            "strKey"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "tohex",
+        "insertText": "tohex(strHex)$0",
+        "documentation": "Function called from DriverWorks driver to convert a text string of hex into a string with hex values in it. &nbsp;Typically used when a protocol sends commands that are hex values. This API can be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "strHex"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "tonumber_loc",
+        "insertText": "tonumber_loc()$0",
+        "documentation": "The Lua tonumber() function included in the Lua Library is locale specific. This can cause issues where the Control4 system is set to a locale where the decimal separator is different than what is returned by the target device. &nbsp;For example, if the target device sends the Control4 driver a string of &nbsp;23.4 (Driver writers must ensure that there drivers will not fail in these circumstances. To assist with this, Control4 has provided a function: tonumber_loc(). This function is included in the driver templates&nbsp;beginning with OS release 2.8.0 and its use ensures this problem does not occur. &nbsp;Driver writers are advised to use tonumber_loc()&nbsp; in place of tonumber() in their code.",
+        "detail": "2.8.0",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Tools",
+        "insertText": "Tools()$0",
+        "documentation": "",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "Unbind",
+        "insertText": "Unbind(idDeviceConsumer, idBindingConsumer)$0",
+        "documentation": "This API provides the ability to unbind bound devices. The unbinding of the devices binding through this API is the same as manually unbinding two devices in ComposerPro's Connections area. Note the parameters passed in the API. Both have \"Consumer\" designation. These parameters represent the device that consumes data from the Provider device. To verify if a device driver is a Consumer, go to the driver's ",
+        "detail": "2.9.0",
+        "parameters": [
+            "idDeviceConsumer",
+            "idBindingConsumer"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "UnregisterAllDeviceEvents",
+        "insertText": "UnregisterAllDeviceEvents()$0",
+        "documentation": "This API unregisters all prior event registrations created by the ",
+        "detail": "2.9.0",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "UnregisterDeviceEvent",
+        "insertText": "UnregisterDeviceEvent(deviceId, eventId)$0",
+        "documentation": "This API unregisters prior event registration created by the ",
+        "detail": "2.9.0",
+        "parameters": [
+            "deviceId",
+            "eventId"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "UnregisterVariableListener",
+        "insertText": "UnregisterVariableListener()$0",
+        "documentation": "Function called from DriverWorks driver to remove a listener on a particular device's variable. Variable changes for the particular Device's Variable will no longer bereported. This API will not work if a variable has not been registered, added or does not exist.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "UpdateProperty",
+        "insertText": "UpdateProperty(strName, strValue)$0",
+        "documentation": "Function called from DriverWorks driver to update driver properties. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "strName",
+            "strValue"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "UpdatePropertyList",
+        "insertText": "UpdatePropertyList(strName, strValue)$0",
+        "documentation": "Function called from DriverWorks driver to update the properties (items) in a driver's list, as displayed in ComposerPro's Advanced properties page. This API should not be invoked during OnDriverInit.",
+        "detail": "2.7.0",
+        "parameters": [
+            "strName",
+            "strValue"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "urlCancel",
+        "insertText": "urlCancel(ticketId)$0",
+        "documentation": "Function to cancel an ongoing transfer. Note that if a transfer is canceled, neither the ReceivedAsync() entry point nor the callback function specified in the C4:url* call will be called.&nbsp; Also, the ticketId is only valid from the point the C4:url* function is called until either the ReceivedAsync() entry point or the callback function was called. A call to C4:urlCancel() will also invalidate that ticketed. This API should not be invoked during OnDriverInit.",
+        "detail": "2.7.0",
+        "parameters": [
+            "ticketId"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "urlCancelAll",
+        "insertText": "urlCancelAll()$0",
+        "documentation": "This method cancels all ongoing transfers and returns an array with the ticket ids of the transfers that were canceled. This API should not be invoked during OnDriverInit.",
+        "detail": "2.8.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "urlClearCookies",
+        "insertText": "urlClearCookies()$0",
+        "documentation": "Function to clear all cookies from a driver's cookie jar.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "urlClearSessionCookies",
+        "insertText": "urlClearSessionCookies()$0",
+        "documentation": "Function to clear all session cookies from a driver's cookie jar.Number The number of session cookies (cookies with no expiration time) that were removed.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "urlCustom",
+        "insertText": "urlCustom(url, method, data, headers, bFailOnHttpError, func, tParams)$0",
+        "documentation": "Function which allows specifying the HTTP method. This function is identical to C4:urlPost(), except that it has one additional argument for the method name rather than doing a POST request. This command is not allowed to be initialized through OnDriverInit. Including it can result in Virtual Director instability. Best practice is to initialize it through the OnDriverLatInit API. This API should not be invoked during OnDriverInit.failOnHttpError (boolean) - True/False. Defaults to True. ",
+        "detail": "1.6.1",
+        "parameters": [
+            "url",
+            "method",
+            "data",
+            "headers",
+            "bFailOnHttpError",
+            "func",
+            "tParams"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "urlDelete",
+        "insertText": "urlDelete(sURL, sHeader, tParams)$0",
+        "documentation": "Function to delete data on a server and receive a response back. URL (str) - URL for server.",
+        "detail": "1.6.1",
+        "parameters": [
+            "sURL",
+            "sHeader",
+            "tParams"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "urlGet",
+        "insertText": "urlGet(url, tHeaders, failOnHttpError, callback, tParams)$0",
+        "documentation": "Lua call which will immediately return a data ticket and then asynchronously returns the data associated with the ticket. urlGet is used to obtain data (via Lua) from a web service. This command is not allowed to be initialized through OnDriverInit. Including it can result in Virtual Director instability. Best practice is to initialize it through the OnDriverLateInit API.str – string representing the URL.tHeaders - optional parameter (table of headers) that adds the ability to specify headers in a HTTP GET methods of lua_gen.",
+        "detail": "1.6.1",
+        "parameters": [
+            "url",
+            "tHeaders",
+            "failOnHttpError",
+            "callback",
+            "tParams"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "urlGetCookies",
+        "insertText": "urlGetCookies(domain)$0",
+        "documentation": "Function to retrieve cookies from the driver's cookie jar filtered by a specific domain",
+        "detail": "1.6.1",
+        "parameters": [
+            "domain"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "urlGetCookiesForDomain",
+        "insertText": "urlGetCookiesForDomain(domain)$0",
+        "documentation": "Function to retrieve cookies from the driver's cookie jar filtered by a specific domain.",
+        "detail": "1.6.1",
+        "parameters": [
+            "domain"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "urlGetOption",
+        "insertText": "urlGetOption(option)$0",
+        "documentation": "This function returns the value of the option specified in the option argument. Option can currently be one of the following parameters defined below. This API should not be invoked during OnDriverInit.",
+        "detail": "2.8.1",
+        "parameters": [
+            "option"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "urlGetTickets",
+        "insertText": "urlGetTickets()$0",
+        "documentation": "This method returns an array with the ticket ids of all ongoing transfers. ",
+        "detail": "2.8.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "urlPost",
+        "insertText": "urlPost(string, string, string, tParams)$0",
+        "documentation": "orLua call which immediately returns a data ticket, and then asynchronously returns the data associated with the ticket. urlPost allows for the posting of data (via Lua) to a webservice. This command is not allowed to be initialized through OnDriverInit. Including it can result in Virtual Director instability. Best practice is to initialize it through the OnDriverLateInit API. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "string",
+            "string",
+            "string",
+            "tParams"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "urlPut",
+        "insertText": "urlPut(sURL, sData, string, tParams)$0",
+        "documentation": "orFunction to push data to a server and receive a response back. This command is not allowed to be initialized through OnDriverInit. Including it can result in Virtual Director instability. Best practice is to initialize it through the OnDriverLateInit API. This API should not be invoked during OnDriverInit.URL (str) - URL for server.",
+        "detail": "1.6.1",
+        "parameters": [
+            "sURL",
+            "sData",
+            "string",
+            "tParams"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "urlSetOption",
+        "insertText": "urlSetOption(option)$0",
+        "documentation": "This function changes the option specified in the option argument, to the value provided. Option can currently be one of the following parameters defined below. This API should not be invoked during OnDriverInit.max_host_connections (number): The number of concurrent transfers allowed per host.&nbsp;This must be a value in the range of 1..5.&nbsp; If the value is being changed to anything other than 1, the \"pipelining\" option will automatically get disabled. See Note for more details. pipelining &nbsp;(boolean): Sets whether HTTP pipelining should be enabled.&nbsp; If this value is being changed to true, the \"max_host_connections\" option will automatically be set to 1. See Note for more details.Changing this option will not have any effect until there are no active transfers running. Also, it will not apply to new transfers created until then.&nbsp;Once all transfers are completed, this setting will apply to any transfers created from that point on.&nbsp;You can use the C4:urlCancelAll() method to cancel all transfers prior to setting this option, or you can use the C4:urlGetTickets() method to determine whether any transfers are currently pending.",
+        "detail": "2.8.1",
+        "parameters": [
+            "option"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "urlSetProxy",
+        "insertText": "urlSetProxy()$0",
+        "documentation": "This function is to set server related security information that may be needed in future related url calls. failOnHttpError (boolean) - True/False. Defaults to True. ",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "urlSetTimeout",
+        "insertText": "urlSetTimeout()$0",
+        "documentation": "This function is to set a maximum time value (in seconds) for a transfer operation to take place before a server time out occurs. The value passed in this API is dependent on driver/Director performance. For example, setting this value too low could result in a timeout occurring too quickly - resulting in messages missed. Setting it too high could result in lag time and poor user experience. Control4 recommends an initial setting of 20 seconds and adjusting as needed. Starting with the release of OS 2.9.0, urlSetTimeout is optional as a driver no longer has to make this call explicitly. As of 2.9.0, Control4 imposes a 300 second overall timeout to all web requests by default.&nbsp; A driver may however override this and call C4:urlSetTimeout() to revert back to the behavior described above.&nbsp;",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "XmlEscapeString",
+        "insertText": "XmlEscapeString(strRawInput)$0",
+        "documentation": "\"Escapes\" the passed in string rendering any XML characters (only &amp;, &lt;, and &gt;) in the string as characters that are valid in an XML value. This API should not be invoked during OnDriverInit.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; strEscaped - The passed in string, with all XML characters properly escaped.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; strRawInput - Raw input string, with possibly invalid characters for an XML value.",
+        "detail": "1.6.1",
+        "parameters": [
+            "strRawInput"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    }
+]

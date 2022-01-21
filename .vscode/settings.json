@@ -1,0 +1,19 @@
+{
+    "files.exclude": {
+        "**/out": true,
+        "**/node_modules": true
+    },
+    "search.exclude": {
+        "**/out": true,
+        "**/node_modules": true
+    },
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "js/ts.implicitProjectConfig.experimentalDecorators": true,
+    "tslint.enable": true,
+    "typescript.tsc.autoDetect": "off",
+    "typescript.preferences.quoteStyle": "single",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    }
+}

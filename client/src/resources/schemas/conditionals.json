@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JSON schema for Control4 actions",
+  "definitions": {
+    "conditional": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "LIST",
+            "STRING",
+            "NUMBER",
+            "BOOLEAN",
+            "SIMPLE",
+            "ROOM",
+            "DEVICE"
+          ]
+        },
+        "conditional_statement" :{
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "command"
+      ]
+    }
+  },
+  "type": "array",
+  "minItems": 0,
+  "uniqueItems": true,
+  "items": {
+    "allOf": [
+      {
+        "$ref": "#/definitions/conditonal"
+      }
+    ]
+  }
+}

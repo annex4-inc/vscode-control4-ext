@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JSON schema for Control4 proxies",
+  "type": "array",
+  "minItems": 0,
+  "uniqueItems": true,
+  "items": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer",
+        "minimum": 5000,
+        "maximum": 5999,
+        "default": 5001
+      },
+      "name": {
+        "type": "string"
+      },
+      "proxy": {
+        "type": "string"
+      },
+      "small_image": {
+        "type": "string"
+      },
+      "large_image": {
+        "type": "string"
+      },
+      "image_source": {
+        "type": "string",
+        "enum": [
+          "c4z",
+          "url"
+        ],
+        "default": "c4z"
+      }
+    },
+    "required": [
+      "name",
+      "proxy"
+    ]
+  }
+}

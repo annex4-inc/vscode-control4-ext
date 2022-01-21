@@ -1,0 +1,24 @@
+{
+	"name": "vscode-control4-ext-server",
+	"description": "Language server for Control4 Driverworks.",
+	"version": "1.0.0",
+	"author": "annex4 Inc.",
+	"license": "MIT",
+	"engines": {
+		"node": "*"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/annex4/vscode-control4-ext"
+	},
+	"dependencies": {
+		"fs-extra": "^10.0.0",
+		"vscode-languageserver": "^7.0.0",
+		"vscode-languageserver-textdocument": "^1.0.1"
+	},
+	"scripts": {},
+	"devDependencies": {
+		"@types/fs-extra": "^9.0.11",
+		"vscode-uri": "^3.0.2"
+	}
+}

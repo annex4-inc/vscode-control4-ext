@@ -1,0 +1,535 @@
+[
+    {
+        "label": "Attach",
+        "insertText": "Attach()$0",
+        "documentation": "Function called by Director when remote debugging of the DriverWorks script has started. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "ExecuteCommand",
+        "insertText": "ExecuteCommand(strCommand, tParams)$0",
+        "documentation": "Function called by Director when a command is received for this DriverWorks driver. This includes commands created in Composer programming. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "strCommand",
+            "tParams"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "ListEvent",
+        "insertText": "ListEvent(strEvent, Param1, Param2)$0",
+        "documentation": "Function called by Director when an event happens on which a List Navigator client should operate. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "strEvent",
+            "Param1",
+            "Param2"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "ListMIBReceived",
+        "insertText": "ListMIBReceived(strCommand, nCount, tParams)$0",
+        "documentation": "Function called by Director when List items or List MIB Commands are received. &nbsp;List MIBs are how Director communicates lists, end, and updated items. ",
+        "detail": "1.6.1",
+        "parameters": [
+            "strCommand",
+            "nCount",
+            "tParams"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "ListNewControl",
+        "insertText": "ListNewControl(strContainer, strNavID, idDevice, tParams)$0",
+        "documentation": "Function called by Director when you have selected a ‘Control’. Controls are pages used on a List Navigator to control a specific item, like a light level or the volume of an audio zone. ",
+        "detail": "1.6.1",
+        "parameters": [
+            "strContainer",
+            "strNavID",
+            "idDevice",
+            "tParams"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "ListNewList",
+        "insertText": "ListNewList(nListID, nItemCount, strName, nIndex, strContainer, strCategory, strNavID)$0",
+        "documentation": "Function called by Director when a new List Navigator List has been requested by the DriverWorks driver and successfully opened by Director. It is called in response to: This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "nListID",
+            "nItemCount",
+            "strName",
+            "nIndex",
+            "strContainer",
+            "strCategory",
+            "strNavID"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnAccept",
+        "insertText": "OnAccept()$0",
+        "documentation": "OnAccept(func)This method sets a callback method that will be called whenever a new client connection has been accepted by the TCP server.This method returns a reference to itself.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnBindingChanged",
+        "insertText": "OnBindingChanged(idBinding, strClass, bIsBound)$0",
+        "documentation": "Function called by Director when a binding changes state (bound or unbound).Class of binding that has changed. A single binding can have multiple classes: COMPONENT, STEREO, etc. This indicates which has been bound or unbound.",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding",
+            "strClass",
+            "bIsBound"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnBindingChanged",
+        "insertText": "OnBindingChanged(idBinding, strClass, bIsBound)$0",
+        "documentation": "Function called by Director when a binding changes state (bound or unbound).Class of binding that has changed. A single binding can have multiple classes: COMPONENT, STEREO, etc. This indicates which has been bound or unbound.",
+        "detail": "2.9.0",
+        "parameters": [
+            "idBinding",
+            "strClass",
+            "bIsBound"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnConnect",
+        "insertText": "OnConnect()$0",
+        "documentation": "OnConnect(func)This method sets a callback method that will be called once the endpoint has been chosen and the connection iss successfully established.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnConnectionStatusChanged",
+        "insertText": "OnConnectionStatusChanged(idBinding, nPort, strStatus)$0",
+        "documentation": "Function based on this return from the system used by weatherbug driver to process the communication.",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding",
+            "nPort",
+            "strStatus"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnDeviceEvent",
+        "insertText": "OnDeviceEvent()$0",
+        "documentation": "OnDeviceEvent(firingDeviceId, eventId)This is a callback function that is sent to a driver when an event is fired. The function delivers the Device ID for the device that fired the event and the Event's ID value. ",
+        "detail": "2.9.0",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnDisconnect",
+        "insertText": "OnDisconnect()$0",
+        "documentation": "OnDisconnect(func)This method sets a callback method that will be called when the client gets disconnected.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnDriverDestroyed",
+        "insertText": "OnDriverDestroyed()$0",
+        "documentation": "Called when a driver is deleted from a project, updated within a project or Director is shut down. All of the driver's timers will be killed within the OnDriverDestroyed function.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnDriverInit",
+        "insertText": "OnDriverInit()$0",
+        "documentation": "Invoked by lua_gen when a driver is loaded. This API is provided for the driver developer to contain all of the driver objects that will require initialization.This function is available in OS releases 2.0 and later.1.2.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnDriverLateInit",
+        "insertText": "OnDriverLateInit()$0",
+        "documentation": "Function applicable to post 2.5.0 OS systems that serves as a callback into a project after the project is loaded. If any initialization has to occur after the project is loaded, it must occur in OndriverLateInit. end",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnDriverRemovedFromProject",
+        "insertText": "OnDriverRemovedFromProject()$0",
+        "documentation": "Called whenever a driver is removed or deleted from a project. This API is useful if a driver has any cleanup requirements or needs to send any final commands to a device prior to being removed or deleted from a project. If so, those should be implemented within this function.This API was added to the SDK in OS release 2.10.0.",
+        "detail": "2.10.0",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnEndDebugSession",
+        "insertText": "OnEndDebugSession()$0",
+        "documentation": "Function called by Director when remote debugging of the DriverWorks script has ended.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnError",
+        "insertText": "OnError()$0",
+        "documentation": "OnError(func)This method sets a callback method that will be called when an error happens during an asynchronous operation.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnError",
+        "insertText": "OnError()$0",
+        "documentation": "OnError(func)This method sets a callback method that will be called when an error occurs during an asynchronous operation.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnListen",
+        "insertText": "OnListen()$0",
+        "documentation": "OnListen(func)This method sets a callback method that will be called once the TCP server starts listening.&nbsp; This callback is called once the host/service has been resolved and the endpoints has been chosen.&nbsp; It is optional to implement this callback method.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnNetworkBindingChanged",
+        "insertText": "OnNetworkBindingChanged(idBinding, bIsBound)$0",
+        "documentation": "Function called by Director when a network connection has been addressed (‘identified’ on Network Connections Page) or unaddressed (‘disconnect’).",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding",
+            "bIsBound"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnPropertyChanged",
+        "insertText": "OnPropertyChanged(strName)$0",
+        "documentation": "Function called by Director when a property changes value.Name of property that has changed.",
+        "detail": "1.6.1",
+        "parameters": [
+            "strName"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnRead",
+        "insertText": "OnRead()$0",
+        "documentation": "OnRead(func)This method sets a callback method that will be called once data has been read on the socket.&nbsp; If you would like to keep reading more data, you should call one of the Read*() methods prior to returning from this callback function.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnReflashLockGranted",
+        "insertText": "OnReflashLockGranted()$0",
+        "documentation": "Function called by Director when a Zigbee device grants communication access. Ensures that the driver is the only one currently granted permission to update the device.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnReflashLockRevoked",
+        "insertText": "OnReflashLockRevoked()$0",
+        "documentation": "Function called by Director when a driver loses permission to perform a device update.",
+        "detail": "1.6.1",
+        "parameters": [],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnResolve",
+        "insertText": "OnResolve()$0",
+        "documentation": "OnResolve(func)This method sets a callback method that is called once the host/service has been resolved.&nbsp; If implemented, it allows you to choose a particular endpoint to connect to, or to cancel the connection request.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnResolve",
+        "insertText": "OnResolve()$0",
+        "documentation": "OnResolve(func)This method sets a callback method that will be called once the host/service has been resolved.&nbsp; If implemented, it allows you to choose a particular endpoint to listen on, or to cancel the listen request.endpoints is an array of endpoint tables, describing all endpoints that the host/service could be resolved to.&nbsp; Each entry has the following fields:",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnServerConnectionStatusChanged",
+        "insertText": "OnServerConnectionStatusChanged(nHandle, nPort, strStatus)$0",
+        "documentation": "This function gets called when Server Socket connection status has changed.instance of a connection on the port, or to close this connection. Calls to ",
+        "detail": "1.6.1",
+        "parameters": [
+            "nHandle",
+            "nPort",
+            "strStatus"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnServerDataIn",
+        "insertText": "OnServerDataIn(nHandle, strData, strclientAddress, strPort)$0",
+        "documentation": "This function gets called when data is coming in on an open Server Socket.Server Socket handle received in OnServerConnectionStatusChanged. &nbsp;May be used to reply to or disconnect this same Server Socket.",
+        "detail": "1.6.1",
+        "parameters": [
+            "nHandle",
+            "strData",
+            "strclientAddress",
+            "strPort"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnTimerExpired",
+        "insertText": "OnTimerExpired(idTimer)$0",
+        "documentation": "Function called by Director when the specified Control4 timer expires.Timer ID of expired timer.This function is called by Director when a timer expires. Based on the idTimer passed in, you program what you want to do. &nbsp;This example is used for handling several timers. It can be found in: [DriverWorks_232_sample_receiver_Integra_dtr-4.5.c4i] ",
+        "detail": "1.6.1",
+        "parameters": [
+            "idTimer"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnVariableChanged",
+        "insertText": "OnVariableChanged(strName)$0",
+        "documentation": "Function called by Director when one of this driver’s variables’ values is changed.OnVariableChanged is NOT called on a driver when it changes its own variable’s value. The value of the variable that has changed can be found with: Variables[strName].",
+        "detail": "1.6.1",
+        "parameters": [
+            "strName"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnWatchedVariableChanged",
+        "insertText": "OnWatchedVariableChanged(idDevice, idVariable, strValue)$0",
+        "documentation": "Function called by Director when a Control4 variable changes value.",
+        "detail": "1.6.1",
+        "parameters": [
+            "idDevice",
+            "idVariable",
+            "strValue"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnZigbeeOnlineStatusChanged",
+        "insertText": "OnZigbeeOnlineStatusChanged(strStatus, strVersion, strSkew)$0",
+        "documentation": "Parameters",
+        "detail": "1.6.1",
+        "parameters": [
+            "strStatus",
+            "strVersion",
+            "strSkew"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnZigbeePacketFailed",
+        "insertText": "OnZigbeePacketFailed(strPacket, nProfileID, nClusterID, nGroupID, nSourceEndpoint, ndestinationEndpoint)$0",
+        "documentation": "Return function upon the unsuccessful delivery of a data packet.",
+        "detail": "1.6.1",
+        "parameters": [
+            "strPacket",
+            "nProfileID",
+            "nClusterID",
+            "nGroupID",
+            "nSourceEndpoint",
+            "ndestinationEndpoint"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnZigbeePacketIn",
+        "insertText": "OnZigbeePacketIn()$0",
+        "documentation": "Receives an unsolicited zigbee packet from the device or a response to a command that was sent.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "OnZigbeePacketSuccess",
+        "insertText": "OnZigbeePacketSuccess(strPacket, nProfileID, nClusterID, nGroupID, nSourceEndpoint, ndestinationEndpoint)$0",
+        "documentation": "Return function upon the successful delivery of a data packet",
+        "detail": "1.6.1",
+        "parameters": [
+            "strPacket",
+            "nProfileID",
+            "nClusterID",
+            "nGroupID",
+            "nSourceEndpoint",
+            "ndestinationEndpoint"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "ReceivedFromProxy",
+        "insertText": "ReceivedFromProxy(idBinding, strCommand, tParams)$0",
+        "documentation": "Function called by Director when a proxy bound to the specified binding sends a BindMessage to the DriverWorks driver. Binding ID of the proxy that sent a BindMessage to the DriverWorks driver.",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding",
+            "strCommand",
+            "tParams"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 1
+    },
+    {
+        "label": "ReceivedAsync",
+        "insertText": "ReceivedAsync()$0",
+        "documentation": "This function is used in conjunction with urlGet and urlPost. It handles the data contained in the data ticket. As soon as data is returned from getUrl, Director will call this in the Lua code. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": null,
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ReceivedFromNetwork",
+        "insertText": "ReceivedFromNetwork(idBinding, nPort, strData)$0",
+        "documentation": "Function which combines the data received from the network into a variable for processing when the connection status changes. This API should not be invoked during OnDriverInit.",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding",
+            "nPort",
+            "strData"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ReceivedFromSerial",
+        "insertText": "ReceivedFromSerial(idBinding, strData)$0",
+        "documentation": "Function which dumps the data received from serial (hex format) for inspection via print. &nbsp;It then evaluates the response for specific delimiters and extracts the necessary components which are then used to do something. ",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding",
+            "strData"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+        "label": "ReceivedFromSerial",
+        "insertText": "ReceivedFromSerial(idBinding, strData)$0",
+        "documentation": "Function which dumps the data received from serial (hex format) for inspection via print. &nbsp;It then evaluates the response for specific delimiters and extracts the necessary components which are then used to do something. ",
+        "detail": "1.6.1",
+        "parameters": [
+            "idBinding",
+            "strData"
+        ],
+        "deprecated": false,
+        "kind": 2,
+        "type": 2
+    },
+    {
+      "label": "GetConditionals",
+      "insertText": "GetConditionals()$0",
+      "documentation": "Function that returns a table of information containing elements of conditionals that will be created dynamically in ComposerPro.",
+      "detail": "2.6.0",
+      "parameters": [],
+      "deprecated": false,
+      "kind": 2,
+      "type": 2
+  },
+  {
+    "label": "TestCondition",
+    "insertText": "TestCondition(name, tParams)$0",
+    "documentation": "Function that returns a table of information containing elements of conditionals that will be created dynamically in ComposerPro.",
+    "detail": "2.6.0",
+    "parameters": [
+      "name",
+      "tParams"
+    ],
+    "deprecated": false,
+    "kind": 2,
+    "type": 2
+}
+]

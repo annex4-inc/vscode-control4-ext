@@ -1,0 +1,112 @@
+import * as fse from 'fs-extra';
+import { URI } from 'vscode-uri';
+import * as path from 'path';
+
+import { CompletionItemKind } from 'vscode-languageserver';
+import { CompletionItem } from 'vscode-languageserver-types'
+
+let Methods : any = {
+  SendToProxy: function(parameterIndex: number) : Array<CompletionItem> {
+    let items : Array<CompletionItem> = [];
+
+    if (parameterIndex == 0) {
+      Resources.proxies.forEach((p: any) => {
+        items.push({
+          label: p.id.toString(),
+          kind: CompletionItemKind.Text,
+          data: p.id,
+          documentation: p.name,
+          detail: p.proxy
+        })
+      })
+    }
+
+    return items;
+  },
+  UpdateProperty: function(parameterIndex: number) : Array<CompletionItem> {
+    let items : Array<CompletionItem> = [];
+
+    if (parameterIndex == 0) {
+      Resources.properties.forEach((p: any) => {
+        items.push({
+          label: `"${p.name}"`,
+          documentation: `Control4 Property "${p.name}" - ${p.type}`,
+          kind: CompletionItemKind.Text,
+          data: p.name,
+          detail: p.type,
+        })
+      })
+    }
+
+    return items;
+  },
+  FireEventByID: function(parameterIndex: number): Array<CompletionItem> {
+    let items : Array<CompletionItem> = [];
+
+    if (parameterIndex == 0) {
+      Resources.events.forEach((p: any) => {
+        items.push({
+          label: `${p.id}`,
+          documentation: p.description,
+          kind: CompletionItemKind.Text,
+          data: p.name,
+          detail: p.name,
+        })
+      })
+    }
+
+    return items;
+  }
+}
+
+let Suggestions = {
+  Get: function(method : string, parameterIndex: number) : Array<CompletionItem> {
+    let items = [];
+
+    if (Methods[method]) {
+      items.push(...Methods[method](parameterIndex));
+    }
+
+    return items;
+  }
+}
+
+let Resources: any = {
+  proxies: [],
+  properties: [],
+  actions: [],
+  connections: [],
+  events: [],
+  commands: []
+}
+
+let Components = {
+  Set: function(uri: string) {
+    let path = URI.parse(uri).fsPath;
+
+    let results  = new RegExp(/\\([a-zA-Z]*?)\.c4c/, "i").exec(path);
+
+    if (results && results[1]) {
+      let resource = results[1];
+
+      fse.readFile(path).then(result => {
+        let j = JSON.parse(result.toString());
+        Resources[resource] = j
+      })
+    }
+  },
+  Initialize: function(uri: string) {
+    Object.keys(Resources).forEach(r => {
+      fse.readFile(path.join(URI.parse(uri).fsPath, "components", `${r}.c4c`)).then(result => {
+        Resources[r] = JSON.parse(result.toString());
+      }).catch(err => {
+        console.log(err);
+      })
+    })
+  }
+}
+
+export {
+  Suggestions,
+  Components
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JSON schema for Control4 capabilities",
+  "definitions": {
+    "capability": {
+      "type": "object",
+      "properties": {
+        "has_discrete_volume_control": {"type": "boolean"},
+        "has_up_down_volume_control": { "type": "boolean" },
+        "has_discrete_input_select": { "type": "boolean" },
+        "has_toad_input_select": { "type": "boolean" },
+        "has_discrete_surround_mode_select": { "type": "boolean" },
+        "has_toad_surround_mode_select": { "type": "boolean" },
+        "has_tune_up_down": { "type": "boolean" },
+        "has_search_up_down": { "type": "boolean" },
+        "has_discrete_preset": { "type": "boolean" },
+        "has_preset_up_down": { "type": "boolean" },
+        "preset_count": { "type": "boolean" },
+        "can_upclass": { "type": "boolean" },
+        "can_downclass": { "type": "boolean" },
+        "video_provider_count": { "type": "boolean" },
+        "video_consumer_count": { "type": "boolean" },
+        "audio_provider_count": { "type": "boolean" },
+        "audio_consumer_count": { "type": "boolean" },
+        "has_discrete_mute_control": { "type": "boolean" },
+        "has_toggle_mute_control": { "type": "boolean" },
+        "has_discrete_channel_select": { "type": "boolean" },
+        "has_channel_up_down": { "type": "boolean" },
+        "has_feedback": { "type": "boolean" },
+        "serialdelay": { "type": "integer" },
+        "serialsettings": { "type" : "string", "default": "8 none 1 none 232" },
+        "modes": { "type" : "string", "default": "SNAPSHOT,MJPEG,H264,H264I" },
+        "has_pan": {"type": "boolean"},
+        "has_pan_scan": {"type": "boolean"},
+        "has_tilt": {"type": "boolean"},
+        "has_tilt_scan": {"type": "boolean"},
+        "has_home": {"type": "boolean"},
+        "has_zoom": {"type": "boolean"},
+        "number_presets": {"type": "number", "default": 0},
+        "default_http_port": {"type": "number", "default": 80},
+        "default_rtsp_port": {"type": "number", "default": 554},
+        "default_authentication_required": {"type": "boolean"},
+        "default_authentication_type": { "type" : "string", "default": "BASIC" },
+        "default_username": { "type" : "string", "default": "" },
+        "default_password": { "type" : "string", "default": "" },
+        "address_readonly": {"type": "boolean"},
+        "http_port_readonly": {"type": "boolean"},
+        "show_test_url": {"type": "boolean"},
+        "use_http_for_h264": {"type": "boolean"},
+        "has_camera": {"type": "boolean"},
+        "has_display": {"type": "boolean"},
+        "has_buttons": {"type": "boolean"},
+        "can_set_aec": {"type": "boolean"},
+        "is_doorstation": {"type": "boolean"},
+        "audio_codecs_supported": { "type" : "string", "default": "" },
+        "vidio_codecs_supported": { "type" : "string", "default": "" }
+      }
+    }
+  },
+  "type": "object",
+  "minItems": 0,
+  "uniqueItems": true,
+  "items": {
+    "allOf": [
+      {
+        "$ref": "#/definitions/capability"
+      }
+    ]
+  }
+}

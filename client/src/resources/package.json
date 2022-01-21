@@ -1,0 +1,35 @@
+{
+  "name": "my_package",
+  "description": "",
+  "version": "0.0.1",
+  "main": "src/driver.lua",
+  "scripts": {
+    "test": "wsl busted tests/test.lua"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/[GIT_USER]/my_package.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/[GIT_USER]/my_package/issues"
+  },
+  "homepage": "https://github.com/[GIT_USER]/my_package",
+  "control4": {
+    "name": "[[NAME]]",
+    "model": "[[MODEL]]",
+    "manufacturer": "[[MANUFACTURER]]",
+    "created": "[[CREATED]]",
+    "icon": {
+      "small": "devices_sm/c4.gif",
+      "large": "devices_lg/c4.gif"
+    },
+    "control": "lua_gen",
+    "controlmethod": "ip"
+  },
+  "devDependencies": {
+    "@annex4/test.control4": "^1.0.0"
+  }
+}

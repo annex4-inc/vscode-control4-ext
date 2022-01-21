@@ -1,0 +1,700 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JSON schema for Control4 UI section",
+  "definitions": {
+    "actionFilter": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "enum": ["Change", "Disable"]
+        },
+        "noSelection": {
+          "type": "string",
+          "description": "If included then this filter is active when there isn't any selected items. Note: If the type is 'Disable' and 'NoSelection' is present then the action will be disabled if nothing is selected."
+        },
+        "property": {
+          "type": "string",
+          "description": "The name of the property this filter acts on."
+        },
+        "iconId": {
+          "type": "string",
+          "description": "The icon to display."
+        },
+        "name": {
+          "type": "string",
+          "description": "The displayed action name to change to."
+        }
+      }
+    },
+    "trait": {
+      "type": "object",
+      "properties": {
+        "property": {
+          "type": "string"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "list": {
+      "type": "object",
+      "properties": {
+        "defaultAction": {
+          "type": "string",
+          "description": "The default action that will be executed when an item is selected. This only references an action that is defined in the Actions section. This is the last (bottom) action that will be called if no other actions are defined and if no ItemDefaultAction is defined or provided for the selected list item."
+        },
+        "itemDefaultActionProperty": {
+          "type": "string",
+          "description": "Maps a data property to an action name that will override the default action. If the property does not exist on a list item then the DefaultAction is still applied if there is one."
+        },
+        "actionIds": {
+          "type": "array",
+          "description": "Defines the list of actions shown on the screen.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "itemActionIdsProperty": {
+          "type": "array",
+          "description": "The name of an items property that contains a list of actions that will override the ActionIds defined actions.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "titleProperty": {
+          "type": "string",
+          "description": "Maps the title of a list item to a data item property"
+        },
+        "subTitleProperty": {
+          "type": "string",
+          "description": "Optional, only applies if item needs sub text. Maps the sub title of a list item to a data item property."
+        },
+        "lengthProperty": {
+          "type": "string",
+          "description": "Optional, only applies if the driver knows the length of the item. Recommended format hh:mm:ss."
+        },
+        "isLink": {
+          "$ref": "#/definitions/trait",
+          "description": "Optional, only applies if the list shows links that go to another screen. If this element is present and the property of a list item matches one of the valid values, the link will be shown."
+        },
+        "isHeader": {
+          "$ref": "#/definitions/trait",
+          "description": "Optional, If this trait is true then the item represents a list header. The header will not be clickable or display the isLink chevron."
+        },
+        "willTranslate": {
+          "$ref": "#/definitions/trait",
+          "description": "Optional, If this trait is true the UIs will try to translate text fields in the list."
+        },
+        "imageProperty": {
+          "type": "string"
+        }
+      }
+    },
+    "grid": {
+      "type": "object",
+      "properties": {
+        "defaultAction": {
+          "type": "string",
+          "description": "The default action that will be executed when an item is selected. This only references an action that is defined in the Actions section. This is the last (bottom) action that will be called if no other actions are defined and if no ItemDefaultAction is defined or provided for the selected list item."
+        },
+        "itemDefaultActionProperty": {
+          "type": "string",
+          "description": "Maps a data property to an action name that will override the default action. If the property does not exist on a list item then the DefaultAction is still applied if there is one."
+        },
+        "actionIds": {
+          "type": "array",
+          "description": "Defines the list of actions shown on the screen.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "itemActionIdsProperty": {
+          "type": "array",
+          "description": "The name of an items property that contains a list of actions that will override the ActionIds defined actions.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "titleProperty": {
+          "type": "string",
+          "description": "Maps the title of a list item to a data item property"
+        },
+        "subTitleProperty": {
+          "type": "string",
+          "description": "Optional, only applies if item needs sub text. Maps the sub title of a list item to a data item property."
+        },
+        "lengthProperty": {
+          "type": "string",
+          "description": "Optional, only applies if the driver knows the length of the item. Recommended format hh:mm:ss."
+        },
+        "isLink": {
+          "$ref": "#/definitions/trait",
+          "description": "Optional, only applies if the list shows links that go to another screen. If this element is present and the property of a list item matches one of the valid values, the link will be shown."
+        },
+        "isHeader": {
+          "$ref": "#/definitions/trait",
+          "description": "Optional, If this trait is true then the item represents a list header. The header will not be clickable or display the isLink chevron."
+        },
+        "willTranslate": {
+          "$ref": "#/definitions/trait",
+          "description": "Optional, If this trait is true the UIs will try to translate text fields in the list."
+        },
+        "imageProperty": {
+          "type": "string"
+        }
+      }
+    },
+    "settingBase": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "OnOff",
+            "Button",
+            "Text",
+            "TextField",
+            "NumericSpinner",
+            "HeaderTxt",
+            "ComboBox",
+            "CheckBox"
+          ]
+        }
+      },
+      "required": ["type"],
+      "allOf": [{
+        "if": {
+          "properties": {
+            "type": {
+              "enum": [
+                "OnOff",
+                "Text",
+                "TextField",
+                "NumericSpinner",
+                "ComboBox",
+                "CheckBox"
+              ]
+            }
+          }
+        },
+        "then": {
+          "required": ["property"]
+        }
+      }]
+    },
+    "settingHeader": {
+      "additionalProperties": false,
+      "type": "object",
+      "description": "The header text",
+      "properties": {
+        "type": { "const": "HeaderTxt" },
+        "value": {
+          "type": "string"
+        }
+      },
+      "allOf": [{"$ref": "#/definitions/settingBase"}]
+    },
+    "settingButton": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "type": { "const": "Button" },
+        "name": {
+          "type": "string"
+        },
+        "command": {
+          "$ref": "#/definitions/command"
+        }
+      },
+      "allOf": [{"$ref": "#/definitions/settingBase"}]
+    },
+    "settingText": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "type": { "const": "Text" },
+        "value": {
+          "type": "string"
+        },
+        "property": {
+          "type": "string"
+        }
+      },
+      "allOf": [{"$ref": "#/definitions/settingBase"}]
+    },
+    "settingTextField": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "type": { "const": "Text" },
+        "value": {
+          "type": "string"
+        },
+        "property": {
+          "type": "string"
+        },
+        "isPassword": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "allOf": [{"$ref": "#/definitions/settingBase"}]
+    },
+    "settingOnOff": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "type": { "const": "OnOff" },
+        "property": {
+          "type": "string"
+        }
+      },
+      "allOf": [{"$ref": "#/definitions/settingBase"}]
+    },
+    "settingCheckbox": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "type": { "const": "CheckBox" },
+        "property": {
+          "type": "string"
+        }
+      },
+      "allOf": [{"$ref": "#/definitions/settingBase"}]
+    },
+    "settingCombobox": {
+      "additionalProperties": false,
+      "type": "object",
+      "description": "Displays a selectable list of items. Each item must have a unique id and a user displayable value. If the items value is in the localized string list it will be translated.",
+      "properties": {
+        "type": { "const": "ComboBox" },
+        "property": {
+          "type": "string"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "allOf": [{"$ref": "#/definitions/settingBase"}]
+    },
+    "settingNumericSpinner": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "type": { "const": "NumericSpinner" },
+        "minimum": {
+          "type": "integer"
+        },
+        "maximum": {
+          "type": "integer"
+        },
+        "increment": {
+          "type": "integer"
+        },
+        "property": {
+          "type": "string"
+        }
+      },
+      "allOf": [{"$ref": "#/definitions/settingBase"}],
+      "required": ["minimum", "maximum", "increment", "property"]
+    },
+    "param": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "DEFAULT",
+            "FIRST_SELECTED",
+            "DATA_OFFSET",
+            "DATA_PAGE",
+            "DATA_COUNT",
+            "SEARCH",
+            "SEARCH_FILTER",
+            "SYSTEM"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "description": "When Type = DEFAULT, this element is the value passed to the driver command. When the type is FIRST_SELECTED or SELECTED, this element is the name of the property who's value will be used to create a list of values passed to the driver command."
+        }
+      },
+      "required": [
+        "name", "type"
+      ],
+      "allOf": [{
+        "if": {
+          "properties": {
+            "type": {
+              "const": "SYSTEM"
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "value": {
+              "enum": ["screenDepth", "screenID", "tabID", "menu"]
+            }
+          }
+        }
+      }]
+    },
+    "command": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "PROTOCOL",
+            "ROOM"
+          ]
+        },
+        "params": {
+          "type": "array",
+          "description": "A list of parameters that will be included with the command. Ignored for commands of type ROOM.",
+          "items": {
+            "$ref": "#/definitions/param"
+          }
+        }
+      }
+    },
+    "filter": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "screenId": {
+          "type": "string"
+        }
+      }
+    },
+    "filters": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/filter"
+      }
+    },
+    "historyEntry": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "dataCommand": {
+          "$ref": "#/definitions/command"
+        },
+        "deleteCommand": {
+          "$ref": "#/definitions/command"
+        }
+      }
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/historyEntry"
+      }
+    },
+    "search": {
+      "type": "object",
+      "properties": {
+        "filters": {
+          "$ref": "#/definitions/filters",
+          "description": "Defines how content can be filtered"
+        },
+        "history": {
+          "$ref": "#/definitions/history",
+          "description": "Defines how search history is supported"
+        }
+      }
+    },
+    "item": {
+      "type": "object",
+      "oneOf": [
+        { "$ref": "#/definitions/settingHeader" },
+        { "$ref": "#/definitions/settingOnOff" },
+        { "$ref": "#/definitions/settingButton" },
+        { "$ref": "#/definitions/settingNumericSpinner" },
+        { "$ref": "#/definitions/settingText" },
+        { "$ref": "#/definitions/settingTextField" },
+        { "$ref": "#/definitions/settingCheckbox" },
+        { "$ref": "#/definitions/settingCombobox" }
+      ]
+    },
+    "iconsBasic": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "The ID of the icon",
+          "type": "string"
+        },
+        "icons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/icon"
+          }
+        }
+      },
+      "required": ["id", "icons"]
+    },
+    "iconsGenerator": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "The ID of the icon",
+          "type": "string"
+        },
+        "sizes": {
+          "type": "array",
+          "description": "An array of image sizes",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "template": {
+          "description": "The path to the file, subsititute %size% into the path where the sizes should be inserted",
+          "examples": ["controller://driver/DRIVER_FILE_NAME/icons/my_icon_%size%.png"],
+          "type": "string"
+        }
+      },
+      "required": ["id", "sizes", "template"]
+    },
+    "icons": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {"$ref": "#/definitions/iconsBasic"}, 
+          {"$ref": "#/definitions/iconsGenerator"} 
+        ]
+      }  
+    },
+    "icon": {
+      "type": "object",
+      "properties": {
+        "height": {
+          "type": "integer",
+          "description": "The height of the icon"
+        },
+        "width": {
+          "type": "integer",
+          "description": "The width of the icon"
+        },
+        "path": {
+          "type": "string",
+          "description": "The path to the icon"
+        }
+      }
+    },
+    "tab": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "screenId": {
+          "type": "string"
+        },
+        "iconId": {
+          "type": "string"
+        }
+      }
+    },
+    "screen": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "SettingsScreenType",
+            "ListScreenType",
+            "CollectionScreenType",
+            "GridScreenType",
+            "DetailScreenType"
+          ]
+        },
+        "dataCommand": {
+          "$ref": "#/definitions/command"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/item"
+          }
+        }
+      },
+      "required": ["id", "type", "dataCommand"],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [ "SettingsScreenType" ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "items"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "ListScreenType"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "list"
+            ],
+            "properties": {
+              "paginationStyle": {
+                "enum": ["OFFSET", "NONE", "ALPHA"]
+              },
+              "list": {
+                "$ref": "#/definitions/list"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "type": "array",
+  "items": {
+    "properties": {
+      "proxy": {
+        "type": "integer",
+        "description": "The proxy ID for which to bind this interface to"
+      },
+      "deviceIcon": {
+        "type": "string",
+        "description": "The Icon ID to be used for the device"
+      },
+      "brandingIcon": {
+        "type": "string",
+        "description": "The Icon ID to be used for branding"
+      },
+      "icons": {
+        "$ref": "#/definitions/icons",
+        "description": "A collection of icons to be used in the Media Service proxy"
+      },
+      "search": {
+        "type": "object",
+        "properties": {
+          "filters": {
+            "$ref": "#/definitions/filters"
+          },
+          "history": {
+            "$ref": "#/definitions/history"
+          }
+        }
+      },
+      "tabs": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/tab"
+        }
+      },
+      "notifications": {
+        "type": "array"
+      },
+      "screens": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/screen"
+        }
+      },
+      "nowPlaying": {
+        "type": "object",
+        "properties": {
+          "actions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "image": {
+            "description": "Creates an image placeholder. An option default image can be defined.",
+            "type": "string"
+          },
+          "list": {
+            "$ref": "#/definitions/list"
+          }
+        }
+      },
+      "actions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string",
+              "description": "The displayed action name to change to.",
+              "maxLength": 35
+            },
+            "iconId": {
+              "type": "string",
+              "description": "If no icon is specified then the default system defined icon will be used."
+            },
+            "editProperty": {
+              "type": "string"
+            },
+            "command": {
+              "$ref": "#/definitions/command",
+              "description": "The command parameter values come from the item that initiated the action. This can be a List item, Collection, Now Playing, etc..."
+            },
+            "filters": {
+              "type": "array",
+              "description": "Filters change action behavior based on selected content. Only one filter can be applied at a time. Filters will be evaluated in the order they appear in the list. Once one filter is activated, no other filters will be evaluated until the selected item changes.",
+              "items": {
+                "$ref": "#/definitions/actionFilter"
+              }
+            }
+          }
+        }
+      },
+      "dashboard": {
+        "type": "array"
+      }
+    }
+  }
+}

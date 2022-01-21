@@ -1,0 +1,152 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JSON schema for Control4 properties",
+  "definitions": {
+    "property": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "id": "propertyType",
+          "type": "string",
+          "enum": [
+            "STRING",
+            "LABEL",
+            "RANGED_INTEGER",
+            "RANGED_FLOAT",
+            "SCROLL",
+            "TRACK",
+            "LIST",
+            "DYNAMIC_LIST",
+            "DEVICE_SELECTOR",
+            "COLOR_SELECTOR",
+            "CUSTOM_SELECT",
+            "LINK"
+          ]
+        },
+        "default": {
+          "type": [
+            "string",
+            "integer"
+          ]
+        },
+        "password": {
+          "type": "boolean"
+        },
+        "minimum": {
+          "type": "integer"
+        },
+        "maximum": {
+          "type": "integer"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "readonly": {
+          "type": "boolean",
+          "default": true
+        },
+        "tooltip": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "multiselect": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "type",
+        "default"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "RANGED_INTEGER",
+                  "RANGED_FLOAT",
+                  "SCROLL",
+                  "TRACK"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "minimum",
+              "maximum"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "LIST"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "items"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "DYNAMIC_LIST"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "items",
+              "multiselect"
+            ]
+          }
+        }
+      ]
+    },
+    "ranged": {
+      "id": "#ranged",
+      "type": "object",
+      "properties": {
+        "minimum": {
+          "type": "integer"
+        },
+        "maximum": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "minimum",
+        "maximum"
+      ]
+    }
+  },
+  "type": "array",
+  "minItems": 0,
+  "uniqueItems": true,
+  "items": {
+    "allOf": [
+      {
+        "$ref": "#/definitions/property"
+      }
+    ]
+  }
+}
