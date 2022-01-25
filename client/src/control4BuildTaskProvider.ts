@@ -19,7 +19,9 @@ export class Control4BuildTaskProvider implements vscode.TaskProvider {
   // Since our build has this shared state, the CustomExecution is used below.
   private sharedState: string | undefined;
 
-  constructor(private workspaceRoot: string) { }
+  constructor(private workspaceRoot: string, private context: vscode.ExtensionContext) {
+      this.context = context;
+  }
 
   public async provideTasks(): Promise<vscode.Task[]> {
     return this.getTasks();
@@ -58,7 +60,7 @@ export class Control4BuildTaskProvider implements vscode.TaskProvider {
     }
     return new vscode.Task(definition, vscode.TaskScope.Workspace, `Package Driver - ${version}`,
       Control4BuildTaskProvider.BuildType, new vscode.CustomExecution(async (): Promise<vscode.Pseudoterminal> => {
-        return new CustomBuildTaskTerminal(this.workspaceRoot, version, encryption, template, () => this.sharedState, (state: string) => this.sharedState = state);
+        return new CustomBuildTaskTerminal(this.workspaceRoot, version, encryption, template, () => this.sharedState, (state: string) => this.sharedState = state, this.context);
       }));
   }
 }
@@ -67,12 +69,15 @@ class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
   private writeEmitter = new vscode.EventEmitter<string>();
   private closeEmitter = new vscode.EventEmitter<void>();
 
+  private context: vscode.ExtensionContext;
+
   onDidWrite: vscode.Event<string> = this.writeEmitter.event;
   onDidClose?: vscode.Event<void> = this.closeEmitter.event;
 
   private fileWatcher: vscode.FileSystemWatcher | undefined;
 
-  constructor(private workspaceRoot: string, private version: BuildVersion, private encryption: boolean, private template: boolean, private getSharedState: () => string | undefined, private setSharedState: (state: string) => void) {
+  constructor(private workspaceRoot: string, private version: BuildVersion, private encryption: boolean, private template: boolean, private getSharedState: () => string | undefined, private setSharedState: (state: string) => void, context: vscode.ExtensionContext) {
+      this.context = context;
   }
 
   open(initialDimensions: vscode.TerminalDimensions | undefined): void {
@@ -88,15 +93,15 @@ class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
 
   private async doBuild(): Promise<void> {
     return new Promise<void>(async (resolve) => {
-      this.writeEmitter.fire(`[${new Date().toISOString()}] Starting ${this.version} build...\r\n`);
+      this.writeEmitter.fire(`[${new Date().toLocaleString()}] Starting ${this.version} build...\r\n`);
 
-      let iterator = Builder.Build(this.version, this.encryption, this.template);
+      let iterator = Builder.Build(this.version, this.encryption, this.template, this.context);
 
       let value = null
 
       try {
         while (value = await iterator.next(), !value.done) {
-          this.writeEmitter.fire(`[${new Date().toISOString()}] ${value.value.message}\r\n`);
+          this.writeEmitter.fire(`[${new Date().toLocaleString()}] ${value.value.message}\r\n`);
         }
 
         this.closeEmitter.fire();
@@ -105,7 +110,7 @@ class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
       } catch (err) {
         console.log(err);
         
-        this.writeEmitter.fire(`[${new Date().toISOString()}] ${err.message}\r\n`);
+        this.writeEmitter.fire(`[${new Date().toLocaleString()}] ${err.message}\r\n`);
 
         this.closeEmitter.fire();
 

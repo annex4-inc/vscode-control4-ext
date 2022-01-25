@@ -30,6 +30,6 @@
     "controlmethod": "ip"
   },
   "devDependencies": {
-    "@annex4/test.control4": "^1.0.0"
+    "@annex4/test": "^1.0.0"
   }
 }

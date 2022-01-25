@@ -2,159 +2,71 @@
 
 import * as vscode from 'vscode';
 import * as path from 'path';
-import * as fs from 'fs';
 
-import Manifest from './manifest';
-import { Driver } from './driver';
 import Package from '../package';
-import { StartProcess } from '../utility';
+import {
+    OpenSSLStage,
+    IncrementVersionStage,
+    IntermediateStage,
+    DriverXmlBuildStage,
+    ManifestStage,
+    DependencyInjectionStage,
+    ZipStage,
+    CopyToOutputStage
+} from "./stages"
 
 export enum BuildVersion {
   Debug = "debug",
   Release = "release"
 }
 
-export class Builder {
-  static async* Build(version: BuildVersion, encrypted: boolean, templated: boolean) {
-    const build = vscode.workspace.getConfiguration('control4.build');
-    const increment = build.get<boolean>('autoIncrementVersion');
+export interface BuildStage {
+    Execute(source: string, intermediate: string, destination: string): Promise<any>;
+    OnSuccess(result: any): String
+    OnFailure(result: any): String
+}
 
-    if (increment) {
-      try {
-        yield {
-          message: `Incrementing driver version to "${await StartProcess("npm", ["version", "--no-git-tag-version", "patch"])}"`
-        }
-      } catch (err) {
-        console.log(err)
-      }
+export class Builder {
+  static async* Build(version: BuildVersion, encrypted: boolean, templated: boolean, context: vscode.ExtensionContext) {
+    const pkg = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, 'package.json');
+
+    const _package = await Package.Get(pkg);
+
+    // Prepare the build stages
+    let stages = new Array<BuildStage>();
+        stages.push(new IncrementVersionStage());
+        stages.push(new IntermediateStage());
+        stages.push(new DriverXmlBuildStage(_package, encrypted));
+        stages.push(new DependencyInjectionStage(_package));
+        
+    if (vscode.workspace.getConfiguration('control4').get<string>('buildMethod') == "DriverPackager") {
+        stages.push(new ManifestStage(_package, encrypted));
+    } else {
+        stages.push(new OpenSSLStage(encrypted, context.asAbsolutePath(path.join('client', 'src', 'resources', 'certificate.pem'))));
+        stages.push(new ZipStage(_package));
     }
 
-    let pkg = await Package.Get(`${vscode.workspace.workspaceFolders[0].uri.fsPath}/package.json`);
-    let driver = await Driver.From(pkg);
-        driver.encrypted = encrypted;
+    stages.push(new CopyToOutputStage(_package));
 
-    // Establishing working directories
+    // Establish working directories
     const src = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, 'src');
     const int = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, 'intermediate', version);
     const dst = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, 'output', version);
 
-    let manifest = new Manifest(pkg.name, version);
+    for (let i = 0; i < stages.length; i++) {
+        let stage = stages[i];
 
-    try {
-      manifest.addFile("driver.xml", driver.build());
-      manifest.encrypted = encrypted;
-    } catch (err) {
-      console.log(err);
-
-      yield {
-        code: -1,
-        message: err.message
-      }
-
-      return {
-        code: -1,
-        message: "Failed to prepare driver.xml",
-        inner: err.message
-      }
-    }
-
-    // Copies base files into an intermediate directory for building
-    try {
-      await manifest.prepare(src, int)
-      yield {
-        code: 1,
-        message: "Intermediate folder prepared"
-      }
-    } catch (err) {
-      console.log(err);
-      return {
-        code: -1,
-        message: "Failed to prepare intermediate folder",
-        inner: err.message
-      }
-    }
-
-    // Inject dependies from driver lua compilation
-    try {
-      let modules = await pkg.getDependencyOrder();
-
-      if (modules) {
-        yield {
-          code: 3,
-          message: `Dependencies:\r\n\t${modules.join("\r\n\t")}`
-        }
-
-        await pkg.injectDependencies(modules, path.join(int, 'driver.lua'));
-      }
-
-      yield {
-        code: 4,
-        message: "Dependencies injected"
-      }
-    } catch (err) {
-      console.log(err);
-      return {
-        code: -1,
-        message: "Failed to inject dependencies",
-        inner: err.message
-      }
-    }
-
-    // Use driver packager to build the manifest
-    try {
-      if (templated) {
-        await driver.zip(int, dst);
-      } else {
-        await manifest.build(int, dst, true);
-      }
-
-      yield {
-        code: 5,
-        message: "Driver built"
-      }
-    } catch (err) {
-      console.log(err);
-      return {
-        code: -1,
-        message: "Failed to build driver",
-        inner: err.message
-      }
-    }
-
-    try {
-      const build = vscode.workspace.getConfiguration('control4.build');
-      const ex = build.get<boolean>('exportToDriverLocation');
-
-      let root = path.join(process.env.USERPROFILE, "Documents", "Control4", "Drivers")
-
-      // @ts-expect-error
-      if (pkg.control4 && pkg.control4.agent) {
-        root = path.join(process.env.USERPROFILE, "Documents", "Control4", "Agents")
-      }
-
-      let driver = path.join(root, pkg.name + ".c4z")
-
-      if (ex) {
         try {
-          await fs.promises.copyFile(path.join(dst, pkg.name + ".c4z"), driver)
+            let result = await stage.Execute(src, int, dst);
 
-          yield {
-            message: `Copied driver to: ${driver}`
-          }
+            yield {
+                message: stage.OnSuccess(result)
+            }
         } catch (err) {
-          return {
-            code: -1,
-            message: "Failed to export driver",
-            inner: err.message
-          }
+            yield {
+                message: stage.OnFailure(err)
+            }
         }
-      }
-    } catch (err) {
-      return {
-        code: -1,
-        message: "Failed to export driver",
-        inner: err.message
-      }
     }
   }
 }

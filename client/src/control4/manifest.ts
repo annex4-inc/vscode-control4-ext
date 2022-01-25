@@ -7,7 +7,8 @@ import * as cp from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import { ForceWrite } from "../utility"
+import { ForceWrite, GetDirents, ReadFileContents } from "../utility"
+
 
 const fsPromises = fs.promises;
 
@@ -18,16 +19,14 @@ export default class Manifest {
   driverName: string
   type: string
   encrypted: boolean
-  buildType: string
 
-  constructor(driverName: string, buildType: string) {
+  constructor(driverName: string) {
     this.type = "c4z";
     this.driverName = driverName;
     this.files = []
     this.folders = [];
     this.contents = {};
     this.encrypted = false;
-    this.buildType = buildType;
   }
 
   /**
@@ -77,11 +76,11 @@ export default class Manifest {
    * @param int Path to intermediate directory
    * @returns 
    */
-  async prepare(src : string, int: string) {
+  async prepare(src: string, int: string) {
     return new Promise(async (resolve, reject) => {
       try {
         await fsPromises.rmdir(int, { recursive: true })
-  
+
         fse.copy(src, int, async (err, data) => {
           if (err) {
             reject(err)
@@ -108,43 +107,47 @@ export default class Manifest {
    * @param doScan Runs the scan method to determine which files exist in the source directory. They will automatically be included in the manifest.
    * @returns 
    */
-  async build(source: string, destination: string, doScan: boolean) : Promise<Boolean> {
+  async build(source: string, intermediate: string, destination: string, doScan: boolean): Promise<Boolean> {
     return new Promise(async (resolve, reject) => {
       if (doScan) {
-        await this.scan(source);
+        await this.scan(intermediate);
       }
-  
+
       try {
-        await ForceWrite(`${vscode.workspace.rootPath}/intermediate/${this.buildType}/manifest.xml`, this.toString());
+        await ForceWrite(path.join(intermediate, 'manifest.xml'), this.toString());
       } catch (err) {
         vscode.window.showInformationMessage(err.message);
       }
-  
+
       const configuration = vscode.workspace.getConfiguration('control4');
       const packager = configuration.get<string>('driverPackagerLocation');
-  
+
       try {
         // Try to retrive DriverPackager.exe information, if it fails the configuration is invalid
         fsPromises.stat(packager);
       } catch (err) {
         vscode.window.showInformationMessage("Unable to locate DriverPackager.exe: Missing File - " + packager);
       }
-  
-      // Attempt to build the driver using driver packager
-      cp.execFile(path.basename(packager), ["-v", source, destination, 'manifest.xml'], { shell: false, cwd: path.dirname(packager), timeout: 3000 }, (err, stdout, stderr) => {
-        if (err) {
-          vscode.window.showErrorMessage(stderr ? stderr : stdout);
-          reject(false)
-        } else {
-          vscode.window.showInformationMessage(`"${this.driverName}.c4z" built at ${new Date().toLocaleTimeString()}`, {modal: false}, "Open Folder", "Ok").then(selection => {
-            if (selection === "Open Folder") {
-              vscode.env.openExternal(vscode.Uri.file(destination));
-            }
-          });
 
-          resolve(true)
-        }
-      })
+      if (configuration.get<string>('buildMethod') == "OpenSSL") {
+      
+      } else {
+        // Attempt to build the driver using driver packager
+        cp.execFile(path.basename(packager), ["-v", intermediate, destination, 'manifest.xml'], { shell: false, cwd: path.dirname(packager), timeout: 3000 }, (err, stdout, stderr) => {
+          if (err) {
+            vscode.window.showErrorMessage(stderr ? stderr : stdout);
+            reject(false)
+          } else {
+            vscode.window.showInformationMessage(`"${this.driverName}.c4z" built at ${new Date().toLocaleTimeString()}`, { modal: false }, "Open Folder", "Ok").then(selection => {
+              if (selection === "Open Folder") {
+                vscode.env.openExternal(vscode.Uri.file(destination));
+              }
+            });
+
+            resolve(true)
+          }
+        })
+      }
     })
   }
 
@@ -172,6 +175,6 @@ export default class Manifest {
       })
     }
 
-    return root.end({prettyPrint: true})
+    return root.end({ prettyPrint: true })
   }
 }

@@ -1,5 +1,5 @@
 -- Load stubs
-dofile("node_modules/@annex4/test.control4/src.lua")
+dofile("node_modules/@annex4/test/src.lua")
 
 -- Include NPM dependencies
 dofile('tests/generated.lua')

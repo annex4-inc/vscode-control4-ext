@@ -14,13 +14,28 @@ export async function WriteIfNotExists(file, data) {
         await handler.close();
     } catch (err) {
         if (err.code == "ENOENT") {
-            await fsPromises.mkdir(path.dirname(file));
+            await fsPromises.mkdir(path.dirname(file), {recursive: true });
             await WriteIfNotExists(file, data)
         }
     }
 }
 
 export async function ReadFileContents(file) {
+    try {
+        var handler = await fsPromises.open(file, 'r');
+        var buffer = await handler.readFile();
+
+        var contents = buffer.toString('utf-8');
+
+        await handler.close();
+
+        return contents;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export async function GetFileBuffer(file) {
     try {
         var handler = await fsPromises.open(file, 'r');
         var buffer = await handler.readFile();

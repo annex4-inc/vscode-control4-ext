@@ -63,7 +63,7 @@ export function activate(context: vscode.ExtensionContext) {
   Register(context, uiProvider.register(Views.UI, Commands.UI.Select, Commands.UI.Remove));
   //Register(context, parametersProvider.register(Views.Parameters, Commands.Parameters.Select, Commands.Parameters.Rmeove))
 
-  context.subscriptions.push(vscode.tasks.registerTaskProvider(Control4BuildTaskProvider.BuildType, new Control4BuildTaskProvider(workspacePath)));
+  context.subscriptions.push(vscode.tasks.registerTaskProvider(Control4BuildTaskProvider.BuildType, new Control4BuildTaskProvider(workspacePath, context)));
 
   /* Parameter window
   context.subscriptions.push(vscode.commands.registerCommand("select.C4Parameter", function (e, p) {
