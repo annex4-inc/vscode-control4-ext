@@ -10,7 +10,7 @@ import { ConnectionNodeProvider } from './providers/tree/ConnectionNodeProvider'
 
 import * as path from 'path';
 import { workspace } from 'vscode';
-import { control4Package, control4Create, control4Release, control4Import, rebuildTestDependencies } from './commands';
+import { control4Create, control4Import, rebuildTestDependencies } from './commands';
 
 import ActionsResource from "./components/actions"
 import PropertiesResource from "./components/properties"
@@ -104,9 +104,7 @@ export function activate(context: vscode.ExtensionContext) {
   client.start();
 
   // Register the global commands for the extension
-  context.subscriptions.push(vscode.commands.registerCommand('control4.package', control4Package, context));
   context.subscriptions.push(vscode.commands.registerCommand('control4.create', control4Create, context));
-  context.subscriptions.push(vscode.commands.registerCommand('control4.release', control4Release, context));
   context.subscriptions.push(vscode.commands.registerCommand('control4.import', control4Import, context));
   context.subscriptions.push(vscode.commands.registerCommand('control4.rebuildTestDependencies', rebuildTestDependencies, context));
 

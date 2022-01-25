@@ -82,40 +82,6 @@ async function control4Create() {
   }
 }
 
-async function control4Package() {
-  let iterator = await Builder.Build(BuildVersion.Debug, false, false);
-
-  let value = null
-
-  let channel = vscode.window.createOutputChannel("Control4")
-      channel.show();
-
-  try {
-    while (value = await iterator.next(), !value.done) {
-      channel.appendLine(`[${new Date().toISOString()}] ${value.value.message}`);
-    }
-  } catch (err) {
-    channel.appendLine(`[${new Date().toISOString()}] ${err.message}`);
-  }
-}
-
-async function control4Release() {
-  let iterator = await Builder.Build(BuildVersion.Release, true, false);
-
-  let value = null
-
-  let channel = vscode.window.createOutputChannel("Control4")
-      channel.show();
-
-  try {
-    while (value = await iterator.next(), !value.done) {
-      channel.appendLine(value.value.message);
-    }
-  } catch (err) {
-    channel.appendLine(err.message)
-  }
-}
-
 async function control4Import() {
   let p = vscode.window.showOpenDialog();
 
@@ -206,8 +172,6 @@ async function rebuildTestDependencies(ctx) {
 }
 
 export {
-  control4Package,
-  control4Release,
   control4Create,
   control4Import,
   rebuildTestDependencies
