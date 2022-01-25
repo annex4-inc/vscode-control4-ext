@@ -368,6 +368,15 @@
     "configuration": {
       "title": "Control4",
       "properties": {
+        "control4.buildMethod": {
+            "type": "string",
+            "default": "OpenSSL", 
+            "enum": ["OpenSSL", "DriverPackager"],
+            "enumDescriptions": [
+                "Uses OpenSSL to encrypt the driver lua",
+                "Uses DriverPackager from the Control4 DriverEditor to encrypt and package the driver"
+            ]
+        },
         "control4.driverPackagerLocation": {
           "type": "string",
           "default": "C:\\Program Files (x86)\\Control4\\DriverEditor301\\DriverPackager.exe",
