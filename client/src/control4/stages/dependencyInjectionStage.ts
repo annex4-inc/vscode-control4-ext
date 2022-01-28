@@ -13,9 +13,9 @@ export default class DependencyInjectionStage implements BuildStage {
     async Execute(source: string, intermediate: string, destination: string): Promise<any> {
         let modules = await this.pkg.getDependencyOrder();
 
-        if (modules) {  
-          await this.pkg.injectDependencies(modules, path.join(intermediate, 'driver.lua'));
+        await this.pkg.injectDependencies(modules || [], path.join(intermediate, 'driver.lua'));
 
+        if (modules) {
           return modules;
         } else {
           return "[Dependencies] No dependencies detected"
