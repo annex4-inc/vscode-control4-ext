@@ -3,7 +3,7 @@ import { BuildStage } from '../builder';
 import Package from '../../package';
 import * as path from 'path';
 import AdmZip from 'adm-zip'
-import { WriteIfNotExists } from '../../utility';
+import { ForceWrite, WriteIfNotExists } from '../../utility';
 import * as vscode from 'vscode';
 
 export default class ZipStage implements BuildStage {
@@ -21,7 +21,7 @@ export default class ZipStage implements BuildStage {
             try {
                 let zipPath = path.resolve(destination, `${this.pkg.name}.c4z`);
 
-                await WriteIfNotExists(zipPath, zip.toBuffer());
+                await ForceWrite(zipPath, zip.toBuffer());
 
                 resolve(zipPath)
             } catch (err) {
