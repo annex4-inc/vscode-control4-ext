@@ -13,22 +13,22 @@ export default class C4InterfaceTrait {
 
     @jsonArrayMember(String)
     values: string[]
-    
+
     toXml() {
         let node = builder.create(this.name).root();
 
         node.ele("Property", this.property);
         node.ele("ValidValues", this.values);
-                
+
         return node;
     }
 
-    static fromXml(obj) : C4InterfaceTrait {
-      let i = new C4InterfaceTrait();
-  
-      i.property = obj["Property"]
-      i.values = obj["ValidValues"]
-  
-      return i
+    static fromXml(obj): C4InterfaceTrait {
+        let i = new C4InterfaceTrait();
+
+        i.property = obj["Property"]
+        i.values = obj["ValidValues"]
+
+        return i
     }
 }

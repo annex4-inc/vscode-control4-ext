@@ -3,7 +3,7 @@ import { BuildStage } from '../builder';
 import Package from '../../package';
 import * as path from 'path';
 import AdmZip from 'adm-zip'
-import { ForceWrite, WriteIfNotExists } from '../../utility';
+import { ForceWrite } from '../../utility';
 import * as vscode from 'vscode';
 
 export default class ZipStage implements BuildStage {

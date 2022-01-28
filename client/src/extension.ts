@@ -7,6 +7,7 @@ import { EventNodeProvider } from './providers/tree/EventNodeProvider';
 import { CommandNodeProvider } from './providers/tree/CommandNodeProvider';
 import { ActionNodeProvider } from './providers/tree/ActionNodeProvider';
 import { ConnectionNodeProvider } from './providers/tree/ConnectionNodeProvider';
+import { UINodeProvider } from './providers/tree/UINodeProvider';
 
 import * as path from 'path';
 import { workspace } from 'vscode';
@@ -30,7 +31,7 @@ import {
   TransportKind
 } from 'vscode-languageclient/node';
 import { PanelManager } from './panel/PanelManager';
-import { UINodeProvider } from './providers/tree/UINodeProvider';
+
 
 function Register(context: vscode.ExtensionContext, disposables: vscode.Disposable[]) {
   disposables.forEach(function (d) {

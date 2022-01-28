@@ -1,16 +1,15 @@
-import { type } from 'os';
 import { jsonObject, jsonMember, jsonArrayMember } from 'typedjson';
 import * as builder from 'xmlbuilder2';
 import { Driver, asInt, asBoolean } from './driver';
 
 export enum Direction {
-  Front,
-  Back,
-  Top,
-  Bottom,
-  Left,
-  Right,
-  Unknown
+    Front,
+    Back,
+    Top,
+    Bottom,
+    Left,
+    Right,
+    Unknown
 }
 
 export enum Binding {
@@ -61,7 +60,7 @@ export class C4Port {
         return node;
     }
 
-    static fromXml(obj) : C4Port {
+    static fromXml(obj): C4Port {
         let p = new C4Port();
 
         p.name = obj.name
@@ -85,13 +84,15 @@ export class C4Port {
 export class C4ConnectionClass {
     @jsonMember classname: string
 
-    @jsonMember({deserializer: value => {
-        if (typeof(value) == "string") {
-          return value.toLowerCase() == "true"
-        } else {
-          return value;
+    @jsonMember({
+        deserializer: value => {
+            if (typeof (value) == "string") {
+                return value.toLowerCase() == "true"
+            } else {
+                return value;
+            }
         }
-    }}) autobind: boolean
+    }) autobind: boolean
 
     @jsonArrayMember(C4Port) ports?: C4Port[]
 
@@ -114,16 +115,16 @@ export class C4ConnectionClass {
         return node;
     }
 
-    static fromXml(obj) : C4ConnectionClass {
+    static fromXml(obj): C4ConnectionClass {
         let c = new C4ConnectionClass()
 
         c.autobind = obj.autobind ? obj.autobind.toLowerCase() == "true" : obj.autobind
         c.classname = obj.classname;
-        
+
         if (obj.ports) {
             let ports = Driver.CleanXmlArray(obj.ports, "port")
 
-            c.ports = ports.map((e) : C4Port => {
+            c.ports = ports.map((e): C4Port => {
                 return C4Port.fromXml(e)
             })
         }
@@ -132,7 +133,7 @@ export class C4ConnectionClass {
     }
 }
 
-@jsonObject 
+@jsonObject
 export class C4Connection {
     @jsonMember id: number
     @jsonMember connectionname: string
@@ -169,26 +170,25 @@ export class C4Connection {
         return node;
     }
 
-    static fromXml(obj) : C4Connection {
+    static fromXml(obj): C4Connection {
         let c = new C4Connection();
 
         c.connectionname = obj.connectionname
-        c.proxybindingid = typeof(obj['@proxybindingid']) == "string" ? Number.parseInt(obj['@proxybindingid']) : obj['@proxybindingid']
-        c.type = typeof(obj.type) == "string" ? Number.parseInt(obj.type) : obj.type
+        c.proxybindingid = typeof (obj['@proxybindingid']) == "string" ? Number.parseInt(obj['@proxybindingid']) : obj['@proxybindingid']
+        c.type = typeof (obj.type) == "string" ? Number.parseInt(obj.type) : obj.type
         c.audiosource = obj.audiosource ? obj.audiosource.toLowerCase() == "true" : obj.audiosource
         c.videosource = obj.videosource ? obj.videosource.toLowerCase() == "true" : obj.videosource
         c.autobind = obj.autobind ? obj.autobind.toLowerCase() == "true" : obj.autobind
         c.consumer = obj.consumer ? obj.consumer.toLowerCase() == "true" : obj.consumer
-        c.facing = typeof(obj.facing) == "string" ? Number.parseInt(obj.facing) : obj.facing
+        c.facing = typeof (obj.facing) == "string" ? Number.parseInt(obj.facing) : obj.facing
         c.hidden = obj.hidden ? obj.hidden.toLowerCase() == "true" : obj.hidden
-        c.id = typeof(obj.id) == "string" ? Number.parseInt(obj.id) : obj.id
-        c.idautobind = typeof(obj.idautobind) == "string" ? Number.parseInt(obj.idautobind) : obj.idautobind
+        c.id = typeof (obj.id) == "string" ? Number.parseInt(obj.id) : obj.id
+        c.idautobind = typeof (obj.idautobind) == "string" ? Number.parseInt(obj.idautobind) : obj.idautobind
 
-        if (obj.classes)
-        {
+        if (obj.classes) {
             let classes = Driver.CleanXmlArray(obj.classes, "class")
 
-            c.classes = classes.map((e) : C4ConnectionClass => {
+            c.classes = classes.map((e): C4ConnectionClass => {
                 return C4ConnectionClass.fromXml(e)
             })
         }

@@ -3,13 +3,15 @@ import * as builder from 'xmlbuilder2';
 
 @jsonObject
 export class C4Event {
-    @jsonMember({deserializer: value => {
-      if (typeof(value) == "string") {
-        return Number.parseInt(value)
-      } else {
-        return value;
-      }
-    }}) id: number
+    @jsonMember({
+        deserializer: value => {
+            if (typeof (value) == "string") {
+                return Number.parseInt(value)
+            } else {
+                return value;
+            }
+        }
+    }) id: number
     @jsonMember name: string
     @jsonMember description: string
 

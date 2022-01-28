@@ -14,7 +14,7 @@
             {"minimum": 1, "maximum": 999, "description": "Control"},
             {"minimum": 1000, "maximum": 1099, "description": "Video Input"},
             {"minimum": 2000, "maximum": 2999, "description": "Video Output"},
-            {"minimum": 3000, "maximum": 3099, "description": "Audio Input"},
+            {"minimum": 3000, "maximum": 3999, "description": "Audio Input"},
             {"minimum": 4000, "maximum": 4999, "description": "Audio Output"},
             {"minimum": 5000, "maximum": 5999, "description": "Proxy"},
             {"minimum": 6000, "maximum": 6999, "description": "Network"},

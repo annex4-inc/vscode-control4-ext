@@ -6,45 +6,45 @@ import C4InterfaceIcon from "./C4InterfaceIcon"
 
 @jsonObject
 export default class C4InterfaceIcons {
-  @jsonMember
-  id: string
+    @jsonMember
+    id: string
 
-  @jsonArrayMember(Number)
-  sizes: number[]
+    @jsonArrayMember(Number)
+    sizes: number[]
 
-  @jsonMember
-  template: string
+    @jsonMember
+    template: string
 
-  @jsonArrayMember(C4InterfaceIcon)
-  icons?: C4InterfaceIcon[]
+    @jsonArrayMember(C4InterfaceIcon)
+    icons?: C4InterfaceIcon[]
 
-  toXml() {
-    let node = builder.create("Icons").root();
+    toXml() {
+        let node = builder.create("Icons").root();
 
-    for (const key in this) {
-      if (key == "icons") {
-        let icons = node.ele("IconGroup");
+        for (const key in this) {
+            if (key == "icons") {
+                let icons = node.ele("IconGroup");
 
-        this.icons.forEach(i => {
-          icons.import(i.toXml())
-        });
-      } else {
-        //@ts-ignore
-        node.ele(key).txt(this[key]);
-      }
+                this.icons.forEach(i => {
+                    icons.import(i.toXml())
+                });
+            } else {
+                //@ts-ignore
+                node.ele(key).txt(this[key]);
+            }
+        }
+
+        return node;
     }
 
-    return node;
-  }
+    static fromXml(obj): C4InterfaceIcons {
+        let icons = new C4InterfaceIcons();
 
-  static fromXml(obj): C4InterfaceIcons {
-    let icons = new C4InterfaceIcons();
+        icons.id = obj["@id"]
+        icons.icons = obj.Icon.map(function (i) {
+            return C4InterfaceIcon.fromXml(i);
+        })
 
-    icons.id = obj["@id"]
-    icons.icons = obj.Icon.map(function(i) {
-      return C4InterfaceIcon.fromXml(i);
-    })
-
-    return icons;
-  }
+        return icons;
+    }
 }

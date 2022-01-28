@@ -14,7 +14,7 @@ export default class C4InterfaceCommand {
 
     @jsonArrayMember(C4InterfaceParameter)
     params: C4InterfaceParameter[]
-    
+
     toXml() {
         let node = builder.create("Command").root();
 
@@ -26,29 +26,29 @@ export default class C4InterfaceCommand {
         this.params.forEach(p => {
             params.import(p.toXml())
         });
-                
+
         return node;
     }
 
-    static fromXml(obj) : C4InterfaceCommand {
-      let a = new C4InterfaceCommand();
-        
-      if (obj.Params) {
-          let params = obj.Params.Param
-          let parameters = [];
+    static fromXml(obj): C4InterfaceCommand {
+        let a = new C4InterfaceCommand();
 
-          if (params[0] == undefined) {
-              parameters.push(params)
-          } else {
-              parameters = params;
-          }
+        if (obj.Params) {
+            let params = obj.Params.Param
+            let parameters = [];
 
-          a.params = parameters.map((p) => { return C4InterfaceParameter.fromXml(p) })
-      }
+            if (params[0] == undefined) {
+                parameters.push(params)
+            } else {
+                parameters = params;
+            }
 
-      a.name = obj.Name;
-      a.type = obj.Type;
-      
-      return a
+            a.params = parameters.map((p) => { return C4InterfaceParameter.fromXml(p) })
+        }
+
+        a.name = obj.Name;
+        a.type = obj.Type;
+
+        return a
     }
 }

@@ -11,88 +11,88 @@ import { asInt } from "./driver"
 
 @jsonObject
 export class C4UI {
-  @jsonMember
-  proxy: number
+    @jsonMember
+    proxy: number
 
-  @jsonMember
-  deviceIcon: string
+    @jsonMember
+    deviceIcon: string
 
-  @jsonMember
-  brandingIcon: string
+    @jsonMember
+    brandingIcon: string
 
-  @jsonArrayMember(C4InterfaceIcons)
-  icons: C4InterfaceIcons[]
+    @jsonArrayMember(C4InterfaceIcons)
+    icons: C4InterfaceIcons[]
 
-  @jsonArrayMember(C4InterfaceScreen)
-  screens: C4InterfaceScreen[]
+    @jsonArrayMember(C4InterfaceScreen)
+    screens: C4InterfaceScreen[]
 
-  @jsonArrayMember(C4InterfaceTab)
-  tabs: C4InterfaceTab[]
+    @jsonArrayMember(C4InterfaceTab)
+    tabs: C4InterfaceTab[]
 
-  @jsonMember
-  tabCommand: C4InterfaceCommand
+    @jsonMember
+    tabCommand: C4InterfaceCommand
 
-  toXml() {
-    let node = builder.create("icons").root();
+    toXml() {
+        let node = builder.create("icons").root();
 
-    for (const key in this) {
-      if (key == "icons") {
-        let icons = node.ele("Icons");
+        for (const key in this) {
+            if (key == "icons") {
+                let icons = node.ele("Icons");
 
-        this.icons.forEach(i => {
-          icons.import(i.toXml())
-        });
-      }
-      else if (key == "screens") {
-        let screens = node.ele("Screens");
+                this.icons.forEach(i => {
+                    icons.import(i.toXml())
+                });
+            }
+            else if (key == "screens") {
+                let screens = node.ele("Screens");
 
-        this.screens.forEach(i => {
-          screens.import(i.toXml())
-        });
-      }
-      else if (key == "tabs") {
-        if (this.tabCommand) {
-          node.import(this.tabCommand.toXml());
-        } else if (this.tabs) {
-          let tabs = node.ele("Tab");
+                this.screens.forEach(i => {
+                    screens.import(i.toXml())
+                });
+            }
+            else if (key == "tabs") {
+                if (this.tabCommand) {
+                    node.import(this.tabCommand.toXml());
+                } else if (this.tabs) {
+                    let tabs = node.ele("Tab");
 
-          this.tabs.forEach(i => {
-            tabs.import(i.toXml())
-          });
+                    this.tabs.forEach(i => {
+                        tabs.import(i.toXml())
+                    });
+                }
+
+            } else {
+                //@ts-ignore
+                node.ele(key).txt(this[key]);
+            }
         }
 
-      } else {
-        //@ts-ignore
-        node.ele(key).txt(this[key]);
-      }
+        return node;
     }
 
-    return node;
-  }
+    static fromXml(obj): C4UI {
+        let ui = new C4UI();
 
-  static fromXml(obj): C4UI {
-    let ui = new C4UI();
+        ui.deviceIcon = obj.DeviceIcon;
+        ui.brandingIcon = obj.BrandingIcon;
+        ui.proxy = asInt(obj["@proxybindingid"]);
 
-    ui.deviceIcon = obj.DeviceIcon;
-    ui.brandingIcon = obj.BrandingIcon;
-    ui.proxy = asInt(obj["@proxybindingid"]);
+        ui.icons = obj.Icons.IconGroup.map(function (i) {
+            return C4InterfaceIcons.fromXml(i)
+        })
 
-    ui.icons = obj.Icons.IconGroup.map(function (i) {
-      return C4InterfaceIcons.fromXml(i)
-    })
+        ui.screens = obj.Screens.Screen.map(function (s) {
+            return C4InterfaceScreen.fromXml(s)
+        })
 
-    ui.screens = obj.Screens.Screen.map(function (s) {
-      return C4InterfaceScreen.fromXml(s)
-    })
+        if (obj.Tabs && obj.Tabs.Tab) {
+            ui.tabs = obj.Tabs.IconGroup.map(function (t) {
+                return C4InterfaceTab.fromXml(t)
+            })
+        } else if (obj.Tabs && obj.Tabs.Command) {
+            ui.tabCommand = C4InterfaceCommand.fromXml(obj.Tabs.Command);
+        }
 
-    if (obj.Tabs && obj.Tabs.Tab) {
-      ui.tabs = obj.Tabs.IconGroup.map(function (t) {
-        return C4InterfaceTab.fromXml(t)
-      })
-    } else if (obj.Tabs && obj.Tabs.Command) {
-      ui.tabCommand = C4InterfaceCommand.fromXml(obj.Tabs.Command);
+        return ui
     }
-
-    return ui
-  }
 }

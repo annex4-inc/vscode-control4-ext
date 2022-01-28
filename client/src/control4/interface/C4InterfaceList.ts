@@ -14,7 +14,7 @@ export default class C4InterfaceList {
 
     @jsonMember
     titleProperty: string
-    
+
     @jsonMember
     subtitleProperty: string
 
@@ -46,25 +46,25 @@ export default class C4InterfaceList {
         node.ele("ImageProperty", this.imageProperty);
         node.ele("IconProperty", this.iconProperty);
         node.ele("LengthProperty", this.lengthProperty);
-                
+
         return node;
     }
 
-    static fromXml(obj) : C4InterfaceList {
-      let i = new C4InterfaceList()
-  
-      i.defaultActionProperty = obj["ItemDefaultActionProperty"]
-      i.actionIdsProperty = obj["ItemActionIdsProperty"]
-      i.titleProperty = obj["TitleProperty"]
-      i.subtitleProperty = obj["SubTitleProperty"];      
-      i.imageProperty = obj["ImageProperty"];
-      i.iconProperty = obj["IconProperty"];
-      i.lengthProperty = obj["LengthProperty"];
-  
-      i.isLink = obj.IsLink ? C4InterfaceTrait.fromXml(obj.IsLink) : undefined;
-      i.isHeader = obj.IsHeader ? C4InterfaceTrait.fromXml(obj.IsHeader) : undefined;
-      i.willTranslate = obj.WillTranslate ? C4InterfaceTrait.fromXml(obj.WillTranslate): undefined;
-  
-      return i
+    static fromXml(obj): C4InterfaceList {
+        let i = new C4InterfaceList()
+
+        i.defaultActionProperty = obj["ItemDefaultActionProperty"]
+        i.actionIdsProperty = obj["ItemActionIdsProperty"]
+        i.titleProperty = obj["TitleProperty"]
+        i.subtitleProperty = obj["SubTitleProperty"];
+        i.imageProperty = obj["ImageProperty"];
+        i.iconProperty = obj["IconProperty"];
+        i.lengthProperty = obj["LengthProperty"];
+
+        i.isLink = obj.IsLink ? C4InterfaceTrait.fromXml(obj.IsLink) : undefined;
+        i.isHeader = obj.IsHeader ? C4InterfaceTrait.fromXml(obj.IsHeader) : undefined;
+        i.willTranslate = obj.WillTranslate ? C4InterfaceTrait.fromXml(obj.WillTranslate) : undefined;
+
+        return i
     }
 }

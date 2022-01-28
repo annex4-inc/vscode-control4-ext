@@ -10,7 +10,7 @@ export default class C4InterfaceParameter {
 
     @jsonMember
     type: string
-    
+
     @jsonMember
     value: string
 
@@ -20,17 +20,17 @@ export default class C4InterfaceParameter {
         node.ele("Name", this.name);
         node.ele("Type", this.type);
         node.ele("Value", this.value);
-                
+
         return node;
     }
 
-    static fromXml(obj) : C4InterfaceParameter {
-      let i = new C4InterfaceParameter()
-  
-      i.name = obj["Name"]
-      i.type = obj["Type"]
-      i.value = obj["Value"];      
-  
-      return i
+    static fromXml(obj): C4InterfaceParameter {
+        let i = new C4InterfaceParameter()
+
+        i.name = obj["Name"]
+        i.type = obj["Type"]
+        i.value = obj["Value"];
+
+        return i
     }
 }

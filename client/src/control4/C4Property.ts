@@ -23,30 +23,38 @@ export class PropertyType {
 export class C4Property {
     @jsonMember name: string
     @jsonMember type: string
-    @jsonMember({deserializer: value => {
-      if (typeof(value) == "string") {
-        return Number.parseFloat(value)
-      } else {
-        return value;
-      }
-    }}) minimum?: number
-    @jsonMember({deserializer: value => {
-      if (typeof(value) == "string") {
-        return Number.parseFloat(value)
-      } else {
-        return value;
-      }
-    }}) maximum?: number
-    @jsonMember({deserializer: value => {
-      return value;
-    }}) default: string | number
-    @jsonMember({deserializer: value => {
-        if (typeof(value) == "string") {
-          return value.toLowerCase() == "true"
-        } else {
-          return value;
+    @jsonMember({
+        deserializer: value => {
+            if (typeof (value) == "string") {
+                return Number.parseFloat(value)
+            } else {
+                return value;
+            }
         }
-    }}) readonly: boolean
+    }) minimum?: number
+    @jsonMember({
+        deserializer: value => {
+            if (typeof (value) == "string") {
+                return Number.parseFloat(value)
+            } else {
+                return value;
+            }
+        }
+    }) maximum?: number
+    @jsonMember({
+        deserializer: value => {
+            return value;
+        }
+    }) default: string | number
+    @jsonMember({
+        deserializer: value => {
+            if (typeof (value) == "string") {
+                return value.toLowerCase() == "true"
+            } else {
+                return value;
+            }
+        }
+    }) readonly: boolean
     @jsonArrayMember(String) items?: string[]
     @jsonMember password?: boolean
 
@@ -69,16 +77,16 @@ export class C4Property {
         return node;
     }
 
-    static fromXml(obj) : C4Property {
+    static fromXml(obj): C4Property {
         let a = new C4Property();
 
         a.name = obj.name;
         a.type = obj.type;
         a.items = obj.items ? obj.items.item : undefined;
-        a.default = typeof(obj.default) == "object" ? "" : obj.default;
-        a.maximum = typeof(obj.maximum) == 'string' ? Number.parseInt(obj.maximum) : obj.maximum;
-        a.minimum = typeof(obj.minimum) == 'string' ? Number.parseInt(obj.minimum) : obj.minimum;
-        a.password = typeof(obj.password) == 'string' ? obj.password.toLowerCase() == "true" : obj.password;
+        a.default = typeof (obj.default) == "object" ? "" : obj.default;
+        a.maximum = typeof (obj.maximum) == 'string' ? Number.parseInt(obj.maximum) : obj.maximum;
+        a.minimum = typeof (obj.minimum) == 'string' ? Number.parseInt(obj.minimum) : obj.minimum;
+        a.password = typeof (obj.password) == 'string' ? obj.password.toLowerCase() == "true" : obj.password;
 
         return a
     }

@@ -2,7 +2,7 @@
 import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
-import {asBoolean, Driver} from "./driver";
+import { asBoolean, Driver } from "./driver";
 
 export class ParameterType {
     static readonly STRING: string = "STRING";
@@ -24,40 +24,50 @@ export class ParameterType {
 export class C4Parameter {
     @jsonMember name: string
     @jsonMember type: string
-    @jsonMember({deserializer: value => {
-      if (typeof(value) == "string") {
-        return Number.parseFloat(value)
-      } else {
-        return value;
-      }
-    }}) minimum?: number
-    @jsonMember({deserializer: value => {
-      if (typeof(value) == "string") {
-        return Number.parseFloat(value)
-      } else {
-        return value;
-      }
-    }}) maximum?: number
-    @jsonMember({deserializer: value => {
-      return value;
-    }}) default: string | number
-    @jsonMember({deserializer: value => {
-        if (typeof(value) == "string") {
-          return value.toLowerCase() == "true"
-        } else {
-          return value;
+    @jsonMember({
+        deserializer: value => {
+            if (typeof (value) == "string") {
+                return Number.parseFloat(value)
+            } else {
+                return value;
+            }
         }
-    }}) readonly: boolean
+    }) minimum?: number
+    @jsonMember({
+        deserializer: value => {
+            if (typeof (value) == "string") {
+                return Number.parseFloat(value)
+            } else {
+                return value;
+            }
+        }
+    }) maximum?: number
+    @jsonMember({
+        deserializer: value => {
+            return value;
+        }
+    }) default: string | number
+    @jsonMember({
+        deserializer: value => {
+            if (typeof (value) == "string") {
+                return value.toLowerCase() == "true"
+            } else {
+                return value;
+            }
+        }
+    }) readonly: boolean
     @jsonArrayMember(String) items?: string[]
     @jsonMember password?: boolean
 
-    @jsonMember({deserializer: value => {
-        if (typeof(value) == "string") {
-          return value.toLowerCase() == "true"
-        } else {
-          return value;
+    @jsonMember({
+        deserializer: value => {
+            if (typeof (value) == "string") {
+                return value.toLowerCase() == "true"
+            } else {
+                return value;
+            }
         }
-    }}) multiselect: boolean
+    }) multiselect: boolean
 
     toXml() {
         let node = builder.create("param").root();
@@ -71,24 +81,24 @@ export class C4Parameter {
                     items.ele("item").txt(i);
                 })
             } else {
-              //@ts-ignore
-              node.ele(key).txt(this[key]);
+                //@ts-ignore
+                node.ele(key).txt(this[key]);
             }
         }
 
         return node;
     }
 
-    static fromXml(obj) : C4Parameter {
+    static fromXml(obj): C4Parameter {
         let a = new C4Parameter();
 
         a.name = obj.name;
         a.type = obj.type;
         a.items = obj.items ? Driver.CleanXmlArray(obj.items, "item") : undefined;
-        a.default = typeof(obj.default) == "object" ? "" : obj.default;
-        a.maximum = typeof(obj.maximum) == 'string' ? Number.parseInt(obj.maximum) : obj.maximum;
-        a.minimum = typeof(obj.minimum) == 'string' ? Number.parseInt(obj.minimum) : obj.minimum;
-        a.password = typeof(obj.password) == 'string' ? obj.password.toLowerCase() == "true" : obj.password;
+        a.default = typeof (obj.default) == "object" ? "" : obj.default;
+        a.maximum = typeof (obj.maximum) == 'string' ? Number.parseInt(obj.maximum) : obj.maximum;
+        a.minimum = typeof (obj.minimum) == 'string' ? Number.parseInt(obj.minimum) : obj.minimum;
+        a.password = typeof (obj.password) == 'string' ? obj.password.toLowerCase() == "true" : obj.password;
         a.multiselect = asBoolean(obj.multiselect);
 
         return a

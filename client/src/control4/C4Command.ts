@@ -9,10 +9,10 @@ export class C4Command {
     @jsonArrayMember(C4Parameter) params?: C4Parameter[]
 
     addParameter(parameter: C4Parameter) {
-      this.params.push(parameter);
+        this.params.push(parameter);
     }
 
-    toXml(){
+    toXml() {
         let node = builder.create("command").root();
 
         for (const key in this) {
@@ -31,9 +31,9 @@ export class C4Command {
         return node;
     }
 
-    static fromXml(obj) : C4Command {
+    static fromXml(obj): C4Command {
         let a = new C4Command();
-        
+
         if (obj.params) {
             let params = obj.params.param
             let parameters = [];
@@ -49,7 +49,7 @@ export class C4Command {
 
         a.name = obj.name;
         a.description = obj.description;
-        
+
         return a
     }
 }

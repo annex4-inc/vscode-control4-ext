@@ -21,17 +21,17 @@ export default class C4InterfaceTab {
         node.ele("Name", this.name);
         node.ele("ScreenId", this.screenId);
         node.ele("IconId", this.iconId);
-                
+
         return node;
     }
 
-    static fromXml(obj) : C4InterfaceTab {
-      let i = new C4InterfaceTab()
-  
-      i.name = obj["Name"]
-      i.screenId = obj["ScreenId"];
-      i.iconId = obj["IconId"];
-  
-      return i
+    static fromXml(obj): C4InterfaceTab {
+        let i = new C4InterfaceTab()
+
+        i.name = obj["Name"]
+        i.screenId = obj["ScreenId"];
+        i.iconId = obj["IconId"];
+
+        return i
     }
 }

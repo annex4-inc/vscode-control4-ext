@@ -22,7 +22,7 @@ export class C4Action {
 
     toXml() {
         let node = builder.create("action").root();
-                
+
         for (const key in this) {
             if (key == "params") {
                 let params = node.ele("params");
@@ -39,7 +39,7 @@ export class C4Action {
         return node;
     }
 
-    static fromXml(obj) : C4Action {
+    static fromXml(obj): C4Action {
         let a = new C4Action();
 
         a.name = obj.name
@@ -48,9 +48,9 @@ export class C4Action {
         if (obj.params) {
             let params = Driver.CleanXmlArray(obj.params, "param");
 
-            a.params = params.map(function(p) {
+            a.params = params.map(function (p) {
                 return C4Parameter.fromXml(p)
-            }) 
+            })
         }
 
         return a

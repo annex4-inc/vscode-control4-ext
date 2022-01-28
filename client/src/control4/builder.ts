@@ -21,9 +21,9 @@ export enum BuildVersion {
 }
 
 export interface BuildStage {
-    Execute(source: string, intermediate: string, destination: string): Promise<any>;
-    OnSuccess(result: any): String
-    OnFailure(result: any): String
+  Execute(source: string, intermediate: string, destination: string): Promise<any>;
+  OnSuccess(result: any): String
+  OnFailure(result: any): String
 }
 
 export class Builder {
