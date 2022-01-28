@@ -86,8 +86,7 @@
             },
             "required": [
                 "name",
-                "type",
-                "default"
+                "type"
             ],
             "allOf": [
                 {

@@ -5,6 +5,7 @@ node_modules
 **/node_mmodules
 **/tool
 **/out
+**/src/**/**.js
 
 *.vsix
 

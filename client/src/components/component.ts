@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { WriteIfNotExists } from '../utility';
+import { WriteFileContents, WriteIfNotExists } from '../utility';
 import isMatch from 'lodash.ismatch';
 
 export class Component {
@@ -39,8 +39,14 @@ export class Component {
 
   async save(data) {
     if (!this._textDocument || this._textDocument.isClosed) {
-      this._textDocument = await vscode.workspace.openTextDocument(this._resourceUri);
+        try {
+            await vscode.workspace.fs.stat(this._resourceUri);
+        } catch (err) {
+            await WriteIfNotExists(this._resourceUri.fsPath, "[]");
+        }
     }
+
+    this._textDocument = await vscode.workspace.openTextDocument(this._resourceUri);
 
     let edit = new vscode.WorkspaceEdit();
     edit.replace(this._textDocument.uri,

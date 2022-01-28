@@ -24,6 +24,7 @@ import { WriteFileContents } from "../utility"
 
 import AdmZip from 'adm-zip'
 import { TypedJSON } from 'typedjson';
+import { C4UI } from '.';
 
 function getEnumKeyByEnumValue<T extends { [index: string]: string }>(myEnum: T, enumValue: string): keyof T | null {
   let keys = Object.keys(myEnum).filter(x => myEnum[x] == enumValue);
@@ -73,6 +74,7 @@ export class Driver {
   actions: C4Action[]
   events: C4Event[]
   proxies: C4Proxy[]
+  UI: C4UI[]
   capabilities: Object
 
   notification_attachment_provider: Boolean
@@ -103,6 +105,7 @@ export class Driver {
     this.actions = [];
     this.events = [];
     this.proxies = [];
+    this.UI = [];
     this.capabilities = {};
   }
 
@@ -444,11 +447,11 @@ export class Driver {
     const devicedata = driver.devicedata;
 
     const icon = new DriverIcon();
-    icon.image_source = devicedata.large["@image_source"]
-    icon.small = devicedata.small["#"]
-    icon.large = devicedata.large["#"]
+    icon.image_source = devicedata.large ? devicedata.large["@image_source"] : "c4z"
+    icon.small = devicedata.small ? devicedata.small["#"] : "composer/device_sm.png"
+    icon.large = devicedata.large ? devicedata.small["#"] :"composer/device_lg.png"
 
-    const d: Driver = new Driver("TODO")
+    const d: Driver = new Driver(devicedata.name.replace(" ", "_").toLowerCase());
 
     d.copyright = devicedata.copyright
     d.creator = devicedata.creator
@@ -462,6 +465,12 @@ export class Driver {
     d.control = devicedata.control
     d.controlmethod = devicedata.controlmethod
     d.driver = devicedata.driver
+
+    if (devicedata.capabilities) {
+        if (devicedata.capabilities.UI) {
+            d.UI.push(C4UI.fromXml(devicedata.capabilities.UI));
+        }
+    }
 
     if (devicedata.connections) {
       const connections = this.CleanXmlArray(devicedata.connections, "connection")
@@ -495,7 +504,9 @@ export class Driver {
       const actions = this.CleanXmlArray(devicedata.config.actions, "action")
 
       if (actions) {
-        d.actions = TypedJSON.parseAsArray<C4Action>(actions, C4Action);
+        actions.forEach(function (a) {
+            d.actions.push(C4Action.fromXml(a));
+        })
       }
     }
 

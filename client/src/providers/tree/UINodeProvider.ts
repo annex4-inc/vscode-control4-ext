@@ -9,6 +9,7 @@ import TextNode from './TextNode';
 import C4InterfaceIcons from '../../control4/interface/C4InterfaceIcons';
 import C4InterfaceScreen from '../../control4/interface/C4InterfaceScreen';
 import C4InterfaceTab from '../../control4/interface/C4InterfaceTab';
+import C4InterfaceCommand from '../../control4/interface/C4InterfaceCommand';
 
 export class UINodeProvider extends TreeNodeProvider<UINode> {
     private _componentPath: string
@@ -48,7 +49,8 @@ export class UINodeProvider extends TreeNodeProvider<UINode> {
                 }));
                 nodes.push(new FolderNode("Tabs", "", {
                   type: "Tabs",
-                  items: element.data.tabs
+                  items: element.data.tabs,
+                  command: element.data.tabCommand
                 }));            
               }
 
@@ -78,15 +80,25 @@ export class UINodeProvider extends TreeNodeProvider<UINode> {
                   }));
                   break;
                 case 'Tabs':
-                  for (var i = 0; i < element.data.items.length; i++) {
-                    let e = element.data.items[i] as C4InterfaceTab;
-
-                    nodes.push(new TextNode(e.name, `Screen [${e.screenId}] - Icon [${e.iconId}]`, "list-filter", {
-                      type: "Tab",
-                      item: e
-                    }));
+                  if (element.data.command) {
+                      let e = element.data.command as C4InterfaceCommand
+                      nodes.push(new TextNode(e.name, e.type, "code", {
+                          type: 'TabCommand',
+                          item: element.data.command,
+                      }))
+                  } else {
+                    for (var i = 0; i < element.data.items.length; i++) {
+                        let e = element.data.items[i] as C4InterfaceTab;
+    
+                        nodes.push(new TextNode(e.name, `Screen [${e.screenId}] - Icon [${e.iconId}]`, "list-filter", {
+                          type: "Tab",
+                          item: e
+                        }));
+                      }
                   }
                   break;
+
+
                   
               }
 

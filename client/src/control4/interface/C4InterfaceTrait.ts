@@ -23,7 +23,7 @@ export default class C4InterfaceTrait {
         return node;
     }
 
-    static fromXml(obj : XMLBuilder) : C4InterfaceTrait {
+    static fromXml(obj) : C4InterfaceTrait {
       let i = new C4InterfaceTrait();
   
       i.property = obj["Property"]

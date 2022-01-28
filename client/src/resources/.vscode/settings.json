@@ -14,7 +14,6 @@
     },
     "Lua.diagnostics.globals": [
         "Properties",
-        "C4",
         "JSON"
     ],
     "Lua.workspace.library": [

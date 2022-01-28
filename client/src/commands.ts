@@ -12,6 +12,7 @@ import EventsResource from './components/events';
 import CommandsResource from './components/commands';
 import ConnectionsResource from './components/connections';
 import ProxiesResource from './components/proxies';
+import UIResource from "./components/ui";
 
 // Retrieve the package, settings, and tasks from json template
 import pjson from "./resources/package.json";
@@ -63,18 +64,19 @@ async function control4Create() {
     await CommandsResource.initialize();
     await ConnectionsResource.initialize();
     await ProxiesResource.initialize();
+    await UIResource.initialize();
 
     // Initialize vscode settings
     await WriteIfNotExists(path.join(root, ".vscode", "settings.json"), JSON.stringify(templateSettings, null, 2));
     await WriteIfNotExists(path.join(root, ".vscode", "tasks.json"), JSON.stringify(templateTasks, null, 2));
-    await WriteIfNotExists(path.join(root, ".gitignore"), await ReadFileContents(path.join(this.extensionUri.fsPath, "resources", "templates", ".gitignore")));
+    await WriteIfNotExists(path.join(root, ".gitignore"), await ReadFileContents(path.join(this.extensionUri.fsPath, "client", "src", "resources", "templates", ".gitignore")));
     await WriteIfNotExists(path.join(root, ".npmrc"), "@annex4:registry=https://npm.pkg.github.com" );
 
     // Initialize tests
     //let file = vscode.Uri.file(vscode.Uri.joinPath(this.extensionUri, "resources", "driver.xml").path);
     //let xml = await fsPromises.readFile(file.fsPath);
 
-    let contents = await ReadFileContents(path.join(this.extensionUri.fsPath, "resources", "templates", "test.lua"));
+    let contents = await ReadFileContents(path.join(this.extensionUri.fsPath, "client", "src", "resources", "templates", "test.lua"));
 
     await WriteIfNotExists(path.join(root, "tests", "test.lua"), contents);
   } catch (err) {
@@ -84,8 +86,17 @@ async function control4Create() {
 
 async function control4Import() {
   let p = vscode.window.showOpenDialog();
+  
+  // Initialize all component files
+  await ActionsResource.initialize();
+  await PropertiesResource.initialize();
+  await EventsResource.initialize();
+  await CommandsResource.initialize();
+  await ConnectionsResource.initialize();
+  await ProxiesResource.initialize();
+  await UIResource.initialize();
 
-  p.then(async function (result: vscode.Uri[]) {
+  p.then(async (result: vscode.Uri[]) => {
     let c4z = result[0];
 
     let zip = new AdmZip(c4z.fsPath);
@@ -115,13 +126,14 @@ async function control4Import() {
             ConnectionsResource.Write(driver.connections),
             EventsResource.Write(driver.events),
             CommandsResource.Write(driver.commands),
-            ProxiesResource.Write(driver.proxies)
+            ProxiesResource.Write(driver.proxies),
+            UIResource.Write(driver.UI)
           ])
 
           // Initialize vscode settings
           await WriteIfNotExists(path.join(root, ".vscode", "settings.json"), JSON.stringify(templateSettings, null, 2));
           await WriteIfNotExists(path.join(root, ".vscode", "tasks.json"), JSON.stringify(templateTasks, null, 2));
-          await WriteIfNotExists(path.join(root, ".gitignore"), await ReadFileContents(path.join(this.extensionUri.fsPath, "resources", "templates", ".gitignore")));
+          await WriteIfNotExists(path.join(root, ".gitignore"), await ReadFileContents(path.join(this.extensionUri.fsPath, "client", "src", "resources", "templates", ".gitignore")));
           await WriteIfNotExists(path.join(root, ".npmrc"), "@annex4:registry=https://npm.pkg.github.com" );
           
           var handler = await fsPromises.open(path.join(root, "package.json"), 'wx');
@@ -136,7 +148,7 @@ async function control4Import() {
           await handler.writeFile(JSON.stringify(templatePackage, null, 2));
           await handler.close()
 
-          let tests = await ReadFileContents(path.join(this.extensionUri.fsPath, "resources", "templates", "test.lua"));
+          let tests = await ReadFileContents(path.join(this.extensionUri.fsPath, "client", "src", "resources", "templates", "test.lua"));
 
           await WriteIfNotExists(path.join(root, "tests", "test.lua"), tests);
         } catch (err) {

@@ -41,7 +41,7 @@ export default class C4InterfaceIcons {
     let icons = new C4InterfaceIcons();
 
     icons.id = obj["@id"]
-    icons.icons = obj.Icons.map(function(i) {
+    icons.icons = obj.Icon.map(function(i) {
       return C4InterfaceIcon.fromXml(i);
     })
 

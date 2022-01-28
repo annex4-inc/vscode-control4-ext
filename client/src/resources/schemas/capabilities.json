@@ -53,7 +53,19 @@
         "can_set_aec": {"type": "boolean"},
         "is_doorstation": {"type": "boolean"},
         "audio_codecs_supported": { "type" : "string", "default": "" },
-        "vidio_codecs_supported": { "type" : "string", "default": "" }
+        "vidio_codecs_supported": { "type" : "string", "default": "" },
+        "hide_in_list_nav": {"type" : "boolean"},
+        "hide_in_media": {"type" : "boolean"},
+        "digital_audio_support": {"type" : "boolean"},
+        "can_scan_media": {"type" : "boolean"},
+        "ui_selects_device": {"type" : "boolean"},
+        "navigator_display_option": {
+            "type": "object",
+            "properties": {
+                "proxybindingid": {"type": "number"},
+                "translation_url": {"type": "string"}
+            }
+        }
       }
     }
   },

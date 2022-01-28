@@ -5,7 +5,7 @@ import * as builder from 'xmlbuilder2';
 import C4InterfaceParameter from './C4InterfaceParameter';
 
 @jsonObject
-export default class C4InterfaceDataCommand {
+export default class C4InterfaceCommand {
     @jsonMember
     name: string
 
@@ -16,7 +16,7 @@ export default class C4InterfaceDataCommand {
     params: C4InterfaceParameter[]
     
     toXml() {
-        let node = builder.create("DataCommand").root();
+        let node = builder.create("Command").root();
 
         node.ele("Name", this.name);
         node.ele("Type", this.type);
@@ -30,8 +30,8 @@ export default class C4InterfaceDataCommand {
         return node;
     }
 
-    static fromXml(obj) : C4InterfaceDataCommand {
-      let a = new C4InterfaceDataCommand();
+    static fromXml(obj) : C4InterfaceCommand {
+      let a = new C4InterfaceCommand();
         
       if (obj.Params) {
           let params = obj.Params.Param

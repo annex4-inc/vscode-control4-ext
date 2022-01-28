@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
 import { C4Parameter } from './C4Parameter'
+import { Driver } from './driver';
 
 @jsonObject
 export class C4Action {
@@ -42,10 +43,15 @@ export class C4Action {
         let a = new C4Action();
 
         a.name = obj.name
-        a.command = obj.commands
-        a.params = obj.params.map(function(p) {
-            return C4Parameter.fromXml(obj.params)
-        }) 
+        a.command = obj.command
+
+        if (obj.params) {
+            let params = Driver.CleanXmlArray(obj.params, "param");
+
+            a.params = params.map(function(p) {
+                return C4Parameter.fromXml(p)
+            }) 
+        }
 
         return a
     }

@@ -84,7 +84,15 @@ export class C4Port {
 @jsonObject
 export class C4ConnectionClass {
     @jsonMember classname: string
-    @jsonMember autobind: boolean
+
+    @jsonMember({deserializer: value => {
+        if (typeof(value) == "string") {
+          return value.toLowerCase() == "true"
+        } else {
+          return value;
+        }
+    }}) autobind: boolean
+    
     @jsonArrayMember(C4Port) ports?: C4Port[]
 
     toXml() {

@@ -7,7 +7,10 @@ import C4InterfaceTrait from './C4InterfaceTrait';
 @jsonObject
 export default class C4InterfaceList {
     @jsonMember
-    defaultAction: string
+    defaultActionProperty: string
+
+    @jsonMember
+    actionIdsProperty: string
 
     @jsonMember
     titleProperty: string
@@ -27,10 +30,17 @@ export default class C4InterfaceList {
     @jsonMember
     isLink: C4InterfaceTrait
 
+    @jsonMember
+    isHeader: C4InterfaceTrait
+
+    @jsonMember
+    willTranslate: C4InterfaceTrait
+
     toXml() {
         let node = builder.create("Param").root();
 
-        node.ele("DefaultAction", this.defaultAction);
+        node.ele("ItemDefaultActionProperty", this.defaultActionProperty);
+        node.ele("ItemActionIdsProperty", this.actionIdsProperty);
         node.ele("TitleProperty", this.titleProperty);
         node.ele("SubTitleProperty", this.subtitleProperty);
         node.ele("ImageProperty", this.imageProperty);
@@ -43,12 +53,17 @@ export default class C4InterfaceList {
     static fromXml(obj) : C4InterfaceList {
       let i = new C4InterfaceList()
   
-      i.defaultAction = obj["DefaultAction"]
+      i.defaultActionProperty = obj["ItemDefaultActionProperty"]
+      i.actionIdsProperty = obj["ItemActionIdsProperty"]
       i.titleProperty = obj["TitleProperty"]
       i.subtitleProperty = obj["SubTitleProperty"];      
       i.imageProperty = obj["ImageProperty"];
       i.iconProperty = obj["IconProperty"];
       i.lengthProperty = obj["LengthProperty"];
+  
+      i.isLink = obj.IsLink ? C4InterfaceTrait.fromXml(obj.IsLink) : undefined;
+      i.isHeader = obj.IsHeader ? C4InterfaceTrait.fromXml(obj.IsHeader) : undefined;
+      i.willTranslate = obj.WillTranslate ? C4InterfaceTrait.fromXml(obj.WillTranslate): undefined;
   
       return i
     }
