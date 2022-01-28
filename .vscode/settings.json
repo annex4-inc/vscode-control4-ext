@@ -8,7 +8,7 @@
         "**/node_modules": true
     },
     "editor.insertSpaces": true,
-    "editor.tabSize": 4,
+    "editor.tabSize": 2,
     "js/ts.implicitProjectConfig.experimentalDecorators": true,
     "tslint.enable": true,
     "typescript.tsc.autoDetect": "off",

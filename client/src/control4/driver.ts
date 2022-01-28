@@ -467,9 +467,22 @@ export class Driver {
     d.driver = devicedata.driver
 
     if (devicedata.capabilities) {
-        if (devicedata.capabilities.UI) {
-            d.UI.push(C4UI.fromXml(devicedata.capabilities.UI));
-        }
+        Object.keys(devicedata.capabilities).forEach(function(key: string) {
+            let value : string = devicedata.capabilities[key];
+
+            if (key == "navigator_display_option")  {
+              d.capabilities[key] = {
+                proxybindingid: value["@proxybindingid"],
+                translation_url: value["translation_url"]
+              }
+            } else if (key == "UI") {
+              d.UI.push(C4UI.fromXml(devicedata.capabilities.UI));
+            } else if (value.match("[Tt][Rr][Uu][Ee]") || value.match("[Ff][Aa][Ll][Ss][Ee]")) {
+              d.capabilities[key] = asBoolean(value);
+            } else {
+              d.capabilities[key] = value;
+            }
+        });
     }
 
     if (devicedata.connections) {

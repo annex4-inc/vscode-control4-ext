@@ -135,8 +135,6 @@ async function control4Import() {
           await WriteIfNotExists(path.join(root, ".vscode", "tasks.json"), JSON.stringify(templateTasks, null, 2));
           await WriteIfNotExists(path.join(root, ".gitignore"), await ReadFileContents(path.join(this.extensionUri.fsPath, "client", "src", "resources", "templates", ".gitignore")));
           await WriteIfNotExists(path.join(root, ".npmrc"), "@annex4:registry=https://npm.pkg.github.com" );
-          
-          var handler = await fsPromises.open(path.join(root, "package.json"), 'wx');
 
           templatePackage.name = driver.name.toLowerCase().replace(" ", "_");
           templatePackage.control4.name = driver.name;
@@ -144,7 +142,9 @@ async function control4Import() {
           templatePackage.control4.model = driver.model;
           templatePackage.control4.manufacturer = driver.manufacturer;
           templatePackage.control4.creator = driver.creator;
+          templatePackage.control4.capabilities = driver.capabilities;
 
+          var handler = await fsPromises.open(path.join(root, "package.json"), 'wx');
           await handler.writeFile(JSON.stringify(templatePackage, null, 2));
           await handler.close()
 

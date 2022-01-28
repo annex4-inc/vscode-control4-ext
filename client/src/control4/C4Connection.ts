@@ -92,7 +92,7 @@ export class C4ConnectionClass {
           return value;
         }
     }}) autobind: boolean
-    
+
     @jsonArrayMember(C4Port) ports?: C4Port[]
 
     toXml() {
@@ -117,7 +117,7 @@ export class C4ConnectionClass {
     static fromXml(obj) : C4ConnectionClass {
         let c = new C4ConnectionClass()
 
-        c.autobind = obj.autobind;
+        c.autobind = obj.autobind ? obj.autobind.toLowerCase() == "true" : obj.autobind
         c.classname = obj.classname;
         
         if (obj.ports) {

@@ -70,13 +70,5 @@
     }
   },
   "type": "object",
-  "minItems": 0,
-  "uniqueItems": true,
-  "items": {
-    "allOf": [
-      {
-        "$ref": "#/definitions/capability"
-      }
-    ]
-  }
+  "$ref": "#/definitions/capability"
 }
