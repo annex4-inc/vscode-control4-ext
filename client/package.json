@@ -16,7 +16,6 @@
         "vscode": "^1.52.0"
     },
     "dependencies": {
-        "@types/adm-zip": "^0.4.33",
         "adm-zip": "^0.5.2",
         "fs-extra": "^9.0.1",
         "lodash.ismatch": "^4.4.0",
@@ -32,6 +31,7 @@
         "@rollup/plugin-commonjs": "^14.0.0",
         "@rollup/plugin-node-resolve": "^8.0.0",
         "@rollup/plugin-typescript": "^6.0.0",
+        "@types/adm-zip": "^0.4.33",
         "@tsconfig/svelte": "^1.0.0",
         "@types/vscode": "^1.52.0",
         "rollup": "^2.3.4",

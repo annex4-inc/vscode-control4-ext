@@ -1,0 +1,10 @@
+{
+	"compilerOptions": {
+		"strict": false,
+		"noImplicitAny": false,
+		"noImplicitReturns": false,
+		"noImplicitThis": false,
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+	}
+}

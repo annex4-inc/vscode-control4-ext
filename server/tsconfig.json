@@ -1,24 +1,20 @@
 {
+	"extends": "../tsconfig.base.json",
     "compilerOptions": {
-        "target": "es2019",
-        "lib": [
-            "ES2019"
-        ],
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "strict": true,
-        "outDir": "out",
-        "rootDir": "src",
-        "skipLibCheck": true,
+		"target": "es2020",
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"outDir": "out",
+		"rootDir": "src",
+		"lib": [ "es2020" ],
         "resolveJsonModule": true,
         "esModuleInterop": true
-    },
-    "include": [
-        "src"
-    ],
-    "exclude": [
-        "node_modules",
-        ".vscode-test"
-    ]
+	},
+	"include": [
+		"src"
+	],
+	"exclude": [
+		"node_modules"
+	]
 }
