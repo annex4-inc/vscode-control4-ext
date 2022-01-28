@@ -1,9 +1,7 @@
 import { BuildStage } from '../builder';
-import openssl from 'openssl';
 import * as path from 'path';
-import { ReadFileContents } from '../../utility';
-import * as vscode from 'vscode';
-
+import * as cp from 'child_process';
+import * as fs from 'fs'
 export default class OpenSSLStage implements BuildStage {
     encrypted: boolean
     certificatePath: string
@@ -20,7 +18,20 @@ export default class OpenSSLStage implements BuildStage {
             let input = path.join(intermediate, "driver.lua");
             let output = path.join(intermediate, "driver.lua.encrypted");
 
-            let request = {
+            cp.exec(`openssl smime -encrypt -binary -aes-256-cbc -in ${input} -out ${output} -outform DER ${this.certificatePath}`,
+                {timeout: 3000}, async (err, stdout, stderr) => {
+                if (stderr !== "") {
+                    reject({message: stderr})
+                } else {
+                    await fs.promises.unlink(path.join(intermediate, "driver.lua"));
+
+                    resolve("Encrypted Driver");
+                }
+            });
+
+            //
+
+            /*let request = {
                 verb: "smime",
                 flags:  `-encrypt -binary -aes-256-cbc -in ${input} -out ${output} -outform DER`,
                 tail: `${this.certificatePath}`
@@ -38,7 +49,7 @@ export default class OpenSSLStage implements BuildStage {
                 }
             } catch (err) {
                 reject(err);
-            }
+            }*/
         });
     }
 
