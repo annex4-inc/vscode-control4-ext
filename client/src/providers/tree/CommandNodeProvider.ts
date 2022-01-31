@@ -2,9 +2,10 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import CommandNode from './CommandNode';
 import { TreeNodeProvider } from './TreeNodeProvider';
-import { C4Command } from '../../control4';
+import { C4Command, C4Parameter } from '../../control4';
 import { TypedJSON } from 'typedjson';
 import { ParameterNode } from './ParameterNode';
+import { StringNode } from './StringNode';
 
 export class CommandNodeProvider extends TreeNodeProvider<CommandNode> {
     private _componentPath: string
@@ -26,7 +27,17 @@ export class CommandNodeProvider extends TreeNodeProvider<CommandNode> {
         try {
             console.log(element)
 
-            if (element) {
+            if (element && element.data instanceof C4Parameter) {
+                var params = [];
+
+                for (var i = 0; i < element.data.items.length; i++) {
+                    let e = element.data.items[i]
+          
+                    params.push(new StringNode(e));
+                  }
+
+                return Promise.resolve(params);
+            } else if (element && element.data instanceof C4Command) {
                 var params = [];
                 
                 if (!element.data.params) {
@@ -37,39 +48,6 @@ export class CommandNodeProvider extends TreeNodeProvider<CommandNode> {
                     let e = element.data.params[i]
 
                     params.push(new ParameterNode(e.name, e, element));
-                }
-    
-                return Promise.resolve(params);
-
-                var params = [];
-                for (var i = 0; i < element.data.params.length; i++) {
-                    let e = element.data.params[i]
-    
-                    if (e.type == "RANGED_INTEGER") {
-                        params.push({
-                            label: e.name,
-                            name: e.name,
-                            description: `${e.type} [${e.minimum}-${e.maximum}]`,
-                            iconPath: new vscode.ThemeIcon("info", new vscode.ThemeColor("icon.foreground")),
-                            command: {
-                                command: "command.select",
-                                title: "Select Command",
-                                arguments: [e]
-                            }
-                        })
-                    } else {
-                        params.push({
-                            label: e.name,
-                            name: e.name,
-                            description: e.type,
-                            iconPath: new vscode.ThemeIcon("info", new vscode.ThemeColor("icon.foreground")),
-                            command: {
-                                command: "command.select",
-                                title: "Select Command",
-                                arguments: [e]
-                            }
-                        })
-                    }
                 }
     
                 return Promise.resolve(params);

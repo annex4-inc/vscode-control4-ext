@@ -119,10 +119,13 @@
     }
 
     if (event != "" && event != null && event != undefined) {
-      param.items = [...param.items, event.target.param];
+      param.items = [...param.items, event.target.value];
 
       event.target.value = "";
-    }
+    }    
+
+    // This will cause a reactive update on the interface.
+    value.params = value.params;
   }
 
   function removeItem(param, item) {
@@ -130,11 +133,10 @@
       param.items = [];
     }
 
-    for (let i = param.items.length - 1; i >= 0; i--) {
-      if (param.items[i] == item) {
-        param.items = param.items.filter((p) => p !== item);
-      }
-    }
+    param.items = param.items.filter((p) => p !== item);
+
+    // This will cause a reactive update on the interface.
+    value.params = value.params;
   }
 
   function validate(param) {
@@ -149,7 +151,7 @@
 </script>
 
 <main>
-  <div class="page">
+  <div class="page-wide">
     <label for="name">Name</label>
     <input name="name" type="text" bind:value={value.name} />
 
@@ -163,70 +165,87 @@
       </div>
     </div>
 
-    <div style="margin-left: 15px;">
+    <table class="full-width">
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Options</th>
+            <th>Default</th>
+            <th style="width:32px">Actions</th>
+        </tr>
     {#each value.params as param}
-      <label for="name">Name</label>
-      <input name="name" type="text" bind:value={param.name} /> <button on:click={removeParameter(param)}>Remove</button>
+    <tr>
+        <td>
+            <input name="name" type="text" bind:value={param.name} />
+        </td>
 
-      <!-- Selection for value Type -->
-      <label for="type">Type</label>
-      <!-- svelte-ignore a11y-no-onchange -->
-      <select name="type" bind:value={param.type} on:input={validate(param)} on:change={validate(param)}>
-        {#each properties as p}
-          <option value={p.value} selected={param.type == p.value}>
-            {p.name}
-          </option>
-        {/each}
-      </select>
+        <td>
+            <!-- svelte-ignore a11y-no-onchange -->
+            <select name="type" bind:value={param.type} on:input={validate(param)} on:change={validate(param)}>
+                {#each properties as p}
+                <option value={p.value} selected={param.type == p.value}>
+                    {p.name}
+                </option>
+                {/each}
+            </select>
+        </td>
 
-      <!-- If the type is a list the default and items need to be shown-->
-      {#if param.type == "LIST" && param.items}
-        <ul>
-          {#each param.items as item}
+        <td>
+        <!-- If the type is a list the default and items need to be shown-->
+        {#if param.type == "LIST" && param.items}
+            <ul>
+            {#each param.items as item}
+                <li class="list-item">
+                <input type="text" group={param.items} bind:value={item} />
+                <button on:click={removeItem(param, item)}>Remove</button>
+                </li>
+            {/each}
             <li class="list-item">
-              <input type="text" group={param.items} bind:value={item} />
-              <button on:click={removeItem(param, item)}>Remove</button>
+                <input type="text" group={param.items} on:change={event => addItem(param, event)} />
             </li>
-          {/each}
-          <li class="list-item">
-            <input type="text" group={param.items} on:change={event => addItem(param, event)} />
-          </li>
-        </ul>
-        <label for="default">Default</label>
-        <select name="type" bind:value={param.default}>
-          {#each param.items as p}
-            <option value={p} selected={p == param.default}>
-              {p}
-            </option>
-          {/each}
-        </select>
-      {:else if param.type == "RANGED_INTEGER" || param.type == "RANGED_FLOAT"}
-        <div class="range">
-          <div>
-            <label for="minimum">Minimum</label>
-            <input name="minimum" type="number" bind:value={param.minimum} />
-          </div>
+            </ul>
+        {:else if param.type == "RANGED_INTEGER" || param.type == "RANGED_FLOAT"}
+            <div class="range">
+            <div>
+                <label for="minimum">Minimum</label>
+                <input name="minimum" type="number" bind:value={param.minimum} />
+            </div>
 
-          <div class="maximum">
-            <label for="maximum">Maximum</label>
-            <input name="maximum" type="number" bind:value={param.maximum} />
-          </div>
-        </div>
+            <div class="maximum">
+                <label for="maximum">Maximum</label>
+                <input name="maximum" type="number" bind:value={param.maximum} />
+            </div>
+            </div>
+        {/if}
+        </td>
+        <td>
+        {#if param.type == "LIST" && param.items}
+            <select name="type" bind:value={param.default}>
+                {#each param.items as p}
+                    <option value={p} selected={p == param.default}>
+                    {p}
+                    </option>
+                {/each}
+                </select>
+        {:else if param.type == "RANGED_INTEGER" || param.type == "RANGED_FLOAT"}
+            <input
+            name="default"
+            type="number"
+            min={param.minimum}
+            max={param.maximum}
+            bind:value={param.default}
+            />   
+        {:else}
+            <input name="default" type="text" bind:value={param.default} />
+        {/if}     
+        </td>
+        <td class="align-center">
+            <button class="round-button" on:click={removeParameter(param)}>-</button>
+        </td>
+    </tr>
 
-        <label for="default">Default</label>
-        <input
-          name="default"
-          type="number"
-          min={param.minimum}
-          max={param.maximum}
-          bind:value={param.default}
-        />
-      {:else}
-        <label for="default">Default</label>
-        <input name="default" type="text" bind:value={param.default} />
-      {/if}
     {/each}
-    </div>
+</table>
 
     
 

@@ -97,9 +97,6 @@ export class UINodeProvider extends TreeNodeProvider<UINode> {
                       }
                   }
                   break;
-
-
-                  
               }
 
               return Promise.resolve(nodes);

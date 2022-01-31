@@ -4,6 +4,54 @@
     max-width: 400px;
 }
 
+.page-wide {
+    margin: auto;
+    width: 100%;
+    max-width: 800px;
+}
+
+table {
+    margin: 8px 0px;
+    border-collapse: collapse;
+}
+
+table tr {
+    border-bottom: 1px solid #777;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.align-center {
+    text-align: center;;
+}
+
+.toolbar {
+    margin: 8px 0px;
+}
+
+.parameters {
+    margin: 8px 0px;
+}
+
+.parameter {
+    display:flex;
+    align-items: center;
+    text-align: center;
+}
+
+
+.btn-sm {
+    width: 24px;
+    height: 24px;
+}
+
+.input {
+    padding: 4px;
+}
+
+
 .page > * {
     margin: 4px 0px;
 }
