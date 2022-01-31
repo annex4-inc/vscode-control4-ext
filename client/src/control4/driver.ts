@@ -180,7 +180,33 @@ export class Driver {
             Object.keys(this.capabilities).forEach((key) => {
                 let value = this.capabilities[key]
 
-                if (typeof (value) == "object") {
+                if (key == "navigator_display_option") {
+                    let attributes = {
+                        ...value.attributes
+                    }
+
+                    if (value.proxybindingid) {
+                        attributes.proxybindingid = value.proxybindingid
+                    }
+
+                    let node = nCapabilities.ele(key, attributes);
+
+                    if (value.display_icons) {
+                        let icons = node.ele("display_icons");
+
+                        for (let i = 0; i < value.display_icons.length; i++) {
+                            if (value.display_icons[i].repeat) {
+                                let r = value.display_icons[i].repeat
+                                for (let j = r.start_size; j <= r.end_size; j += r.increment) {
+                                    icons.ele("Icon", {
+                                        width: j,
+                                        height: j,
+                                    }).txt(r.path.replace("%SIZE%", j));
+                                }  
+                            }
+                        }
+                    }
+                } else if (typeof (value) == "object") {
                     if (value.attributes) {
                         if (typeof (value.value) == "object") {
                             let node = builder.create(value.value);
@@ -430,7 +456,7 @@ export class Driver {
                         d.capabilities[key].display_icons = icons.map((i) => {
                             return C4InterfaceIcon.fromXml(i);
                         })
-                    } 
+                    }
                 } else if (key == "UI") {
                     d.UI.push(C4UI.fromXml(devicedata.capabilities.UI));
                 } else if (value.match("[Tt][Rr][Uu][Ee]") || value.match("[Ff][Aa][Ll][Ss][Ee]")) {

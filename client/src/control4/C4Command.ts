@@ -1,3 +1,5 @@
+
+import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
 import { C4Parameter } from './C4Parameter'
