@@ -21,7 +21,7 @@
         "lodash.ismatch": "^4.4.0",
         "npm": "^6.14.10",
         "reflect-metadata": "^0.1.13",
-        "typedjson": "^1.6.0",
+        "typedjson": "^1.8.0",
         "vscode-languageclient": "^7.0.0",
         "xml2js": "^0.4.23",
         "xmlbuilder2": "^2.4.0"

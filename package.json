@@ -2,7 +2,7 @@
   "name": "vscode-control4",
   "displayName": "Control4",
   "description": "Control4 driver development tooling.",
-  "version": "1.0.1",
+  "version": "0.0.1",
   "publisher": "annex4",
   "repository": {
     "type": "git",
@@ -58,24 +58,12 @@
     ],
     "commands": [
       {
-        "command": "control4.package",
-        "title": "Package Driver"
-      },
-      {
         "command": "control4.rebuildTestDependencies",
         "title": "Rebuild Test Dependencies"
       },
       {
-        "command": "control4.release",
-        "title": "Release Driver"
-      },
-      {
         "command": "control4.create",
         "title": "Create Project"
-      },
-      {
-        "command": "control4.viewVue",
-        "title": "Launch Vue"
       },
       {
         "command": "control4.import",
@@ -380,7 +368,7 @@
             "DriverPackager"
           ],
           "enumDescriptions": [
-            "Uses OpenSSL to encrypt the driver lua",
+            "Uses OpenSSL to encrypt the driver",
             "Uses DriverPackager from the Control4 DriverEditor to encrypt and package the driver"
           ]
         },
