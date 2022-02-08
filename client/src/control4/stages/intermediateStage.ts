@@ -6,9 +6,6 @@ export default class IntermediateStage implements BuildStage {
   Execute(source: string, intermediate: string, destination: string): Promise<any> {
     return new Promise(async (resolve, reject) => {
       try {
-        // Remove all exists files from the intermediate folder
-        await fs.promises.rmdir(intermediate, { recursive: true })
-
         // Copy from source to intermediate
         fse.copy(source, intermediate, async (err, data) => {
           if (err) {
@@ -28,7 +25,7 @@ export default class IntermediateStage implements BuildStage {
   }
 
   OnFailure(result: any): String {
-    return `[Intermediate] Failed to copy files into intermediate build folder`;
+    return `[Intermediate] Failed to copy files into intermediate build folder\r\n${result.message}`;
   }
 }
 

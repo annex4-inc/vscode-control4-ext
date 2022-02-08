@@ -12,7 +12,8 @@ import {
     ManifestStage,
     DependencyInjectionStage,
     ZipStage,
-    CopyToOutputStage
+    CopyToOutputStage,
+    CleanStage
 } from "./stages"
 
 export enum BuildVersion {
@@ -35,6 +36,7 @@ export class Builder {
     // Prepare the build stages
     let stages = new Array<BuildStage>();
         stages.push(new IncrementVersionStage());
+        stages.push(new CleanStage());
         stages.push(new IntermediateStage());
         stages.push(new DriverXmlBuildStage(_package, encrypted));
         stages.push(new DependencyInjectionStage(_package));

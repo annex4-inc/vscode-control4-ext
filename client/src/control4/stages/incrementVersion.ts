@@ -4,11 +4,11 @@ import { BuildStage } from '../builder';
 import { StartProcess } from '../../utility';
 
 export default class IncrementVersionStage implements BuildStage {
-    Execute(source: string, intermediate: string, destination: string): Promise<any> {
+    async Execute(source: string, intermediate: string, destination: string): Promise<any> {
         const increment = vscode.workspace.getConfiguration('control4.build').get<boolean>('autoIncrementVersion');
 
         if (increment) {
-            return StartProcess("npm", ["version", "--no-git-tag-version", "patch"])
+            return await StartProcess("npm", ["version", "--no-git-tag-version", "patch"])
         }
     }
 
