@@ -167,10 +167,9 @@
                                     "repeat": {
                                         "type": "object",
                                         "properties": {
-                                            "start_width": {"type": "number"},
-                                            "start_height": {"type": "number"},
+                                            "start_size": {"type": "number"},
+                                            "end_size": {"type": "number"},
                                             "increment": {"type": "number"},
-                                            "count": {"type": "number"},
                                             "path": {"type": "string"}
                                         }
                                     }
