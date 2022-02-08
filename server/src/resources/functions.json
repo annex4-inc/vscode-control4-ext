@@ -5689,24 +5689,24 @@
   },
   {
     "label": "Custom",
-    "signature": "C4:Custom(url, method data, headers)",
+    "signature": "C4:Custom(url, method, data, headers)",
     "description": "Starts a HTTP transfer with a custom request method as specified by the method argument.",
     "documentation": null,
     "version": "2.10.5",
     "parameters": [
       {
-        "type": "url",
+        "type": "string",
         "name": "url",
-        "description": "String of the URL to perform the PUT method on."
+        "description": "String of the URL to perform the method on."
       },
       {
         "type": "string",
-        "name": "method data",
+        "name": "method",
         "description": "String of the request method."
       },
       {
         "type": "string",
-        "name": "headers",
+        "name": "data",
         "description": "String of the request body to be sent."
       },
       {
@@ -5726,7 +5726,7 @@
     "version": "2.10.5",
     "parameters": [
       {
-        "type": "url",
+        "type": "string",
         "name": "url",
         "description": "String of the URL to perform the DELETE method on."
       },
@@ -5752,7 +5752,7 @@
     "version": "2.10.5",
     "parameters": [
       {
-        "type": "url",
+        "type": "string",
         "name": "url",
         "description": "String of the URL to perform the GET E method on."
       },
@@ -5837,7 +5837,7 @@
     "version": "2.10.5",
     "parameters": [
       {
-        "type": "url",
+        "type": "string",
         "name": "url",
         "description": "String of the URL to perform the POST method on."
       },
@@ -5863,7 +5863,7 @@
     "version": "3.0.0",
     "parameters": [
       {
-        "type": "url",
+        "type": "string",
         "name": "url",
         "description": "String of the URL to perform the POST method on."
       },
@@ -6164,6 +6164,15 @@
       }
     ],
     "returns": [],
+    "deprecated": false
+  },
+  {
+    "label": "url",
+    "signature": "C4:url()",
+    "description": "Utilizes a more flexible callback-based object interface. A call to this function returns a C4LuaUrl object that can be set up with various callback functions and options. Once set up, a call to its methods: Get(), Post(), Put(), Delete(), or Custom() initiates the transfer.",
+    "documentation": null,
+    "version": "2.10.5",
+    "parameters": [],
     "deprecated": false
   },
   {
