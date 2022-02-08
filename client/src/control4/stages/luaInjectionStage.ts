@@ -7,13 +7,13 @@ export default class LuaInjectionStage implements BuildStage {
     constructor() {
     }
 
-    async Execute(source: string, intermediate: string, destination: string): Promise<any> {
+    async Execute(_source: string, intermediate: string, _destination: string): Promise<any> {
         let srcFile = path.join(intermediate, "driver.lua")
         let srcDocument = await ReadFileContents(srcFile);
 
         let injections = [
             "C4:AllowExecute(true)",
-            "gIsDevelopmentVersionOfDriver = true",
+            //"gIsDevelopmentVersionOfDriver = true",
             "\r\n"
         ]
 

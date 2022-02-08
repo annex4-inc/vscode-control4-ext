@@ -1,9 +1,8 @@
 import { BuildStage } from '../builder';
-import * as fs from 'fs';
 import * as fse from 'fs-extra';
 
 export default class IntermediateStage implements BuildStage {
-  Execute(source: string, intermediate: string, destination: string): Promise<any> {
+  Execute(source: string, intermediate: string, _destination: string): Promise<any> {
     return new Promise(async (resolve, reject) => {
       try {
         // Copy from source to intermediate

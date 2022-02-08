@@ -2,8 +2,6 @@
 import { BuildStage } from '../builder';
 import Package from '../../package';
 import Manifest from '../manifest';
-import { ReadFileContents } from '../../utility';
-import * as path from 'path';
 
 export default class ManifestStage implements BuildStage {
     package: any

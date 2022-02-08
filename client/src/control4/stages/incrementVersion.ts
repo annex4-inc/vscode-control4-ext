@@ -4,7 +4,7 @@ import { BuildStage } from '../builder';
 import { StartProcess } from '../../utility';
 
 export default class IncrementVersionStage implements BuildStage {
-    async Execute(source: string, intermediate: string, destination: string): Promise<any> {
+    async Execute(_source: string, _intermediate: string, _destination: string): Promise<any> {
         const increment = vscode.workspace.getConfiguration('control4.build').get<boolean>('autoIncrementVersion');
 
         if (increment) {

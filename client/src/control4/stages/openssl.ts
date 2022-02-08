@@ -11,45 +11,23 @@ export default class OpenSSLStage implements BuildStage {
         this.certificatePath = certificatePath
     }
 
-    Execute(source: string, intermediate: string, destination: string): Promise<any> {
+    Execute(_source: string, intermediate: string, _destination: string): Promise<any> {
         if (!this.encrypted) { return }
 
         return new Promise<any>(async (resolve, reject) => {
             let input = path.join(intermediate, "driver.lua");
             let output = path.join(intermediate, "driver.lua.encrypted");
+            let command = `openssl smime -encrypt -binary -aes-256-cbc -in ${input} -out ${output} -outform DER ${this.certificatePath}`
 
-            cp.exec(`openssl smime -encrypt -binary -aes-256-cbc -in ${input} -out ${output} -outform DER ${this.certificatePath}`,
-                {timeout: 3000}, async (err, stdout, stderr) => {
+            cp.exec(command, { timeout: 3000 }, async (err, stdout, stderr) => {
                 if (stderr !== "") {
-                    reject({message: stderr})
+                    reject({ message: stderr })
                 } else {
                     await fs.promises.unlink(path.join(intermediate, "driver.lua"));
 
                     resolve("Encrypted Driver");
                 }
             });
-
-            //
-
-            /*let request = {
-                verb: "smime",
-                flags:  `-encrypt -binary -aes-256-cbc -in ${input} -out ${output} -outform DER`,
-                tail: `${this.certificatePath}`
-            }
-
-            try {
-                let result = await openssl(request);
-
-                console.log(result);
-
-                if (result && result.stderr !== "") {
-                    reject({message: result.stderr})
-                } else {
-                    resolve(result.stdout)
-                }
-            } catch (err) {
-                reject(err);
-            }*/
         });
     }
 

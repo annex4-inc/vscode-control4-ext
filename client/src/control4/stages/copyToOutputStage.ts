@@ -13,7 +13,7 @@ export default class CopyToOutputStage implements BuildStage {
         this.pkg = pkg;
     }
 
-    async Execute(source: string, intermediate: string, destination: string): Promise<any> {
+    async Execute(_source: string, _intermediate: string, destination: string): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {
                 if (vscode.workspace.getConfiguration('control4.build').get<boolean>('exportToDriverLocation')) {

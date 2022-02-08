@@ -1,10 +1,8 @@
-
 import { BuildStage } from '../builder';
 import { Driver } from '../driver';
 import Package from '../../package';
 import { WriteFileContents } from '../../utility';
 import * as path from 'path';
-
 
 export default class DriverXmlBuildStage implements BuildStage {
     driver: Driver
@@ -16,7 +14,7 @@ export default class DriverXmlBuildStage implements BuildStage {
         this.encrypted = encrypted;
     }
 
-    async Execute(source: string, intermediate: string, destination: string): Promise<any> {
+    async Execute(_source: string, intermediate: string, _destination: string): Promise<any> {
         this.driver = await Driver.From(this.pkg);
         this.driver.encrypted = this.encrypted;
         
