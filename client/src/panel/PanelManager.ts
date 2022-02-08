@@ -34,9 +34,7 @@ export class PanelManager {
   }
 
   protected subscribe() {
-    console.log("SUBSCRIBE")
     this.currentPanel._panel.webview.onDidReceiveMessage(async (message) => {
-      console.log(`MESSAGE: ${JSON.stringify(message)}`);
       switch (message.type) {
         case 'update':
           let updated = await this.resource.Update(this.currentEntity, message.value);
