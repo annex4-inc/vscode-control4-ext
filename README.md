@@ -57,7 +57,7 @@ local myEnvironmentValue = [[ENV.my_environment_variable]]
 
 ## Roadmap
 - [x] Add support for OpenSSL driver encryption instead of using DriverPackager.exe
-- [ ] Add support for a build option which injects C4:AllowExecute
+- [x] Add support for a build option which injects C4:AllowExecute
 - [ ] Add support for hooks in the language server
 - [ ] Add support for C4:url userdata information
     - [ ] Add completion information for Get, Post, Put, Custom, etc
