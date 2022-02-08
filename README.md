@@ -56,9 +56,13 @@ local myEnvironmentValue = [[ENV.my_environment_variable]]
 * Company: Will automatically include this in the creator element of the driver
 
 ## Roadmap
-* Add support for OpenSSL driver encryption instead of using DriverPackager.exe
-  * This will remove the dependency on DriverEditor completely.
-* Add support for hooks in the language server
+- [x] Add support for OpenSSL driver encryption instead of using DriverPackager.exe
+- [ ] Add support for a build option which injects C4:AllowExecute
+- [ ] Add support for hooks in the language server
+- [ ] Add support for C4:url userdata information
+    - [ ] Add completion information for Get, Post, Put, Custom, etc
+    - [ ] Add completion information for the OnDone callback function
+
 
 ## Figures
 
