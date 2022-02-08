@@ -75,7 +75,7 @@ export class C4Parameter {
         for (const key in this) {
             if (key == "items") {
                 //@ts-ignore
-                let items = node.ele("items").txt(this[key]);
+                let items = node.ele("items");
 
                 this.items.forEach((i) => {
                     items.ele("item").txt(i);
