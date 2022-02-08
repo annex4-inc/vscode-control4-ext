@@ -217,7 +217,7 @@ connection.onCompletion(
           kind: CompletionItemKind.Function,
           data: index,
           detail: func.version,
-          documentation: documentation
+          documentation: documentation,
         }
 
         return item;
@@ -238,11 +238,18 @@ connection.onCompletion(
 
         // SendToProxy
         if (results) {
+          let values = [];
+          
           if (results[2]) {
-            index = (results[2].match(/,/g) || []).length;
+            index = (results[2].match(/,/g) || []).length;  
+
+            for (let i = 2; i < results.length; i++) {
+                let matches = results[i].match(/(.*),/);
+                values.push(matches[1]);
+            }
           } 
           
-          items.push(...Suggestions.Get(results[1], index));
+          items.push(...Suggestions.Get(results[1], index, values));
         }
       }
     }}
@@ -293,7 +300,7 @@ connection.onSignatureHelp((params: SignatureHelpParams, token: CancellationToke
         let parameters = f.parameters?.map((p: any) => {
           let param : ParameterInformation = {
             label: p.name,
-            documentation: p.description,
+            documentation: p.description
           }
 
           return param
