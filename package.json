@@ -52,6 +52,10 @@
           "template": {
             "type": "boolean",
             "description": "True if this is a template that will be built elsewhere"
+          },
+          "development": {
+            "type": "boolean",
+            "description": "True if the driver should allow Lua execution and dev logs"
           }
         }
       }

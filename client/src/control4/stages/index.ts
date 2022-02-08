@@ -8,6 +8,7 @@ import DependencyInjectionStage from './dependencyInjectionStage';
 import ZipStage from './zipStage';
 import CopyToOutputStage from './copyToOutputStage';
 import CleanStage from './cleanStage';
+import LuaInjectionStage from './luaInjectionStage';
 
 export {
     OpenSSLStage,
@@ -18,5 +19,6 @@ export {
     DependencyInjectionStage,
     ZipStage,
     CopyToOutputStage,
-    CleanStage
+    CleanStage,
+    LuaInjectionStage
 }

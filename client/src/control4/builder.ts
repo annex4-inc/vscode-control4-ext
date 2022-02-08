@@ -13,7 +13,8 @@ import {
     DependencyInjectionStage,
     ZipStage,
     CopyToOutputStage,
-    CleanStage
+    CleanStage,
+    LuaInjectionStage
 } from "./stages"
 
 export enum BuildVersion {
@@ -28,7 +29,7 @@ export interface BuildStage {
 }
 
 export class Builder {
-  static async* Build(version: BuildVersion, encrypted: boolean, templated: boolean, context: vscode.ExtensionContext) {
+  static async* Build(version: BuildVersion, encrypted: boolean, templated: boolean, development: boolean, context: vscode.ExtensionContext) {
     const pkg = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, 'package.json');
 
     const _package = await Package.Get(pkg);
@@ -40,6 +41,10 @@ export class Builder {
         stages.push(new IntermediateStage());
         stages.push(new DriverXmlBuildStage(_package, encrypted));
         stages.push(new DependencyInjectionStage(_package));
+
+    if (development) {
+        stages.push(new LuaInjectionStage());
+    }
         
     if (vscode.workspace.getConfiguration('control4').get<string>('buildMethod') == "DriverPackager") {
         stages.push(new ManifestStage(_package, encrypted));
