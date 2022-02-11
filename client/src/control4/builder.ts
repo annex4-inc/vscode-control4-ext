@@ -49,7 +49,9 @@ export class Builder {
     if (vscode.workspace.getConfiguration('control4').get<string>('buildMethod') == "DriverPackager") {
         stages.push(new ManifestStage(_package, encrypted));
     } else {
-        stages.push(new OpenSSLStage(encrypted, context.asAbsolutePath(path.join('client', 'src', 'resources', 'certificate.pem'))));
+        if (!templated) {
+            stages.push(new OpenSSLStage(encrypted, context.asAbsolutePath(path.join('client', 'src', 'resources', 'certificate.pem'))));
+        }
         stages.push(new ZipStage(_package));
     }
 
