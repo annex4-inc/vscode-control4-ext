@@ -10,7 +10,7 @@
 // to report the results back to the caller. When the tests are finished, return
 // a possible error to the callback or null if none.
 
-/*import testRunner from 'vscode/lib/testrunner';
+import testRunner from 'vscode/lib/testrunner';
 
 // You can directly control Mocha options by uncommenting the following lines
 // See https://github.com/mochajs/mocha/wiki/Using-mocha-programmatically#set-options for more info
@@ -20,4 +20,3 @@ testRunner.configure({
 });
 
 module.exports = testRunner;
-*/

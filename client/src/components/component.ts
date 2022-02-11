@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { WriteFileContents, WriteIfNotExists } from '../utility';
+import { WriteIfNotExists } from '../utility';
 import isMatch from 'lodash.ismatch';
 
 export class Component {

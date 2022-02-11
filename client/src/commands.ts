@@ -34,7 +34,6 @@ const fsPromises = fs.promises;
 async function control4Create() {
   try {
     const root = vscode.workspace.workspaceFolders[0].uri.fsPath;
-    let name = templatePackage.name;
 
     try {
       const input = await vscode.window.showInputBox();
@@ -49,6 +48,7 @@ async function control4Create() {
       await handler.close()
     } catch (err) {
       vscode.window.showWarningMessage("package.json already exists.")
+      return;
     }
 
     // Write default lua script
@@ -71,10 +71,6 @@ async function control4Create() {
     await WriteIfNotExists(path.join(root, ".vscode", "tasks.json"), JSON.stringify(templateTasks, null, 2));
     await WriteIfNotExists(path.join(root, ".gitignore"), await ReadFileContents(path.join(this.extensionUri.fsPath, "client", "src", "resources", "templates", ".gitignore")));
     await WriteIfNotExists(path.join(root, ".npmrc"), "@annex4:registry=https://npm.pkg.github.com" );
-
-    // Initialize tests
-    //let file = vscode.Uri.file(vscode.Uri.joinPath(this.extensionUri, "resources", "driver.xml").path);
-    //let xml = await fsPromises.readFile(file.fsPath);
 
     let contents = await ReadFileContents(path.join(this.extensionUri.fsPath, "client", "src", "resources", "templates", "test.lua"));
 
@@ -168,7 +164,7 @@ async function control4Import() {
   })
 }
 
-async function rebuildTestDependencies(ctx) {
+async function rebuildTestDependencies() {
   let pkg = await Package.Get(`${vscode.workspace.rootPath}/package.json`);
   let modules = await pkg.getDependencyOrder();
 
