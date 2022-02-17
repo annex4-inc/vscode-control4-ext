@@ -9,6 +9,7 @@ import ZipStage from './zipStage';
 import CopyToOutputStage from './copyToOutputStage';
 import CleanStage from './cleanStage';
 import LuaInjectionStage from './luaInjectionStage';
+import LuaDeploymentStage from './luaDeploymentStage';
 
 export {
     OpenSSLStage,
@@ -20,5 +21,6 @@ export {
     ZipStage,
     CopyToOutputStage,
     CleanStage,
-    LuaInjectionStage
+    LuaInjectionStage,
+    LuaDeploymentStage
 }

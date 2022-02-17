@@ -166,7 +166,7 @@ async function control4Import() {
 
 async function rebuildTestDependencies() {
   let pkg = await Package.Get(`${vscode.workspace.rootPath}/package.json`);
-  let modules = await pkg.getDependencyOrder();
+  let modules = await pkg.getDependencyOrder(true);
 
   let content = "";
 
