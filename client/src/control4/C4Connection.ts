@@ -161,6 +161,8 @@ export class C4Connection {
                 this.classes.forEach(c => {
                     classes.import(c.toXml())
                 });
+            } else if(key == 'total') {
+                continue;
             } else {
                 //@ts-ignore
                 node.ele(key).txt(this[key])
