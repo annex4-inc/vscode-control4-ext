@@ -2,8 +2,10 @@
     "name": "vscode-control4",
     "displayName": "Control4",
     "description": "Control4 driver development tooling.",
-    "version": "0.0.1",
-    "publisher": "annex4",
+    "icon": "images/annex4.png",
+    "version": "0.0.2",
+    "license": "GPL",
+    "publisher": "annex4-inc",
     "repository": {
         "type": "git",
         "url": "https://github.com/annex4-inc/vscode-control4-ext.git"
