@@ -1,9 +1,9 @@
 {
     "name": "vscode-control4",
-    "displayName": "Control4",
-    "description": "Control4 driver development tooling.",
+    "displayName": "Control4 DriverWorks Support",
+    "description": "Assists in the creation of Control4 drivers",
     "icon": "images/annex4.png",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "license": "GPL",
     "publisher": "annex4-inc",
     "repository": {
