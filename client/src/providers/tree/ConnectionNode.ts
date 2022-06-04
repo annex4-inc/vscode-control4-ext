@@ -19,5 +19,10 @@ export class ConnectionNode extends TreeNode<C4Connection> {
         this.tooltip = `${connection.id}`;
     }
 
+
+    getNameOfType() {
+        return "C4Connection"
+    }
+
     contextValue = "connection";
 }

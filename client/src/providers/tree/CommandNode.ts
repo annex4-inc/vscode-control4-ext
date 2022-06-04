@@ -11,6 +11,11 @@ export default class CommandNode extends TreeNode<C4Command> {
         
         this.tooltip = command.description;
         this.description = command.description;
+        
+    }
+
+    getNameOfType() {
+        return "C4Command"
     }
 
     contextValue = "command";

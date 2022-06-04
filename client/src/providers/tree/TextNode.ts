@@ -11,5 +11,10 @@ export default class TextNode extends TreeNode<any> {
         this.description = description;
     }
 
+    
+    getNameOfType() {
+        return "any"
+    }
+
     contextValue: "text"
 }

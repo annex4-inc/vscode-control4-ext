@@ -13,5 +13,9 @@ export default class UINode extends TreeNode<C4UI> {
         this.tooltip = ui.proxy.toString();
     }
 
+    getNameOfType() {
+        return "C4UI"
+    }
+
     contextValue = "ui";
 }

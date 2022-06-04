@@ -11,5 +11,10 @@ export default class FolderNode extends TreeNode<any> {
         this.description = description;
     }
 
+    
+    getNameOfType() {
+        return "C4Command"
+    }
+
     contextValue = "folder";
 }

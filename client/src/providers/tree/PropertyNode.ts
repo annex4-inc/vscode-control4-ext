@@ -13,6 +13,11 @@ export class PropertyNode extends TreeNode<C4Property> {
         this.tooltip = property.type;
     }
 
+
+    getNameOfType() {
+        return "C4Property"
+    }
+
     contextValue = "property";
 }
 

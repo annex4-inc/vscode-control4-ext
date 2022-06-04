@@ -15,8 +15,6 @@ export abstract class TreeNode<T> extends vscode.TreeItem {
 
     if (this.data) {
       try {
-        console.log(`select.${this.getNameOfType()}`);
-
         this.command = {
           title: "Select",
           command: `select.${this.getNameOfType()}`,
@@ -28,7 +26,8 @@ export abstract class TreeNode<T> extends vscode.TreeItem {
     }
   }
 
-  getNameOfType(): string {
-    return this.data.constructor.name;
-  }
+  /**
+   * @returns The name of the generic type of data for this node
+   */
+  abstract getNameOfType(): String
 }

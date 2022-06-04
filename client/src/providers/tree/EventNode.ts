@@ -13,5 +13,10 @@ export default class EventNode extends TreeNode<C4Event> {
         this.tooltip = event.description;
     }
 
+
+    getNameOfType() {
+        return "C4Event"
+    }
+
     contextValue = "event";
 }

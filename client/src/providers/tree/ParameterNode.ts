@@ -11,5 +11,10 @@ export class ParameterNode extends TreeNode<C4Parameter> {
         this.tooltip = parameter.type;
     }
 
+    
+    getNameOfType() {
+        return "C4Parameter"
+    }
+
     contextValue = "parameter";
 }

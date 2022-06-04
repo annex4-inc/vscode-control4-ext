@@ -9,5 +9,10 @@ export class StringNode extends TreeNode<String> {
     super(name, null);
   }
 
+  
+  getNameOfType() {
+    return "String"
+}
+
   contextValue = "string";
 }
