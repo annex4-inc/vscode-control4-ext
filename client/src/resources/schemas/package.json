@@ -90,6 +90,10 @@
             "$ref": "#/definitions/notification_attachment"
           }
         },
+        "combo": {
+          "type": "boolean",
+          "description": "Tells Director that this driver does not use a proxy but provides its own UI within Composer."
+        },
         "capabilities": {
             "description": "Determines if the driver supports notifications",
             "type": "object",

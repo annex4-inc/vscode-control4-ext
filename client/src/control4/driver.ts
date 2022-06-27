@@ -172,7 +172,7 @@ export class Driver {
             var nProxies = root.ele("proxies").att({ qty: this.proxies.length });
 
             this.proxies.forEach((p) => {
-                if (p.proxy == this.filename) {
+                if (p.proxy == this.filename && !this.combo) {
                     root.ele("combo").txt("true")
                 }
 
