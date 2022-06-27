@@ -64,6 +64,7 @@ export class Driver {
     controlmethod: ControlMethod
     driver: string
     agent: boolean
+    combo: boolean
 
     connections: C4Connection[]
     properties: C4Property[]
@@ -95,6 +96,7 @@ export class Driver {
         this.controlmethod = ControlMethod.IP;
         this.driver = "DriverWorks"
         this.agent = false;
+        this.combo = false;
 
         this.connections = [];
         this.properties = [];
@@ -127,6 +129,10 @@ export class Driver {
         root.ele("model").txt(this.model);
         root.ele("created").txt(this.created.toLocaleString("en-US").replace(",", ""));
         root.ele("modified").txt(this.modified.toLocaleString("en-US").replace(",", ""));
+
+        if (this.combo) {
+            root.ele("combo").txt("true");
+        }
 
         let major = semver.major(this.version);
         let minor = semver.minor(this.version);
