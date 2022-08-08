@@ -117,8 +117,8 @@ export default class Package {
             let env = JSON.parse(environment)
 
             for (const [key, value] of Object.entries(env)) {
-                //@ts-ignore
-                src = src.replace(`\[\[ENV.${key}\]\]`, value)
+                let regexp = new RegExp(`\\[\\[ENV\\.${key}\\]\\]`, 'g');
+                src = src.replace(regexp, value as any)
             }
         }
 
