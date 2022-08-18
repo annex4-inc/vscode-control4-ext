@@ -80,7 +80,7 @@ export class Driver {
 
     encrypted: boolean
 
-    constructor(filename) {
+    constructor(filename: string) {
         this.encrypted = true;
         this.filename = filename;
         this.copyright = `Copyright ${new Date().getFullYear()}`;
@@ -90,7 +90,7 @@ export class Driver {
         this.model = "";
         this.created = new Date();
         this.modified = new Date();
-        this.version = "";
+        this.version = "0.0.1";
         this.icon = new DriverIcon();
         this.control = "lua_gen"
         this.controlmethod = ControlMethod.IP;
@@ -120,6 +120,10 @@ export class Driver {
         this.proxies = await ProxiesResource.Reload();
     }
 
+    /**
+     * Exports the XML structure of a Control4 driver
+     * @returns An XML string
+     */
     build() {
         var root = builder.create("devicedata").root();
         root.ele("copyright",).txt(this.copyright);
@@ -418,13 +422,17 @@ export class Driver {
     }
 
     static Parse(xml): Driver {
-        const doc = builder.create({}, xml).root();
-        const driver = doc.end({ format: 'object' })
+        const doc = builder.create({parser: { comment: () => undefined }}, xml).root();
+        const driver = doc.toObject();
 
-        console.log(driver)
+        console.log(driver);
 
         //@ts-ignore
         const devicedata = driver.devicedata;
+
+        if (devicedata["#"] != undefined) {
+            throw new Error("The XML document contains duplicate root nodes. Unable to import succesfully.");
+        }
 
         const icon = new DriverIcon();
         icon.image_source = devicedata.large ? devicedata.large["@image_source"] : "c4z"
