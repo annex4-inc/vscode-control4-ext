@@ -155,7 +155,9 @@ export class C4Connection {
         let node = builder.create("connection").root();
 
         for (const key in this) {
-            if (key == "classes") {
+            if (key == "proxybindingid") {
+                node.att(key, `${this.proxybindingid}`);
+            } else if (key == "classes") {
                 let classes = node.ele("classes")
 
                 this.classes.forEach(c => {
