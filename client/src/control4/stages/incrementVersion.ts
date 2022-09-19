@@ -14,7 +14,7 @@ export default class IncrementVersionStage implements BuildStage {
 
     OnSuccess(result: any): String {
         if (result) {
-            return `[Version     ] Incrementing driver version to ${result}`;
+            return `[Version     ] Incremented driver version to ${result}`;
         }
     }
 

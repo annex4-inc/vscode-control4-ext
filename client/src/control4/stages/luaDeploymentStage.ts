@@ -32,7 +32,7 @@ export default class LuaDeploymentStage implements BuildStage {
         if (typeof(result) === "string") {
             return result;
         } else {
-            return `[Lua Deploy]: Injected Allow Execute`;
+            return `[Lua Deploy]: Updated Lua Code`;
         }
     }
 
