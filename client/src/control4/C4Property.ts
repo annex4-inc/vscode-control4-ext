@@ -87,6 +87,7 @@ export class C4Property {
         a.maximum = typeof (obj.maximum) == 'string' ? Number.parseInt(obj.maximum) : obj.maximum;
         a.minimum = typeof (obj.minimum) == 'string' ? Number.parseInt(obj.minimum) : obj.minimum;
         a.password = typeof (obj.password) == 'string' ? obj.password.toLowerCase() == "true" : obj.password;
+        a.readonly = typeof (obj.readonly) == 'string' ? obj.readonly.toLowerCase() == "true" : obj.readonly;
 
         return a
     }
