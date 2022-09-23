@@ -94,6 +94,10 @@
           "type": "boolean",
           "description": "Tells Director that this driver does not use a proxy but provides its own UI within Composer."
         },
+        "documentation": {
+            "type": "string",
+            "description": "The path to the documentation file to load"
+        },
         "capabilities": {
             "description": "Determines if the driver supports notifications",
             "type": "object",
@@ -111,10 +115,10 @@
                 "preset_count": { "type": "boolean" },
                 "can_upclass": { "type": "boolean" },
                 "can_downclass": { "type": "boolean" },
-                "video_provider_count": { "type": "boolean" },
-                "video_consumer_count": { "type": "boolean" },
-                "audio_provider_count": { "type": "boolean" },
-                "audio_consumer_count": { "type": "boolean" },
+                "video_provider_count": { "type": "integer", "default": 0 },
+                "video_consumer_count": { "type": "integer", "default": 0 },
+                "audio_provider_count": { "type": "integer", "default": 0 },
+                "audio_consumer_count": { "type": "integer", "default": 0 },
                 "has_discrete_mute_control": { "type": "boolean" },
                 "has_toggle_mute_control": { "type": "boolean" },
                 "has_discrete_channel_select": { "type": "boolean" },

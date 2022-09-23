@@ -54,6 +54,7 @@ export class Driver {
     copyright: string
     creator: string
     manufacturer: string
+    documentation: string
     name: string
     model: string
     created: Date
@@ -95,6 +96,7 @@ export class Driver {
         this.control = "lua_gen"
         this.controlmethod = ControlMethod.IP;
         this.driver = "DriverWorks"
+        this.documentation = "www/documentation.html";
         this.agent = false;
         this.combo = false;
 
@@ -325,7 +327,7 @@ export class Driver {
         }
 
         // Documentation is mandatory, even if empty
-        config.ele("documentation", { file: "www/documentation.html" })
+        config.ele("documentation", { file: this.documentation })
 
         if (this.commands && this.commands.length > 0) {
             let commands = config.ele("commands");
@@ -368,7 +370,7 @@ export class Driver {
                 driver.version = pkg.version;
                 driver.icon = icon;
                 driver.created = new Date(driver.created);
-                driver.modified = new Date();
+                driver.modified = new Date();                
 
                 await driver.load()
 
