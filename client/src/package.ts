@@ -25,14 +25,15 @@ export default class Package {
         this.textDocument = await vscode.workspace.openTextDocument(vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, 'package.json'));
 
         let p = JSON.parse(this.textDocument.getText());
+
         let deps = [];
+        let devDeps = [];
 
         if (p.devDependencies && includeDev) {
-            let devDependencies = p.devDependencies;
-            let modules = Object.keys(devDependencies);
+            let modules = Object.keys(p.devDependencies);
 
             for (let i = 0; i < modules.length; i++) {
-                deps.push(await this.getModuleDependencies(modules[i], 0));
+                devDeps.push(await this.getModuleDependencies(modules[i], 0));
             }
         }
 
@@ -44,27 +45,34 @@ export default class Package {
             }
         }
 
-
-        console.log(deps);
-
-        // Flatten the array
+        // Flatten the arrays of modules so we can sort by how deep they're nested
         deps = deps.flat();
+        devDeps = devDeps.flat();
 
         // Sort by depth
-        let result = deps.sort(function (a, b) {
-            return b.depth - a.depth;
-        });
+        let resultDeps = deps.sort(function (a, b) { return b.depth - a.depth; });
+        let resultDevDeps = devDeps.sort(function (a, b) { return b.depth - a.depth; })
 
         let hierarchy = new Map();
         let final = [];
 
-        for (let i = 0; i < result.length; i++) {
-            if (hierarchy.has(result[i].module)) {
+        // Insert our development dependencies first (so they can be used as mocks)
+        for (let i = 0; i < resultDevDeps.length; i++) {
+            if (hierarchy.has(resultDevDeps[i].module)) {
                 continue;
             }
 
-            hierarchy.set(result[i].module, i);
-            final.push(result[i].module);
+            hierarchy.set(resultDevDeps[i].module, i);
+            final.push(resultDevDeps[i].module);
+        }
+
+        for (let i = 0; i < resultDeps.length; i++) {
+            if (hierarchy.has(resultDeps[i].module)) {
+                continue;
+            }
+
+            hierarchy.set(resultDeps[i].module, i);
+            final.push(resultDeps[i].module);
         }
 
         return final;
