@@ -11,14 +11,16 @@ let Methods: any = {
         let items: Array<CompletionItem> = [];
 
         if (parameterIndex == 0) {
-            Resources.proxies.forEach((p: any) => {
-                items.push({
-                    label: p.id.toString(),
-                    kind: CompletionItemKind.Text,
-                    data: p.id,
-                    documentation: p.name,
-                    detail: p.proxy
-                })
+            Resources.connections.forEach((p: any) => {
+                if (p.id < 1000 || (p.id >= 5000 && p.id < 6000)) {
+                    items.push({
+                        label: p.id.toString(),
+                        kind: CompletionItemKind.Text,
+                        data: p.id,
+                        documentation: p.connectionname,
+                        detail: p.id < 1000 ? "Control" : "Proxy"
+                    })
+                }
             })
         }
 
