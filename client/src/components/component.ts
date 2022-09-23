@@ -8,7 +8,11 @@ export class Component {
   public data: any;
 
   constructor(resource) {
-    this._resourceUri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, 'components', resource);
+    if (vscode.workspace.workspaceFolders !== undefined) {
+        this._resourceUri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, 'components', resource);
+    }
+    
+    //this._resourceUri = vscode.Uri.joinPath(vscode.workspace.name, 'components', resource);
 
     let watcher = vscode.workspace.createFileSystemWatcher(`**/${resource}`);
 

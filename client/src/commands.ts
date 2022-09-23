@@ -148,7 +148,7 @@ async function control4Import() {
 
           await WriteIfNotExists(path.join(root, "tests", "test.lua"), tests);
         } catch (err) {
-          console.log(err);
+            return vscode.window.showInformationMessage(`${err.message}`);
         }
       } else {
         let contents = zip.readFile(entry)

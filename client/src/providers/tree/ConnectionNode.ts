@@ -11,9 +11,14 @@ export class ConnectionNode extends TreeNode<C4Connection> {
 
         if (connection.total) {
           this.description = `[${connection.id} - ${connection.id + connection.total - 1}] ${connection.consumer ? "Input" : "Output"}`;
+
           this.label = name.replace("%INDEX%", `[1 to ${connection.total}]`);
         } else {
           this.description = `[${connection.id}] ${connection.consumer ? "Input" : "Output"}`;
+        }
+
+        if (connection.classes && connection.classes.length > 0) {
+            this.description = `${this.description} (${connection.classes.map((c) => {return c.classname}).join(", ")})`;
         }
         
         this.tooltip = `${connection.id}`;
