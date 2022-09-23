@@ -17,6 +17,7 @@ import {
     LuaInjectionStage,
     LuaDeploymentStage
 } from "./stages"
+import MergeStage from './stages/mergeStage';
 
 export enum BuildVersion {
   Debug = "debug",
@@ -57,12 +58,16 @@ export class Builder {
     // Prepare the build stages
     let stages = new Array<BuildStage>();
         stages.push(new CleanStage());
-        stages.push(new IntermediateStage());
+        stages.push(new IntermediateStage(encrypted));
         stages.push(new DriverXmlBuildStage(_package, encrypted));
         stages.push(new DependencyInjectionStage(_package, development));
 
     if (development) {
         stages.push(new LuaInjectionStage());
+    }
+
+    if (encrypted) {
+        stages.push(new MergeStage());
     }
 
     if (deploy) {
