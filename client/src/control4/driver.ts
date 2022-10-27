@@ -22,6 +22,8 @@ import ProxiesResource from '../components/proxies';
 import { TypedJSON } from 'typedjson';
 import { C4UI } from '.';
 import C4InterfaceIcon from './interface/C4InterfaceIcon';
+import { C4NavigatorDisplayOption } from './capabilities/C4NavigatorDisplayOption';
+import { C4WebviewUrl } from './capabilities/C4WebviewUrl';
 
 function getEnumKeyByEnumValue<T extends { [index: string]: string }>(myEnum: T, enumValue: string): keyof T | null {
     let keys = Object.keys(myEnum).filter(x => myEnum[x] == enumValue);
@@ -74,7 +76,7 @@ export class Driver {
     events: C4Event[]
     proxies: C4Proxy[]
     UI: C4UI[]
-    capabilities: Object
+    capabilities: any
 
     notification_attachment_provider: Boolean
     notification_attachments: NotificationAttachment[]
@@ -193,31 +195,14 @@ export class Driver {
                 let value = this.capabilities[key]
 
                 if (key == "navigator_display_option") {
-                    let attributes = {
-                        ...value.attributes
-                    }
+                    value.forEach((option : C4NavigatorDisplayOption) => {
+                        nCapabilities.import(option.toXml())
+                    });
+                } else if (key == "web_view_url") {
+                    value.forEach((url : C4WebviewUrl) => {
+                        nCapabilities.import(url.toXml())
 
-                    if (value.proxybindingid) {
-                        attributes.proxybindingid = value.proxybindingid
-                    }
-
-                    let node = nCapabilities.ele(key, attributes);
-
-                    if (value.display_icons) {
-                        let icons = node.ele("display_icons");
-
-                        for (let i = 0; i < value.display_icons.length; i++) {
-                            if (value.display_icons[i].repeat) {
-                                let r = value.display_icons[i].repeat
-                                for (let j = r.start_size; j <= r.end_size; j += r.increment) {
-                                    icons.ele("Icon", {
-                                        width: j,
-                                        height: j,
-                                    }).txt(r.path.replace("%SIZE%", j));
-                                }  
-                            }
-                        }
-                    }
+                    })
                 } else if (typeof (value) == "object") {
                     if (value.attributes) {
                         if (typeof (value.value) == "object") {
@@ -370,7 +355,21 @@ export class Driver {
                 driver.version = pkg.version;
                 driver.icon = icon;
                 driver.created = new Date(driver.created);
-                driver.modified = new Date();                
+                driver.modified = new Date();
+                
+                if (driver.capabilities) {
+                    if (driver.capabilities.web_view_url) {
+                        driver.capabilities.web_view_url = driver.capabilities.web_view_url.map((url) => {
+                            return new C4WebviewUrl(url)
+                        })
+                    }
+
+                    if (driver.capabilities.navigator_display_option) {
+                        driver.capabilities.navigator_display_option = driver.capabilities.navigator_display_option.map((option) => {
+                            return new C4NavigatorDisplayOption(option)
+                        })
+                    }
+                }
 
                 await driver.load()
 
@@ -461,20 +460,11 @@ export class Driver {
                 let value: any = devicedata.capabilities[key];
 
                 if (key == "navigator_display_option") {
-                    d.capabilities[key] = {
-                        proxybindingid: asInt(value["@proxybindingid"]),
-                        translation_url: value["translation_url"],
-                    }
-
-                    if (value.display_icons) {
-                        let icons = Driver.CleanXmlArray(value.display_icons, "Icon")
-
-                        d.capabilities[key].display_icons = icons.map((i) => {
-                            return C4InterfaceIcon.fromXml(i);
-                        })
-                    }
+                    return C4NavigatorDisplayOption.fromXml(value)
+                } else if (key == "web_view_url") {
+                    return C4WebviewUrl.fromXml(value)
                 } else if (key == "UI") {
-                    d.UI.push(C4UI.fromXml(devicedata.capabilities.UI));
+                    d.UI.push(C4UI.fromXml(value));
                 } else if (value.match("[Tt][Rr][Uu][Ee]") || value.match("[Ff][Aa][Ll][Ss][Ee]")) {
                     d.capabilities[key] = asBoolean(value);
                 } else {

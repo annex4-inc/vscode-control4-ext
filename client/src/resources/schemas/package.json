@@ -1,185 +1,99 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "JSON schema for NPM package.json files",
-  "definitions": {
-    "notification_attachment": {
-      "description": "A notification attachment",
-      "type": "object",
-      "properties": {
-        "id": {
-          "description": "Identifier of the attachment",
-          "type": "integer"
-        },
-        "type": {
-          "description": "The type of attachment",
-          "type": "string",
-          "enum": [
-            "IMAGE_JPEG"
-          ]
-        },
-        "description": {
-          "description": "A description of the attachment",
-          "type": "string"
-        },
-        "source": {
-          "description": "The source of the attachment",
-          "type": "string",
-          "enum": [
-            "MEMORY",
-            "FILE",
-            "URL"
-          ]
-        }
-      }
-    },
-    "icon": {
-      "type": "object",
-      "properties": {
-        "small": {
-          "type": "string"
-        },
-        "large": {
-          "type": "string"
-        }
-      }
-    },
-    "control4": {
-      "description": "Control driver configuration section",
-      "type": "object",
-      "properties": {
-        "name": {
-          "description": "Driver name",
-          "type": "string"
-        },
-        "model": {
-          "description": "Device model",
-          "type": "string"
-        },
-        "manufacturer": {
-          "description": "Device manufacturer",
-          "type": "string"
-        },
-        "created": {
-          "description": "Date of creation",
-          "type": "string"
-        },
-        "icon": {
-          "type": "object",
-          "$ref": "#/definitions/icon"
-        },
-        "control": {
-          "type": "string",
-          "enum": [
-            "lua_gen"
-          ]
-        },
-        "controlmethod": {
-          "type": "string",
-          "enum": [
-            "ip",
-            "serial"
-          ]
-        },
-        "notification_attachment_provider": {
-          "description": "Determines if the driver supports notifications",
-          "type": "boolean"
-        },
-        "notification_attachments": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/notification_attachment"
-          }
-        },
-        "combo": {
-          "type": "boolean",
-          "description": "Tells Director that this driver does not use a proxy but provides its own UI within Composer."
-        },
-        "documentation": {
-            "type": "string",
-            "description": "The path to the documentation file to load"
-        },
-        "capabilities": {
-            "description": "Determines if the driver supports notifications",
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "JSON schema for NPM package.json files",
+    "definitions": {
+        "notification_attachment": {
+            "description": "A notification attachment",
             "type": "object",
             "properties": {
-                "has_discrete_volume_control": {"type": "boolean"},
-                "has_up_down_volume_control": { "type": "boolean" },
-                "has_discrete_input_select": { "type": "boolean" },
-                "has_toad_input_select": { "type": "boolean" },
-                "has_discrete_surround_mode_select": { "type": "boolean" },
-                "has_toad_surround_mode_select": { "type": "boolean" },
-                "has_tune_up_down": { "type": "boolean" },
-                "has_search_up_down": { "type": "boolean" },
-                "has_discrete_preset": { "type": "boolean" },
-                "has_preset_up_down": { "type": "boolean" },
-                "preset_count": { "type": "boolean" },
-                "can_upclass": { "type": "boolean" },
-                "can_downclass": { "type": "boolean" },
-                "video_provider_count": { "type": "integer", "default": 0 },
-                "video_consumer_count": { "type": "integer", "default": 0 },
-                "audio_provider_count": { "type": "integer", "default": 0 },
-                "audio_consumer_count": { "type": "integer", "default": 0 },
-                "has_discrete_mute_control": { "type": "boolean" },
-                "has_toggle_mute_control": { "type": "boolean" },
-                "has_discrete_channel_select": { "type": "boolean" },
-                "has_channel_up_down": { "type": "boolean" },
-                "has_feedback": { "type": "boolean" },
-                "serialdelay": { "type": "integer" },
-                "serialsettings": { "type" : "string", "default": "8 none 1 none 232" },
-                "modes": { "type" : "string", "default": "SNAPSHOT,MJPEG,H264,H264I" },
-                "has_pan": {"type": "boolean"},
-                "has_pan_scan": {"type": "boolean"},
-                "has_tilt": {"type": "boolean"},
-                "has_tilt_scan": {"type": "boolean"},
-                "has_home": {"type": "boolean"},
-                "has_zoom": {"type": "boolean"},
-                "number_presets": {"type": "number", "default": 0},
-                "default_http_port": {"type": "number", "default": 80},
-                "default_rtsp_port": {"type": "number", "default": 554},
-                "default_authentication_required": {"type": "boolean"},
-                "default_authentication_type": { "type" : "string", "default": "BASIC" },
-                "default_username": { "type" : "string", "default": "" },
-                "default_password": { "type" : "string", "default": "" },
-                "address_readonly": {"type": "boolean"},
-                "http_port_readonly": {"type": "boolean"},
-                "show_test_url": {"type": "boolean"},
-                "use_http_for_h264": {"type": "boolean"},
-                "has_camera": {"type": "boolean"},
-                "has_display": {"type": "boolean"},
-                "has_buttons": {"type": "boolean"},
-                "can_set_aec": {"type": "boolean"},
-                "is_doorstation": {"type": "boolean"},
-                "audio_codecs_supported": { "type" : "string", "default": "" },
-                "vidio_codecs_supported": { "type" : "string", "default": "" },
-                "hide_in_list_nav": {"type" : "boolean"},
-                "hide_in_media": {"type" : "boolean"},
-                "digital_audio_support": {"type" : "boolean"},
-                "can_scan_media": {"type" : "boolean"},
-                "ui_selects_device": {"type" : "boolean"},
-                "navigator_display_option": {
-                    "description": "Display options for navigator including translations and icons",
-                    "type": "object",
-                    "properties": {
-                        "proxybindingid": {
-                            "type": "number",
-                            "description": "Which proxy these options apply to"
-                        },
-                        "translation_url": {"type": "string"},
-                        "display_icons": {
-                            "type": "array",
-                            "items": {
+                "id": {
+                    "description": "Identifier of the attachment",
+                    "type": "integer"
+                },
+                "type": {
+                    "description": "The type of attachment",
+                    "type": "string",
+                    "enum": [
+                        "IMAGE_JPEG"
+                    ]
+                },
+                "description": {
+                    "description": "A description of the attachment",
+                    "type": "string"
+                },
+                "source": {
+                    "description": "The source of the attachment",
+                    "type": "string",
+                    "enum": [
+                        "MEMORY",
+                        "FILE",
+                        "URL"
+                    ]
+                }
+            }
+        },
+        "icon": {
+            "type": "object",
+            "properties": {
+                "small": {
+                    "type": "string"
+                },
+                "large": {
+                    "type": "string"
+                }
+            }
+        },
+        "web_view_url": {
+            "type": "object",
+            "properties": {
+                "proxybindingid": {
+                    "description": "The proxy binding ID this URL applies to",
+                    "type": "number"
+                },
+                "value": {
+                    "description": "The URL value",
+                    "type": "string"
+                }
+            }
+        },
+        "navigator_display_option": {
+            "properties": {
+                "proxybindingid": {
+                    "description": "Which proxy these options apply to",
+                    "type": "number"
+                },
+                "translation_url": {
+                    "description": "Path to a translation",
+                    "type": "string"
+                },
+                "display_icons": {
+                    "description": "An array of display icons",
+                    "type": "array",
+                    "items": {
+                        "properties": {
+                            "height": {
+                                "type": "number"
+                            },
+                            "width": {
+                                "type": "number"
+                            },
+                            "path": {
+                                "type": "string"
+                            },
+                            "repeat": {
+                                "type": "object",
                                 "properties": {
-                                    "height": {"type": "number"},
-                                    "width": {"type": "number"},
-                                    "path": {"type": "string"},
-                                    "repeat": {
-                                        "type": "object",
-                                        "properties": {
-                                            "start_size": {"type": "number"},
-                                            "end_size": {"type": "number"},
-                                            "increment": {"type": "number"},
-                                            "path": {"type": "string"}
-                                        }
+                                    "start_size": {
+                                        "type": "number"
+                                    },
+                                    "end_size": {
+                                        "type": "number"
+                                    },
+                                    "increment": {
+                                        "type": "number"
+                                    },
+                                    "path": {
+                                        "type": "string"
                                     }
                                 }
                             }
@@ -187,736 +101,987 @@
                     }
                 }
             }
-        }
-      }
-    },
-    "person": {
-      "description": "A person who has been involved in creating or maintaining this package.",
-      "type": [
-        "object",
-        "string"
-      ],
-      "required": [
-        "name"
-      ],
-      "properties": {
-        "name": {
-          "type": "string"
         },
-        "url": {
-          "type": "string",
-          "format": "uri"
+        "control4": {
+            "description": "Control driver configuration section",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Driver name",
+                    "type": "string"
+                },
+                "model": {
+                    "description": "Device model",
+                    "type": "string"
+                },
+                "manufacturer": {
+                    "description": "Device manufacturer",
+                    "type": "string"
+                },
+                "created": {
+                    "description": "Date of creation",
+                    "type": "string"
+                },
+                "icon": {
+                    "type": "object",
+                    "$ref": "#/definitions/icon"
+                },
+                "control": {
+                    "type": "string",
+                    "enum": [
+                        "lua_gen"
+                    ]
+                },
+                "controlmethod": {
+                    "type": "string",
+                    "enum": [
+                        "ip",
+                        "serial"
+                    ]
+                },
+                "notification_attachment_provider": {
+                    "description": "Determines if the driver supports notifications",
+                    "type": "boolean"
+                },
+                "notification_attachments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/notification_attachment"
+                    }
+                },
+                "combo": {
+                    "type": "boolean",
+                    "description": "Tells Director that this driver does not use a proxy but provides its own UI within Composer."
+                },
+                "documentation": {
+                    "type": "string",
+                    "description": "The path to the documentation file to load"
+                },
+                "capabilities": {
+                    "description": "Determines if the driver supports notifications",
+                    "type": "object",
+                    "properties": {
+                        "has_discrete_volume_control": {
+                            "type": "boolean"
+                        },
+                        "has_up_down_volume_control": {
+                            "type": "boolean"
+                        },
+                        "has_discrete_input_select": {
+                            "type": "boolean"
+                        },
+                        "has_toad_input_select": {
+                            "type": "boolean"
+                        },
+                        "has_discrete_surround_mode_select": {
+                            "type": "boolean"
+                        },
+                        "has_toad_surround_mode_select": {
+                            "type": "boolean"
+                        },
+                        "has_tune_up_down": {
+                            "type": "boolean"
+                        },
+                        "has_search_up_down": {
+                            "type": "boolean"
+                        },
+                        "has_discrete_preset": {
+                            "type": "boolean"
+                        },
+                        "has_preset_up_down": {
+                            "type": "boolean"
+                        },
+                        "preset_count": {
+                            "type": "boolean"
+                        },
+                        "can_upclass": {
+                            "type": "boolean"
+                        },
+                        "can_downclass": {
+                            "type": "boolean"
+                        },
+                        "video_provider_count": {
+                            "type": "integer",
+                            "default": 0
+                        },
+                        "video_consumer_count": {
+                            "type": "integer",
+                            "default": 0
+                        },
+                        "audio_provider_count": {
+                            "type": "integer",
+                            "default": 0
+                        },
+                        "audio_consumer_count": {
+                            "type": "integer",
+                            "default": 0
+                        },
+                        "has_discrete_mute_control": {
+                            "type": "boolean"
+                        },
+                        "has_toggle_mute_control": {
+                            "type": "boolean"
+                        },
+                        "has_discrete_channel_select": {
+                            "type": "boolean"
+                        },
+                        "has_channel_up_down": {
+                            "type": "boolean"
+                        },
+                        "has_feedback": {
+                            "type": "boolean"
+                        },
+                        "serialdelay": {
+                            "type": "integer"
+                        },
+                        "serialsettings": {
+                            "type": "string",
+                            "default": "8 none 1 none 232"
+                        },
+                        "modes": {
+                            "type": "string",
+                            "default": "SNAPSHOT,MJPEG,H264,H264I"
+                        },
+                        "has_pan": {
+                            "type": "boolean"
+                        },
+                        "has_pan_scan": {
+                            "type": "boolean"
+                        },
+                        "has_tilt": {
+                            "type": "boolean"
+                        },
+                        "has_tilt_scan": {
+                            "type": "boolean"
+                        },
+                        "has_home": {
+                            "type": "boolean"
+                        },
+                        "has_zoom": {
+                            "type": "boolean"
+                        },
+                        "number_presets": {
+                            "type": "number",
+                            "default": 0
+                        },
+                        "default_http_port": {
+                            "type": "number",
+                            "default": 80
+                        },
+                        "default_rtsp_port": {
+                            "type": "number",
+                            "default": 554
+                        },
+                        "default_authentication_required": {
+                            "type": "boolean"
+                        },
+                        "default_authentication_type": {
+                            "type": "string",
+                            "default": "BASIC"
+                        },
+                        "default_username": {
+                            "type": "string",
+                            "default": ""
+                        },
+                        "default_password": {
+                            "type": "string",
+                            "default": ""
+                        },
+                        "address_readonly": {
+                            "type": "boolean"
+                        },
+                        "http_port_readonly": {
+                            "type": "boolean"
+                        },
+                        "show_test_url": {
+                            "type": "boolean"
+                        },
+                        "use_http_for_h264": {
+                            "type": "boolean"
+                        },
+                        "has_camera": {
+                            "type": "boolean"
+                        },
+                        "has_display": {
+                            "type": "boolean"
+                        },
+                        "has_buttons": {
+                            "type": "boolean"
+                        },
+                        "can_set_aec": {
+                            "type": "boolean"
+                        },
+                        "is_doorstation": {
+                            "type": "boolean"
+                        },
+                        "audio_codecs_supported": {
+                            "type": "string",
+                            "default": ""
+                        },
+                        "vidio_codecs_supported": {
+                            "type": "string",
+                            "default": ""
+                        },
+                        "hide_in_list_nav": {
+                            "type": "boolean"
+                        },
+                        "hide_in_media": {
+                            "type": "boolean"
+                        },
+                        "digital_audio_support": {
+                            "type": "boolean"
+                        },
+                        "can_scan_media": {
+                            "type": "boolean"
+                        },
+                        "ui_selects_device": {
+                            "type": "boolean"
+                        },
+                        "web_view_url": {
+                            "description": "Display options for navigator including translations and icons",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/web_view_url"
+                            }
+                        },
+                        "navigator_display_option": {
+                            "description": "Display options for navigator including translations and icons",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/navigator_display_option"
+                            }
+                        }
+                    }
+                }
+            }
         },
-        "email": {
-          "type": "string",
-          "format": "email"
-        }
-      }
-    },
-    "dependency": {
-      "description": "Dependencies are specified with a simple hash of package name to version range. The version range is a string which has one or more space-separated descriptors. Dependencies can also be identified with a tarball or git URL.",
-      "type": "object",
-      "additionalProperties": {
-        "type": "string"
-      }
-    },
-    "scriptsInstallAfter": {
-      "description": "Run AFTER the package is installed.",
-      "type": "string"
-    },
-    "scriptsPublishAfter": {
-      "description": "Run AFTER the package is published.",
-      "type": "string"
-    },
-    "scriptsRestart": {
-      "description": "Run by the 'npm restart' command. Note: 'npm restart' will run the stop and start scripts if no restart script is provided.",
-      "type": "string"
-    },
-    "scriptsStart": {
-      "description": "Run by the 'npm start' command.",
-      "type": "string"
-    },
-    "scriptsStop": {
-      "description": "Run by the 'npm stop' command.",
-      "type": "string"
-    },
-    "scriptsTest": {
-      "description": "Run by the 'npm test' command.",
-      "type": "string"
-    },
-    "scriptsUninstallBefore": {
-      "description": "Run BEFORE the package is uninstalled.",
-      "type": "string"
-    },
-    "scriptsVersionBefore": {
-      "description": "Run BEFORE bump the package version.",
-      "type": "string"
-    },
-    "packageExportsEntryPath": {
-      "type": [
-        "string",
-        "null"
-      ],
-      "description": "The module path that is resolved when this specifier is imported. Set to `null` to disallow importing this module.",
-      "pattern": "^\\./"
-    },
-    "packageExportsEntryObject": {
-      "type": "object",
-      "description": "Used to specify conditional exports, note that Conditional exports are unsupported in older environments, so it's recommended to use the fallback array option if support for those environments is a concern.",
-      "properties": {
-        "require": {
-          "$ref": "#/definitions/packageExportsEntryOrFallback",
-          "description": "The module path that is resolved when this specifier is imported as a CommonJS module using the `require(...)` function."
+        "person": {
+            "description": "A person who has been involved in creating or maintaining this package.",
+            "type": [
+                "object",
+                "string"
+            ],
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string",
+                    "format": "uri"
+                },
+                "email": {
+                    "type": "string",
+                    "format": "email"
+                }
+            }
         },
-        "import": {
-          "$ref": "#/definitions/packageExportsEntryOrFallback",
-          "description": "The module path that is resolved when this specifier is imported as an ECMAScript module using an `import` declaration or the dynamic `import(...)` function."
+        "dependency": {
+            "description": "Dependencies are specified with a simple hash of package name to version range. The version range is a string which has one or more space-separated descriptors. Dependencies can also be identified with a tarball or git URL.",
+            "type": "object",
+            "additionalProperties": {
+                "type": "string"
+            }
         },
-        "node": {
-          "$ref": "#/definitions/packageExportsEntryOrFallback",
-          "description": "The module path that is resolved when this environment is Node.js."
-        },
-        "default": {
-          "$ref": "#/definitions/packageExportsEntryOrFallback",
-          "description": "The module path that is resolved when no other export type matches."
-        }
-      },
-      "patternProperties": {
-        "^(?![\\.0-9]).": {
-          "$ref": "#/definitions/packageExportsEntryOrFallback",
-          "description": "The module path that is resolved when this environment matches the property name."
-        }
-      },
-      "additionalProperties": false
-    },
-    "packageExportsEntry": {
-      "oneOf": [
-        {
-          "$ref": "#/definitions/packageExportsEntryPath"
-        },
-        {
-          "$ref": "#/definitions/packageExportsEntryObject"
-        }
-      ]
-    },
-    "packageExportsFallback": {
-      "type": "array",
-      "description": "Used to allow fallbacks in case this environment doesn't support the preceding entries.",
-      "items": {
-        "$ref": "#/definitions/packageExportsEntry"
-      }
-    },
-    "packageExportsEntryOrFallback": {
-      "oneOf": [
-        {
-          "$ref": "#/definitions/packageExportsEntry"
-        },
-        {
-          "$ref": "#/definitions/packageExportsFallback"
-        }
-      ]
-    }
-  },
-  "type": "object",
-  "patternProperties": {
-    "^_": {
-      "description": "Any property starting with _ is valid.",
-      "tsType": "any"
-    }
-  },
-  "properties": {
-    "control4": {
-      "$ref": "#/definitions/control4"
-    },
-    "name": {
-      "description": "The name of the package.",
-      "type": "string",
-      "maxLength": 214,
-      "minLength": 1,
-      "pattern": "^(?:@[a-z0-9-*~][a-z0-9-*._~]*/)?[a-z0-9-~][a-z0-9-._~]*$"
-    },
-    "version": {
-      "description": "Version must be parseable by node-semver, which is bundled with npm as a dependency.",
-      "type": "string"
-    },
-    "description": {
-      "description": "This helps people discover your package, as it's listed in 'npm search'.",
-      "type": "string"
-    },
-    "keywords": {
-      "description": "This helps people discover your package as it's listed in 'npm search'.",
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "homepage": {
-      "description": "The url to the project homepage.",
-      "type": "string"
-    },
-    "bugs": {
-      "description": "The url to your project's issue tracker and / or the email address to which issues should be reported. These are helpful for people who encounter issues with your package.",
-      "type": [
-        "object",
-        "string"
-      ],
-      "properties": {
-        "url": {
-          "type": "string",
-          "description": "The url to your project's issue tracker.",
-          "format": "uri"
-        },
-        "email": {
-          "type": "string",
-          "description": "The email address to which issues should be reported.",
-          "format": "email"
-        }
-      }
-    },
-    "license": {
-      "type": "string",
-      "description": "You should specify a license for your package so that people know how they are permitted to use it, and any restrictions you're placing on it."
-    },
-    "licenses": {
-      "description": "DEPRECATED: Instead, use SPDX expressions, like this: { \"license\": \"ISC\" } or { \"license\": \"(MIT OR Apache-2.0)\" } see: 'https://docs.npmjs.com/files/package.json#license'.",
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "type": {
+        "scriptsInstallAfter": {
+            "description": "Run AFTER the package is installed.",
             "type": "string"
-          },
-          "url": {
-            "type": "string",
-            "format": "uri"
-          }
-        }
-      }
-    },
-    "author": {
-      "$ref": "#/definitions/person"
-    },
-    "contributors": {
-      "description": "A list of people who contributed to this package.",
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/person"
-      }
-    },
-    "maintainers": {
-      "description": "A list of people who maintains this package.",
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/person"
-      }
-    },
-    "files": {
-      "description": "The 'files' field is an array of files to include in your project. If you name a folder in the array, then it will also include the files inside that folder.",
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "main": {
-      "description": "The main field is a module ID that is the primary entry point to your program.",
-      "type": "string"
-    },
-    "exports": {
-      "description": "The \"exports\" field is used to restrict external access to non-exported module files, also enables a module to import itself using \"name\".",
-      "oneOf": [
-        {
-          "$ref": "#/definitions/packageExportsEntryPath",
-          "description": "The module path that is resolved when the module specifier matches \"name\", shadows the \"main\" field."
         },
-        {
-          "type": "object",
-          "properties": {
-            ".": {
-              "$ref": "#/definitions/packageExportsEntryOrFallback",
-              "description": "The module path that is resolved when the module specifier matches \"name\", shadows the \"main\" field."
+        "scriptsPublishAfter": {
+            "description": "Run AFTER the package is published.",
+            "type": "string"
+        },
+        "scriptsRestart": {
+            "description": "Run by the 'npm restart' command. Note: 'npm restart' will run the stop and start scripts if no restart script is provided.",
+            "type": "string"
+        },
+        "scriptsStart": {
+            "description": "Run by the 'npm start' command.",
+            "type": "string"
+        },
+        "scriptsStop": {
+            "description": "Run by the 'npm stop' command.",
+            "type": "string"
+        },
+        "scriptsTest": {
+            "description": "Run by the 'npm test' command.",
+            "type": "string"
+        },
+        "scriptsUninstallBefore": {
+            "description": "Run BEFORE the package is uninstalled.",
+            "type": "string"
+        },
+        "scriptsVersionBefore": {
+            "description": "Run BEFORE bump the package version.",
+            "type": "string"
+        },
+        "packageExportsEntryPath": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "The module path that is resolved when this specifier is imported. Set to `null` to disallow importing this module.",
+            "pattern": "^\\./"
+        },
+        "packageExportsEntryObject": {
+            "type": "object",
+            "description": "Used to specify conditional exports, note that Conditional exports are unsupported in older environments, so it's recommended to use the fallback array option if support for those environments is a concern.",
+            "properties": {
+                "require": {
+                    "$ref": "#/definitions/packageExportsEntryOrFallback",
+                    "description": "The module path that is resolved when this specifier is imported as a CommonJS module using the `require(...)` function."
+                },
+                "import": {
+                    "$ref": "#/definitions/packageExportsEntryOrFallback",
+                    "description": "The module path that is resolved when this specifier is imported as an ECMAScript module using an `import` declaration or the dynamic `import(...)` function."
+                },
+                "node": {
+                    "$ref": "#/definitions/packageExportsEntryOrFallback",
+                    "description": "The module path that is resolved when this environment is Node.js."
+                },
+                "default": {
+                    "$ref": "#/definitions/packageExportsEntryOrFallback",
+                    "description": "The module path that is resolved when no other export type matches."
+                }
             },
-            "./": {
-              "$ref": "#/definitions/packageExportsEntryOrFallback",
-              "description": "The module path prefix that is resolved when the module specifier starts with \"name/\", set to \"./\" to allow external modules to import any subpath."
-            }
-          },
-          "patternProperties": {
-            "^\\./": {
-              "$ref": "#/definitions/packageExportsEntryOrFallback",
-              "description": "The module path that is resolved when the path component of the module specifier matches the property name."
-            }
-          },
-          "additionalProperties": false
+            "patternProperties": {
+                "^(?![\\.0-9]).": {
+                    "$ref": "#/definitions/packageExportsEntryOrFallback",
+                    "description": "The module path that is resolved when this environment matches the property name."
+                }
+            },
+            "additionalProperties": false
         },
-        {
-          "$ref": "#/definitions/packageExportsEntryObject",
-          "description": "The module path that is resolved when the module specifier matches \"name\", shadows the \"main\" field."
+        "packageExportsEntry": {
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/packageExportsEntryPath"
+                },
+                {
+                    "$ref": "#/definitions/packageExportsEntryObject"
+                }
+            ]
         },
-        {
-          "$ref": "#/definitions/packageExportsFallback",
-          "description": "The module path that is resolved when the module specifier matches \"name\", shadows the \"main\" field."
-        }
-      ]
-    },
-    "bin": {
-      "type": [
-        "string",
-        "object"
-      ],
-      "additionalProperties": {
-        "type": "string"
-      }
-    },
-    "type": {
-      "description": "When set to \"module\", the type field allows a package to specify all .js files within are ES modules. If the \"type\" field is omitted or set to \"commonjs\", all .js files are treated as CommonJS.",
-      "type": "string",
-      "enum": [
-        "commonjs",
-        "module"
-      ],
-      "default": "commonjs"
-    },
-    "types": {
-      "description": "Set the types property to point to your bundled declaration file.",
-      "type": "string"
-    },
-    "typings": {
-      "description": "Note that the \"typings\" field is synonymous with \"types\", and could be used as well.",
-      "type": "string"
-    },
-    "typesVersions": {
-      "description": "The \"typesVersions\" field is used since TypeScript 3.1 to support features that were only made available in newer TypeScript versions.",
-      "type": "object",
-      "additionalProperties": {
-        "description": "Contains overrides for the TypeScript version that matches the version range matching the property key.",
-        "type": "object",
-        "properties": {
-          "*": {
-            "description": "Maps all file paths to the file paths specified in the array.",
+        "packageExportsFallback": {
             "type": "array",
+            "description": "Used to allow fallbacks in case this environment doesn't support the preceding entries.",
             "items": {
-              "type": "string",
-              "pattern": "^[^*]*(?:\\*[^*]*)?$"
+                "$ref": "#/definitions/packageExportsEntry"
             }
-          }
         },
-        "patternProperties": {
-          "^[^*]+$": {
-            "description": "Maps the file path matching the property key to the file paths specified in the array.",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "^[^*]*\\*[^*]*$": {
-            "description": "Maps file paths matching the pattern specified in property key to file paths specified in the array.",
-            "type": "array",
-            "items": {
-              "type": "string",
-              "pattern": "^[^*]*(?:\\*[^*]*)?$"
-            }
-          }
-        },
-        "additionalProperties": false
-      }
-    },
-    "man": {
-      "type": [
-        "array",
-        "string"
-      ],
-      "description": "Specify either a single file or an array of filenames to put in place for the man program to find.",
-      "items": {
-        "type": "string"
-      }
-    },
-    "directories": {
-      "type": "object",
-      "properties": {
-        "bin": {
-          "description": "If you specify a 'bin' directory, then all the files in that folder will be used as the 'bin' hash.",
-          "type": "string"
-        },
-        "doc": {
-          "description": "Put markdown files in here. Eventually, these will be displayed nicely, maybe, someday.",
-          "type": "string"
-        },
-        "example": {
-          "description": "Put example scripts in here. Someday, it might be exposed in some clever way.",
-          "type": "string"
-        },
-        "lib": {
-          "description": "Tell people where the bulk of your library is. Nothing special is done with the lib folder in any way, but it's useful meta info.",
-          "type": "string"
-        },
-        "man": {
-          "description": "A folder that is full of man pages. Sugar to generate a 'man' array by walking the folder.",
-          "type": "string"
-        },
-        "test": {
-          "type": "string"
+        "packageExportsEntryOrFallback": {
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/packageExportsEntry"
+                },
+                {
+                    "$ref": "#/definitions/packageExportsFallback"
+                }
+            ]
         }
-      }
     },
-    "repository": {
-      "description": "Specify the place where your code lives. This is helpful for people who want to contribute.",
-      "type": [
-        "object",
-        "string"
-      ],
-      "properties": {
-        "type": {
-          "type": "string"
-        },
-        "url": {
-          "type": "string"
-        },
-        "directory": {
-          "type": "string"
+    "type": "object",
+    "patternProperties": {
+        "^_": {
+            "description": "Any property starting with _ is valid.",
+            "tsType": "any"
         }
-      }
     },
-    "scripts": {
-      "description": "The 'scripts' member is an object hash of script commands that are run at various times in the lifecycle of your package. The key is the lifecycle event, and the value is the command to run at that point.",
-      "type": "object",
-      "properties": {
-        "lint": {
-          "type": "string",
-          "description": "Run code quality tools, e.g. ESLint, TSLint, etc."
+    "properties": {
+        "control4": {
+            "$ref": "#/definitions/control4"
         },
-        "prepublish": {
-          "type": "string",
-          "description": "Run BEFORE the package is published (Also run on local npm install without any arguments)."
-        },
-        "prepare": {
-          "type": "string",
-          "description": "Run both BEFORE the package is packed and published, and on local npm install without any arguments. This is run AFTER prepublish, but BEFORE prepublishOnly."
-        },
-        "prepublishOnly": {
-          "type": "string",
-          "description": "Run BEFORE the package is prepared and packed, ONLY on npm publish."
-        },
-        "prepack": {
-          "type": "string",
-          "description": "run BEFORE a tarball is packed (on npm pack, npm publish, and when installing git dependencies)."
-        },
-        "postpack": {
-          "type": "string",
-          "description": "Run AFTER the tarball has been generated and moved to its final destination."
-        },
-        "publish": {
-          "$ref": "#/definitions/scriptsPublishAfter"
-        },
-        "postpublish": {
-          "$ref": "#/definitions/scriptsPublishAfter"
-        },
-        "preinstall": {
-          "type": "string",
-          "description": "Run BEFORE the package is installed."
-        },
-        "install": {
-          "$ref": "#/definitions/scriptsInstallAfter"
-        },
-        "postinstall": {
-          "$ref": "#/definitions/scriptsInstallAfter"
-        },
-        "preuninstall": {
-          "$ref": "#/definitions/scriptsUninstallBefore"
-        },
-        "uninstall": {
-          "$ref": "#/definitions/scriptsUninstallBefore"
-        },
-        "postuninstall": {
-          "type": "string",
-          "description": "Run AFTER the package is uninstalled."
-        },
-        "preversion": {
-          "$ref": "#/definitions/scriptsVersionBefore"
+        "name": {
+            "description": "The name of the package.",
+            "type": "string",
+            "maxLength": 214,
+            "minLength": 1,
+            "pattern": "^(?:@[a-z0-9-*~][a-z0-9-*._~]*/)?[a-z0-9-~][a-z0-9-._~]*$"
         },
         "version": {
-          "$ref": "#/definitions/scriptsVersionBefore"
-        },
-        "postversion": {
-          "type": "string",
-          "description": "Run AFTER bump the package version."
-        },
-        "pretest": {
-          "$ref": "#/definitions/scriptsTest"
-        },
-        "test": {
-          "$ref": "#/definitions/scriptsTest"
-        },
-        "posttest": {
-          "$ref": "#/definitions/scriptsTest"
-        },
-        "prestop": {
-          "$ref": "#/definitions/scriptsStop"
-        },
-        "stop": {
-          "$ref": "#/definitions/scriptsStop"
-        },
-        "poststop": {
-          "$ref": "#/definitions/scriptsStop"
-        },
-        "prestart": {
-          "$ref": "#/definitions/scriptsStart"
-        },
-        "start": {
-          "$ref": "#/definitions/scriptsStart"
-        },
-        "poststart": {
-          "$ref": "#/definitions/scriptsStart"
-        },
-        "prerestart": {
-          "$ref": "#/definitions/scriptsRestart"
-        },
-        "restart": {
-          "$ref": "#/definitions/scriptsRestart"
-        },
-        "postrestart": {
-          "$ref": "#/definitions/scriptsRestart"
-        },
-        "serve": {
-          "type": "string",
-          "description": "Start dev server to serve application files"
-        }
-      },
-      "additionalProperties": {
-        "type": "string",
-        "tsType": "string | undefined"
-      }
-    },
-    "config": {
-      "description": "A 'config' hash can be used to set configuration parameters used in package scripts that persist across upgrades.",
-      "type": "object",
-      "additionalProperties": true
-    },
-    "dependencies": {
-      "$ref": "#/definitions/dependency"
-    },
-    "devDependencies": {
-      "$ref": "#/definitions/dependency"
-    },
-    "optionalDependencies": {
-      "$ref": "#/definitions/dependency"
-    },
-    "peerDependencies": {
-      "$ref": "#/definitions/dependency"
-    },
-    "peerDependenciesMeta": {
-      "description": "When a user installs your package, warnings are emitted if packages specified in \"peerDependencies\" are not already installed. The \"peerDependenciesMeta\" field serves to provide more information on how your peer dependencies are utilized. Most commonly, it allows peer dependencies to be marked as optional. Metadata for this field is specified with a simple hash of the package name to a metadata object.",
-      "type": "object",
-      "additionalProperties": {
-        "type": "object",
-        "additionalProperties": true,
-        "properties": {
-          "optional": {
-            "description": "Specifies that this peer dependency is optional and should not be installed automatically.",
-            "type": "boolean"
-          }
-        }
-      }
-    },
-    "bundledDependencies": {
-      "description": "Array of package names that will be bundled when publishing the package.",
-      "oneOf": [
-        {
-          "type": "array",
-          "items": {
+            "description": "Version must be parseable by node-semver, which is bundled with npm as a dependency.",
             "type": "string"
-          }
         },
-        {
-          "type": "boolean"
-        }
-      ]
-    },
-    "bundleDependencies": {
-      "description": "DEPRECATED: This field is honored, but \"bundledDependencies\" is the correct field name.",
-      "oneOf": [
-        {
-          "type": "array",
-          "items": {
+        "description": {
+            "description": "This helps people discover your package, as it's listed in 'npm search'.",
             "type": "string"
-          }
         },
-        {
-          "type": "boolean"
-        }
-      ]
-    },
-    "resolutions": {
-      "description": "Resolutions is used to support selective version resolutions, which lets you define custom package versions or ranges inside your dependencies. See: https://classic.yarnpkg.com/en/docs/selective-version-resolutions",
-      "type": "object"
-    },
-    "engines": {
-      "type": "object",
-      "properties": {
-        "node": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": {
-        "type": "string"
-      }
-    },
-    "engineStrict": {
-      "type": "boolean"
-    },
-    "os": {
-      "description": "Specify which operating systems your module will run on.",
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "cpu": {
-      "description": "Specify that your code only runs on certain cpu architectures.",
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "preferGlobal": {
-      "type": "boolean",
-      "description": "DEPRECATED: This option used to trigger an npm warning, but it will no longer warn. It is purely there for informational purposes. It is now recommended that you install any binaries as local devDependencies wherever possible."
-    },
-    "private": {
-      "description": "If set to true, then npm will refuse to publish it.",
-      "oneOf": [
-        {
-          "type": "boolean"
-        },
-        {
-          "enum": [
-            "false",
-            "true"
-          ]
-        }
-      ]
-    },
-    "publishConfig": {
-      "type": "object",
-      "properties": {
-        "access": {
-          "type": "string",
-          "enum": [
-            "public",
-            "restricted"
-          ]
-        },
-        "tag": {
-          "type": "string"
-        },
-        "registry": {
-          "type": "string",
-          "format": "uri"
-        }
-      },
-      "additionalProperties": true
-    },
-    "dist": {
-      "type": "object",
-      "properties": {
-        "shasum": {
-          "type": "string"
-        },
-        "tarball": {
-          "type": "string"
-        }
-      }
-    },
-    "readme": {
-      "type": "string"
-    },
-    "module": {
-      "description": "An ECMAScript module ID that is the primary entry point to your program.",
-      "type": "string"
-    },
-    "esnext": {
-      "description": "A module ID with untranspiled code that is the primary entry point to your program.",
-      "type": [
-        "string",
-        "object"
-      ],
-      "properties": {
-        "main": {
-          "type": "string"
-        },
-        "browser": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": {
-        "type": "string"
-      }
-    },
-    "workspaces": {
-      "description": "Allows packages within a directory to depend on one another using direct linking of local files. Additionally, dependencies within a workspace are hoisted to the workspace root when possible to reduce duplication. Note: It's also a good idea to set \"private\" to true when using this feature.",
-      "anyOf": [
-        {
-          "type": "array",
-          "description": "Workspace package paths. Glob patterns are supported.",
-          "items": {
-            "type": "string"
-          }
-        },
-        {
-          "type": "object",
-          "properties": {
-            "packages": {
-              "type": "array",
-              "description": "Workspace package paths. Glob patterns are supported.",
-              "items": {
+        "keywords": {
+            "description": "This helps people discover your package as it's listed in 'npm search'.",
+            "type": "array",
+            "items": {
                 "type": "string"
-              }
-            },
-            "nohoist": {
-              "type": "array",
-              "description": "Packages to block from hoisting to the workspace root. Currently only supported in Yarn only.",
-              "items": {
-                "type": "string"
-              }
             }
-          }
+        },
+        "homepage": {
+            "description": "The url to the project homepage.",
+            "type": "string"
+        },
+        "bugs": {
+            "description": "The url to your project's issue tracker and / or the email address to which issues should be reported. These are helpful for people who encounter issues with your package.",
+            "type": [
+                "object",
+                "string"
+            ],
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "description": "The url to your project's issue tracker.",
+                    "format": "uri"
+                },
+                "email": {
+                    "type": "string",
+                    "description": "The email address to which issues should be reported.",
+                    "format": "email"
+                }
+            }
+        },
+        "license": {
+            "type": "string",
+            "description": "You should specify a license for your package so that people know how they are permitted to use it, and any restrictions you're placing on it."
+        },
+        "licenses": {
+            "description": "DEPRECATED: Instead, use SPDX expressions, like this: { \"license\": \"ISC\" } or { \"license\": \"(MIT OR Apache-2.0)\" } see: 'https://docs.npmjs.com/files/package.json#license'.",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string",
+                        "format": "uri"
+                    }
+                }
+            }
+        },
+        "author": {
+            "$ref": "#/definitions/person"
+        },
+        "contributors": {
+            "description": "A list of people who contributed to this package.",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/person"
+            }
+        },
+        "maintainers": {
+            "description": "A list of people who maintains this package.",
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/person"
+            }
+        },
+        "files": {
+            "description": "The 'files' field is an array of files to include in your project. If you name a folder in the array, then it will also include the files inside that folder.",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "main": {
+            "description": "The main field is a module ID that is the primary entry point to your program.",
+            "type": "string"
+        },
+        "exports": {
+            "description": "The \"exports\" field is used to restrict external access to non-exported module files, also enables a module to import itself using \"name\".",
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/packageExportsEntryPath",
+                    "description": "The module path that is resolved when the module specifier matches \"name\", shadows the \"main\" field."
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        ".": {
+                            "$ref": "#/definitions/packageExportsEntryOrFallback",
+                            "description": "The module path that is resolved when the module specifier matches \"name\", shadows the \"main\" field."
+                        },
+                        "./": {
+                            "$ref": "#/definitions/packageExportsEntryOrFallback",
+                            "description": "The module path prefix that is resolved when the module specifier starts with \"name/\", set to \"./\" to allow external modules to import any subpath."
+                        }
+                    },
+                    "patternProperties": {
+                        "^\\./": {
+                            "$ref": "#/definitions/packageExportsEntryOrFallback",
+                            "description": "The module path that is resolved when the path component of the module specifier matches the property name."
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                {
+                    "$ref": "#/definitions/packageExportsEntryObject",
+                    "description": "The module path that is resolved when the module specifier matches \"name\", shadows the \"main\" field."
+                },
+                {
+                    "$ref": "#/definitions/packageExportsFallback",
+                    "description": "The module path that is resolved when the module specifier matches \"name\", shadows the \"main\" field."
+                }
+            ]
+        },
+        "bin": {
+            "type": [
+                "string",
+                "object"
+            ],
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
+        "type": {
+            "description": "When set to \"module\", the type field allows a package to specify all .js files within are ES modules. If the \"type\" field is omitted or set to \"commonjs\", all .js files are treated as CommonJS.",
+            "type": "string",
+            "enum": [
+                "commonjs",
+                "module"
+            ],
+            "default": "commonjs"
+        },
+        "types": {
+            "description": "Set the types property to point to your bundled declaration file.",
+            "type": "string"
+        },
+        "typings": {
+            "description": "Note that the \"typings\" field is synonymous with \"types\", and could be used as well.",
+            "type": "string"
+        },
+        "typesVersions": {
+            "description": "The \"typesVersions\" field is used since TypeScript 3.1 to support features that were only made available in newer TypeScript versions.",
+            "type": "object",
+            "additionalProperties": {
+                "description": "Contains overrides for the TypeScript version that matches the version range matching the property key.",
+                "type": "object",
+                "properties": {
+                    "*": {
+                        "description": "Maps all file paths to the file paths specified in the array.",
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "pattern": "^[^*]*(?:\\*[^*]*)?$"
+                        }
+                    }
+                },
+                "patternProperties": {
+                    "^[^*]+$": {
+                        "description": "Maps the file path matching the property key to the file paths specified in the array.",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "^[^*]*\\*[^*]*$": {
+                        "description": "Maps file paths matching the pattern specified in property key to file paths specified in the array.",
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "pattern": "^[^*]*(?:\\*[^*]*)?$"
+                        }
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "man": {
+            "type": [
+                "array",
+                "string"
+            ],
+            "description": "Specify either a single file or an array of filenames to put in place for the man program to find.",
+            "items": {
+                "type": "string"
+            }
+        },
+        "directories": {
+            "type": "object",
+            "properties": {
+                "bin": {
+                    "description": "If you specify a 'bin' directory, then all the files in that folder will be used as the 'bin' hash.",
+                    "type": "string"
+                },
+                "doc": {
+                    "description": "Put markdown files in here. Eventually, these will be displayed nicely, maybe, someday.",
+                    "type": "string"
+                },
+                "example": {
+                    "description": "Put example scripts in here. Someday, it might be exposed in some clever way.",
+                    "type": "string"
+                },
+                "lib": {
+                    "description": "Tell people where the bulk of your library is. Nothing special is done with the lib folder in any way, but it's useful meta info.",
+                    "type": "string"
+                },
+                "man": {
+                    "description": "A folder that is full of man pages. Sugar to generate a 'man' array by walking the folder.",
+                    "type": "string"
+                },
+                "test": {
+                    "type": "string"
+                }
+            }
+        },
+        "repository": {
+            "description": "Specify the place where your code lives. This is helpful for people who want to contribute.",
+            "type": [
+                "object",
+                "string"
+            ],
+            "properties": {
+                "type": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                },
+                "directory": {
+                    "type": "string"
+                }
+            }
+        },
+        "scripts": {
+            "description": "The 'scripts' member is an object hash of script commands that are run at various times in the lifecycle of your package. The key is the lifecycle event, and the value is the command to run at that point.",
+            "type": "object",
+            "properties": {
+                "lint": {
+                    "type": "string",
+                    "description": "Run code quality tools, e.g. ESLint, TSLint, etc."
+                },
+                "prepublish": {
+                    "type": "string",
+                    "description": "Run BEFORE the package is published (Also run on local npm install without any arguments)."
+                },
+                "prepare": {
+                    "type": "string",
+                    "description": "Run both BEFORE the package is packed and published, and on local npm install without any arguments. This is run AFTER prepublish, but BEFORE prepublishOnly."
+                },
+                "prepublishOnly": {
+                    "type": "string",
+                    "description": "Run BEFORE the package is prepared and packed, ONLY on npm publish."
+                },
+                "prepack": {
+                    "type": "string",
+                    "description": "run BEFORE a tarball is packed (on npm pack, npm publish, and when installing git dependencies)."
+                },
+                "postpack": {
+                    "type": "string",
+                    "description": "Run AFTER the tarball has been generated and moved to its final destination."
+                },
+                "publish": {
+                    "$ref": "#/definitions/scriptsPublishAfter"
+                },
+                "postpublish": {
+                    "$ref": "#/definitions/scriptsPublishAfter"
+                },
+                "preinstall": {
+                    "type": "string",
+                    "description": "Run BEFORE the package is installed."
+                },
+                "install": {
+                    "$ref": "#/definitions/scriptsInstallAfter"
+                },
+                "postinstall": {
+                    "$ref": "#/definitions/scriptsInstallAfter"
+                },
+                "preuninstall": {
+                    "$ref": "#/definitions/scriptsUninstallBefore"
+                },
+                "uninstall": {
+                    "$ref": "#/definitions/scriptsUninstallBefore"
+                },
+                "postuninstall": {
+                    "type": "string",
+                    "description": "Run AFTER the package is uninstalled."
+                },
+                "preversion": {
+                    "$ref": "#/definitions/scriptsVersionBefore"
+                },
+                "version": {
+                    "$ref": "#/definitions/scriptsVersionBefore"
+                },
+                "postversion": {
+                    "type": "string",
+                    "description": "Run AFTER bump the package version."
+                },
+                "pretest": {
+                    "$ref": "#/definitions/scriptsTest"
+                },
+                "test": {
+                    "$ref": "#/definitions/scriptsTest"
+                },
+                "posttest": {
+                    "$ref": "#/definitions/scriptsTest"
+                },
+                "prestop": {
+                    "$ref": "#/definitions/scriptsStop"
+                },
+                "stop": {
+                    "$ref": "#/definitions/scriptsStop"
+                },
+                "poststop": {
+                    "$ref": "#/definitions/scriptsStop"
+                },
+                "prestart": {
+                    "$ref": "#/definitions/scriptsStart"
+                },
+                "start": {
+                    "$ref": "#/definitions/scriptsStart"
+                },
+                "poststart": {
+                    "$ref": "#/definitions/scriptsStart"
+                },
+                "prerestart": {
+                    "$ref": "#/definitions/scriptsRestart"
+                },
+                "restart": {
+                    "$ref": "#/definitions/scriptsRestart"
+                },
+                "postrestart": {
+                    "$ref": "#/definitions/scriptsRestart"
+                },
+                "serve": {
+                    "type": "string",
+                    "description": "Start dev server to serve application files"
+                }
+            },
+            "additionalProperties": {
+                "type": "string",
+                "tsType": "string | undefined"
+            }
+        },
+        "config": {
+            "description": "A 'config' hash can be used to set configuration parameters used in package scripts that persist across upgrades.",
+            "type": "object",
+            "additionalProperties": true
+        },
+        "dependencies": {
+            "$ref": "#/definitions/dependency"
+        },
+        "devDependencies": {
+            "$ref": "#/definitions/dependency"
+        },
+        "optionalDependencies": {
+            "$ref": "#/definitions/dependency"
+        },
+        "peerDependencies": {
+            "$ref": "#/definitions/dependency"
+        },
+        "peerDependenciesMeta": {
+            "description": "When a user installs your package, warnings are emitted if packages specified in \"peerDependencies\" are not already installed. The \"peerDependenciesMeta\" field serves to provide more information on how your peer dependencies are utilized. Most commonly, it allows peer dependencies to be marked as optional. Metadata for this field is specified with a simple hash of the package name to a metadata object.",
+            "type": "object",
+            "additionalProperties": {
+                "type": "object",
+                "additionalProperties": true,
+                "properties": {
+                    "optional": {
+                        "description": "Specifies that this peer dependency is optional and should not be installed automatically.",
+                        "type": "boolean"
+                    }
+                }
+            }
+        },
+        "bundledDependencies": {
+            "description": "Array of package names that will be bundled when publishing the package.",
+            "oneOf": [
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "type": "boolean"
+                }
+            ]
+        },
+        "bundleDependencies": {
+            "description": "DEPRECATED: This field is honored, but \"bundledDependencies\" is the correct field name.",
+            "oneOf": [
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "type": "boolean"
+                }
+            ]
+        },
+        "resolutions": {
+            "description": "Resolutions is used to support selective version resolutions, which lets you define custom package versions or ranges inside your dependencies. See: https://classic.yarnpkg.com/en/docs/selective-version-resolutions",
+            "type": "object"
+        },
+        "engines": {
+            "type": "object",
+            "properties": {
+                "node": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
+        "engineStrict": {
+            "type": "boolean"
+        },
+        "os": {
+            "description": "Specify which operating systems your module will run on.",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "cpu": {
+            "description": "Specify that your code only runs on certain cpu architectures.",
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "preferGlobal": {
+            "type": "boolean",
+            "description": "DEPRECATED: This option used to trigger an npm warning, but it will no longer warn. It is purely there for informational purposes. It is now recommended that you install any binaries as local devDependencies wherever possible."
+        },
+        "private": {
+            "description": "If set to true, then npm will refuse to publish it.",
+            "oneOf": [
+                {
+                    "type": "boolean"
+                },
+                {
+                    "enum": [
+                        "false",
+                        "true"
+                    ]
+                }
+            ]
+        },
+        "publishConfig": {
+            "type": "object",
+            "properties": {
+                "access": {
+                    "type": "string",
+                    "enum": [
+                        "public",
+                        "restricted"
+                    ]
+                },
+                "tag": {
+                    "type": "string"
+                },
+                "registry": {
+                    "type": "string",
+                    "format": "uri"
+                }
+            },
+            "additionalProperties": true
+        },
+        "dist": {
+            "type": "object",
+            "properties": {
+                "shasum": {
+                    "type": "string"
+                },
+                "tarball": {
+                    "type": "string"
+                }
+            }
+        },
+        "readme": {
+            "type": "string"
+        },
+        "module": {
+            "description": "An ECMAScript module ID that is the primary entry point to your program.",
+            "type": "string"
+        },
+        "esnext": {
+            "description": "A module ID with untranspiled code that is the primary entry point to your program.",
+            "type": [
+                "string",
+                "object"
+            ],
+            "properties": {
+                "main": {
+                    "type": "string"
+                },
+                "browser": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
+        "workspaces": {
+            "description": "Allows packages within a directory to depend on one another using direct linking of local files. Additionally, dependencies within a workspace are hoisted to the workspace root when possible to reduce duplication. Note: It's also a good idea to set \"private\" to true when using this feature.",
+            "anyOf": [
+                {
+                    "type": "array",
+                    "description": "Workspace package paths. Glob patterns are supported.",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "packages": {
+                            "type": "array",
+                            "description": "Workspace package paths. Glob patterns are supported.",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "nohoist": {
+                            "type": "array",
+                            "description": "Packages to block from hoisting to the workspace root. Currently only supported in Yarn only.",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "jspm": {
+            "$ref": "#"
         }
-      ]
     },
-    "jspm": {
-      "$ref": "#"
-    }
-  },
-  "anyOf": [
-    {
-      "type": "object",
-      "not": {
-        "required": [
-          "bundledDependencies",
-          "bundleDependencies"
-        ]
-      }
-    },
-    {
-      "type": "object",
-      "not": {
-        "required": [
-          "bundleDependencies"
-        ]
-      },
-      "required": [
-        "bundledDependencies"
-      ]
-    },
-    {
-      "type": "object",
-      "not": {
-        "required": [
-          "bundledDependencies"
-        ]
-      },
-      "required": [
-        "bundleDependencies"
-      ]
-    }
-  ]
+    "anyOf": [
+        {
+            "type": "object",
+            "not": {
+                "required": [
+                    "bundledDependencies",
+                    "bundleDependencies"
+                ]
+            }
+        },
+        {
+            "type": "object",
+            "not": {
+                "required": [
+                    "bundleDependencies"
+                ]
+            },
+            "required": [
+                "bundledDependencies"
+            ]
+        },
+        {
+            "type": "object",
+            "not": {
+                "required": [
+                    "bundledDependencies"
+                ]
+            },
+            "required": [
+                "bundleDependencies"
+            ]
+        }
+    ]
 }
