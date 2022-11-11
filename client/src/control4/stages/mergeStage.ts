@@ -15,14 +15,18 @@ export default class MergeStage implements BuildStage {
         let srcFile = path.join(intermediate, "driver.lua")
         let srcDocument = await ReadFileContents(srcFile);
 
-        let r = new RegExp(/require\s*?[\[\[]*?['"(]+(.+)['")];?/, "gm");
+        let r = new RegExp(/require\s*?[\[\[]*?['"(]+(.+)['"]+\)/, "gm");
         let matches = srcDocument.matchAll(r);
+        let modules = ""
 
+        // Create module data
         for (const match of matches) {
             let fileDocument = await ReadFileContents(path.join(_source, ... match[1].split('.')) + ".lua");
 
-            srcDocument = srcDocument.replace(match[0], fileDocument);
+            modules = modules + `package.preload['${match[1]}'] = (function(...)\n ${fileDocument} end)\n`
         }
+
+        srcDocument = modules + srcDocument;
 
         await WriteFileContents(srcFile, srcDocument);
     }
@@ -31,7 +35,7 @@ export default class MergeStage implements BuildStage {
         if (typeof(result) === "string") {
             return result;
         } else {
-            return `[Lua Merge   ] Injected Allow Execute`;
+            return `[Lua Merge   ] Injected lua source from files`;
         }
     }
 
