@@ -17,7 +17,7 @@
         "vscode": "^1.52.0"
     },
     "dependencies": {
-        "adm-zip": "^0.5.2",
+        "adm-zip": "^0.5.10",
         "axios": "^0.26.0",
         "fs-extra": "^9.0.1",
         "lodash.ismatch": "^4.4.0",
