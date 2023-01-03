@@ -43,7 +43,7 @@ During the build process you can dynamically include variables so that you don't
     "my_environment_variable": "PRIVATE_VALUE"
 }
 ```
-### driver.lua:
+### driver.lua
 ```
 local myEnvironmentValue = [[ENV.my_environment_variable]]
 ```
@@ -58,12 +58,30 @@ local myEnvironmentValue = [[ENV.my_environment_variable]]
 ## Roadmap
 - [x] Add support for OpenSSL driver encryption instead of using DriverPackager.exe
 - [x] Add support for a build option which injects C4:AllowExecute(true)
-- [ ] Add support for sending Lua script to driver
+- [x] Add support for sending Lua script to driver
 - [ ] Add support for hooks in the language server
+- [ ] Add support for driver templates
 - [ ] Add support for C4:url userdata information
     - [ ] Add completion information for Get, Post, Put, Custom, etc
     - [ ] Add completion information for the OnDone callback function
 
+## Unit Testing
+* I recommend using [Busted](https://lunarmodules.github.io/busted/) for unit testing. If you're using Windows you can use  WSL to install it following the instructions below. I've included instructions to install the 'bit' library as well as this is included in the Control4 Lua sandbox.
+
+### Installing WSL
+- wsl --install
+### Updating packages
+- sudo apt-get update
+### Installing Lua
+- sudo apt install lua5.2 liblua5.2-dev make unzip
+### Installing Luarocks
+- wget https://luarocks.org/releases/luarocks-3.9.1.tar.gz
+- tar zxpf luarocks-3.9.1.tar.gz
+- cd luarocks-3.9.1
+- ./configure && make && sudo make install
+### Installing dependencies
+- sudo luarocks install luabitop
+- sudo luarocks install busted 2.0.0-1
 
 ## Figures
 
