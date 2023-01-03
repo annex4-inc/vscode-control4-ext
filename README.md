@@ -73,7 +73,7 @@ local myEnvironmentValue = [[ENV.my_environment_variable]]
 ### Updating packages
 - sudo apt-get update
 ### Installing Lua
-- sudo apt install lua5.2 liblua5.2-dev make unzip
+- sudo apt install lua5.1 liblua5.1-dev make unzip
 ### Installing Luarocks
 - wget https://luarocks.org/releases/luarocks-3.9.1.tar.gz
 - tar zxpf luarocks-3.9.1.tar.gz
