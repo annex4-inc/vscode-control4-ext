@@ -17,7 +17,7 @@ export default class OpenSSLStage implements BuildStage {
         return new Promise<any>(async (resolve, reject) => {
             let input = path.join(intermediate, "driver.lua");
             let output = path.join(intermediate, "driver.lua.encrypted");
-            let command = `openssl smime -encrypt -binary -aes-256-cbc -in ${input} -out ${output} -outform DER ${this.certificatePath}`
+            let command = `openssl smime -encrypt -binary -aes-256-cbc -in "${input}" -out "${output}" -outform DER "${this.certificatePath}"`
 
             cp.exec(command, { timeout: 3000 }, async (err, stdout, stderr) => {
                 if (stderr !== "") {
