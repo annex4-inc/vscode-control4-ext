@@ -1,7 +1,7 @@
 {
 	"name": "vscode-control4-ext-server",
 	"description": "Language server for Control4 Driverworks.",
-	"version": "0.0.1",
+	"version": "0.0.6",
 	"author": "annex4 Inc.",
 	"license": "MIT",
 	"engines": {

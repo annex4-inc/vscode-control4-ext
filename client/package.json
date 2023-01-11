@@ -3,7 +3,7 @@
     "description": "Control4 driver development tooling client",
     "author": "annex4 Inc.",
     "license": "GPLv3",
-    "version": "0.0.1",
+    "version": "0.0.6",
     "publisher": "vscode",
     "repository": {
         "type": "git",
