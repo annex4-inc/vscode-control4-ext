@@ -132,7 +132,7 @@ async function control4Import() {
           await WriteIfNotExists(path.join(root, ".gitignore"), await ReadFileContents(path.join(this.extensionUri.fsPath, "client", "src", "resources", "templates", ".gitignore")));
           await WriteIfNotExists(path.join(root, ".npmrc"), "@annex4:registry=https://npm.pkg.github.com" );
 
-          templatePackage.name = driver.name.toLowerCase().replace(" ", "_");
+          templatePackage.name = path.basename(c4z.path, ".c4z");
           templatePackage.control4.name = driver.name;
           templatePackage.control4.created = new Date().toLocaleString('en-US', { timeZone: 'UTC' });
           templatePackage.control4.model = driver.model;
