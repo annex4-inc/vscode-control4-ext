@@ -139,6 +139,7 @@ async function control4Import() {
           templatePackage.control4.manufacturer = driver.manufacturer;
           templatePackage.control4.creator = driver.creator;
           templatePackage.control4.capabilities = driver.capabilities;
+          templatePackage.control4.icon = driver.icon;
 
           var handler = await fsPromises.open(path.join(root, "package.json"), 'wx');
           await handler.writeFile(JSON.stringify(templatePackage, null, 2));

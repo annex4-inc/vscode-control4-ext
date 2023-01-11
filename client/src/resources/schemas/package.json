@@ -35,6 +35,9 @@
         "icon": {
             "type": "object",
             "properties": {
+                "image_source": {
+                    "type": "string"
+                },
                 "small": {
                     "type": "string"
                 },
@@ -124,16 +127,19 @@
                 },
                 "icon": {
                     "type": "object",
+                    "description": "The icon that appears in Composer",
                     "$ref": "#/definitions/icon"
                 },
                 "control": {
                     "type": "string",
+                    "description": "The control type for the driver",
                     "enum": [
                         "lua_gen"
                     ]
                 },
                 "controlmethod": {
                     "type": "string",
+                    "description": "Communication method for control",
                     "enum": [
                         "ip",
                         "serial"
