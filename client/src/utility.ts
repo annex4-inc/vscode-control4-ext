@@ -5,7 +5,7 @@ import * as cp from 'child_process'
 
 const fsPromises = fs.promises;
 
-export async function WriteIfNotExists(file, data) {
+export async function WriteIfNotExists(file: string, data: string | Uint8Array) {
     try {
         var handler = await fsPromises.open(file, 'wx');
 
@@ -20,7 +20,7 @@ export async function WriteIfNotExists(file, data) {
     }
 }
 
-export async function ReadFileContents(file) {
+export async function ReadFileContents(file: string) {
     try {
         var handler = await fsPromises.open(file, 'r');
         var buffer = await handler.readFile();
@@ -35,7 +35,7 @@ export async function ReadFileContents(file) {
     }
 }
 
-export async function GetFileBuffer(file) {
+export async function GetFileBuffer(file: string) {
     try {
         var handler = await fsPromises.open(file, 'r');
         var buffer = await handler.readFile();
@@ -50,7 +50,7 @@ export async function GetFileBuffer(file) {
     }
 }
 
-export async function WriteFileContents(file, data) {
+export async function WriteFileContents(file: string, data: string | Uint8Array) {
     try {
         var handler = await fsPromises.open(file, 'w');
 
@@ -62,7 +62,7 @@ export async function WriteFileContents(file, data) {
     }
 }
 
-export async function GetDirents(dir): Promise<string[]> {
+export async function GetDirents(dir: string): Promise<string[]> {
     const dirents = await fsPromises.readdir(dir, { withFileTypes: true });
     const files = await Promise.all(dirents.map(async (d) => {
         const res = path.join(dir, d.name)
@@ -72,8 +72,16 @@ export async function GetDirents(dir): Promise<string[]> {
     return files.flat();
 }
 
-export async function ForceWrite(file, data) {
+export async function ForceWrite(file: string, data: string | Uint8Array) {
     try {
+        if (file.endsWith(path.sep)) {
+            await fsPromises.mkdir(file, {recursive: true});
+
+            return;
+        } else if (!fs.existsSync(file)) {
+            await fsPromises.mkdir(path.dirname(file), {recursive: true});
+        }
+
         var handler = await fsPromises.open(file, 'w');
 
         await handler.writeFile(data);
