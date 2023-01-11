@@ -460,12 +460,20 @@ export class Driver {
                 let value: any = devicedata.capabilities[key];
 
                 if (key == "navigator_display_option") {
-                    return C4NavigatorDisplayOption.fromXml(value)
+                    if (!d.capabilities[key]) {
+                        d.capabilities[key] = [];
+                    }
+
+                    d.capabilities[key].push(C4NavigatorDisplayOption.fromXml(value))
                 } else if (key == "web_view_url") {
-                    return C4WebviewUrl.fromXml(value)
+                    if (!d.capabilities[key]) {
+                        d.capabilities[key] = [];
+                    }
+
+                    d.capabilities[key].push(C4WebviewUrl.fromXml(value))
                 } else if (key == "UI") {
                     d.UI.push(C4UI.fromXml(value));
-                } else if (value.match("[Tt][Rr][Uu][Ee]") || value.match("[Ff][Aa][Ll][Ss][Ee]")) {
+                } else if (value && (value.match("[Tt][Rr][Uu][Ee]") || value.match("[Ff][Aa][Ll][Ss][Ee]"))) {
                     d.capabilities[key] = asBoolean(value);
                 } else {
                     d.capabilities[key] = value;

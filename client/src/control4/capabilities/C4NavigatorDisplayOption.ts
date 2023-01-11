@@ -17,9 +17,11 @@ export class C4NavigatorDisplayOption {
     display_icons?: C4InterfaceIcon[]
 
     constructor(options?) {
-        this.proxybindingid = options.proxybindingid;
-        this.display_icons = options.display_icons;
-        this.translation_url = options.translation_url;
+        if (options) {
+            this.proxybindingid = options.proxybindingid;
+            this.display_icons = options.display_icons;
+            this.translation_url = options.translation_url;
+        }
     }
 
     toXml() {
