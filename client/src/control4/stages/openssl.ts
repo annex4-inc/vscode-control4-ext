@@ -2,6 +2,7 @@ import { BuildStage } from '../builder';
 import * as path from 'path';
 import * as cp from 'child_process';
 import * as fs from 'fs'
+
 export default class OpenSSLStage implements BuildStage {
     encrypted: boolean
     certificatePath: string

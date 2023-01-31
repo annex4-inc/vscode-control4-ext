@@ -28,7 +28,7 @@ export default class DriverXmlBuildStage implements BuildStage {
     }
 
     OnFailure(result: any): String {
-        return "[Driver      ] Failed to build driver.xml";
+        return `[Driver      ] Failed to build driver.xml\r\n${result}`;
     }
 }
 

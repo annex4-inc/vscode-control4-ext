@@ -31,7 +31,7 @@ export interface BuildStage {
 }
 
 export class Builder {
-  static async* Build(version: BuildVersion, encrypted: boolean, templated: boolean, development: boolean, deploy: {ip: string, port: number}, context: vscode.ExtensionContext) {
+  static async* Build(version: BuildVersion, encrypted: boolean, templated: boolean, development: boolean, merge: boolean, deploy: {ip: string, port: number}, context: vscode.ExtensionContext) {
     const pkg = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, 'package.json');
 
     // Establish working directories
@@ -58,7 +58,7 @@ export class Builder {
     // Prepare the build stages
     let stages = new Array<BuildStage>();
         stages.push(new CleanStage());
-        stages.push(new IntermediateStage(encrypted));
+        stages.push(new IntermediateStage(encrypted || merge));
         stages.push(new DriverXmlBuildStage(_package, encrypted));
         stages.push(new DependencyInjectionStage(_package, development));
 
@@ -66,7 +66,7 @@ export class Builder {
         stages.push(new LuaInjectionStage());
     }
 
-    if (encrypted) {
+    if (merge || encrypted) {
         stages.push(new MergeStage());
     }
 

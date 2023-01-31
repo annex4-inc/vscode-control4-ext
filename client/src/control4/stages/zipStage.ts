@@ -1,4 +1,3 @@
-
 import { BuildStage } from '../builder';
 import Package from '../../package';
 import * as path from 'path';

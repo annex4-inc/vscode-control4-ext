@@ -1,4 +1,3 @@
-
 import OpenSSLStage from './openssl';
 import IncrementVersionStage from './incrementVersion';
 import IntermediateStage from './intermediateStage';

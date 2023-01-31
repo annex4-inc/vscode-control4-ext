@@ -7,6 +7,7 @@ interface Control4BuildTaskDefinition extends vscode.TaskDefinition {
   encryption: boolean;
   template: boolean;
   development: boolean;
+  merge: boolean;
   deploy: {ip: string, port: number};
 }
 
@@ -31,7 +32,7 @@ export class Control4BuildTaskProvider implements vscode.TaskProvider {
 
   public resolveTask(_task: vscode.Task): vscode.Task | undefined {
     const definition: Control4BuildTaskDefinition = <any>_task.definition;
-    return this.getTask(definition.version, definition.encryption, definition.template, definition.development, definition.deploy, definition);
+    return this.getTask(definition.version, definition.encryption, definition.template, definition.development, definition.merge, definition.deploy, definition);
   }
 
   private getTasks(): vscode.Task[] {
@@ -51,7 +52,7 @@ export class Control4BuildTaskProvider implements vscode.TaskProvider {
     return this.tasks;
   }
 
-  private getTask(version: BuildVersion, encryption: boolean, template: boolean, development: boolean, deploy: {ip: string, port: number}, definition?: Control4BuildTaskDefinition): vscode.Task {
+  private getTask(version: BuildVersion, encryption: boolean, template: boolean, development: boolean, merge: boolean, deploy: {ip: string, port: number}, definition?: Control4BuildTaskDefinition): vscode.Task {
     if (definition === undefined) {
       definition = {
         type: Control4BuildTaskProvider.BuildType,
@@ -59,12 +60,13 @@ export class Control4BuildTaskProvider implements vscode.TaskProvider {
         encryption,
         template,
         development,
+        merge,
         deploy
       };
     }
     return new vscode.Task(definition, vscode.TaskScope.Workspace, `Package Driver - ${version}`,
       Control4BuildTaskProvider.BuildType, new vscode.CustomExecution(async (): Promise<vscode.Pseudoterminal> => {
-        return new CustomBuildTaskTerminal(this.workspaceRoot, version, encryption, template, development, deploy, () => this.sharedState, (state: string) => this.sharedState = state, this.context);
+        return new CustomBuildTaskTerminal(this.workspaceRoot, version, encryption, template, development, merge, deploy, () => this.sharedState, (state: string) => this.sharedState = state, this.context);
       }));
   }
 }
@@ -85,7 +87,8 @@ class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
     private encryption: boolean, 
     private template: boolean, 
     private development: boolean, 
-    private deploy, 
+    private merge: boolean,
+    private deploy: {ip: string, port: number},
     private getSharedState: () => string | undefined, private setSharedState: (state: string) => void, context: vscode.ExtensionContext) {
       this.context = context;
   }
@@ -105,7 +108,7 @@ class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
     return new Promise<void>(async (resolve) => {
       this.writeEmitter.fire(`[${new Date().toLocaleString()}] Starting ${this.version} build...\r\n`);
 
-      let iterator = Builder.Build(this.version, this.encryption, this.template, this.development, this.deploy, this.context);
+      let iterator = Builder.Build(this.version, this.encryption, this.template, this.development, this.merge, this.deploy, this.context);
 
       let value = null
 

@@ -2,10 +2,10 @@ import { BuildStage } from '../builder';
 import * as fse from 'fs-extra';
 
 export default class IntermediateStage implements BuildStage {
-    encrypted: boolean
+    merge: boolean
 
-    constructor(encrypted: boolean) {
-        this.encrypted = encrypted;
+    constructor(merge: boolean, ) {
+        this.merge = merge;
     }
 
     Execute(source: string, intermediate: string, _destination: string): Promise<any> {
@@ -14,7 +14,7 @@ export default class IntermediateStage implements BuildStage {
                 // Copy from source to intermediate
                 fse.copy(source, intermediate, {
                     filter: (i: string) => {
-                        if (!this.encrypted) {
+                        if (!this.merge) {
                             return true
                         }
 

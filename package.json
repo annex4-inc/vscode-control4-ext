@@ -3,7 +3,7 @@
     "displayName": "Control4 DriverWorks Support",
     "description": "Assists in the creation of Control4 drivers",
     "icon": "images/annex4.png",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "license": "GPL",
     "publisher": "annex4-inc",
     "repository": {
@@ -58,6 +58,10 @@
                     "development": {
                         "type": "boolean",
                         "description": "True if the driver should allow Lua execution and dev logs"
+                    },
+                    "merge": {
+                        "type": "boolean",
+                        "description": "True if the driver should merge libraries into driver.lua"
                     },
                     "deploy": {
                         "type": "object",

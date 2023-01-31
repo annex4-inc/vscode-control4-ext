@@ -1,4 +1,3 @@
-
 import * as path from 'path';
 import { BuildStage } from '../builder';
 import { ReadFileContents, WriteFileContents } from '../../utility';
@@ -19,12 +18,12 @@ export default class MergeStage implements BuildStage {
         let matches = srcDocument.matchAll(r);
         let modules = ""
 
-        // Create module data
+        // Create module data for each require statement
         for (const match of matches) {
             let fileDocument = await ReadFileContents(path.join(_source, ... match[1].split('.')) + ".lua");
 
             // Check to make sure the library exists, if not don't include it.
-            // This could be caused by a package using it's own require statements in which case it should handle the package preload.
+            // This could be caused by a package using its own require statements in which case it should handle the package preload.
             if (fileDocument) {
                 modules = modules + `package.preload['${match[1]}'] = (function(...)\n ${fileDocument} end)\n`
             }            

@@ -60,6 +60,7 @@
             }
         },
         "navigator_display_option": {
+            "required": ["proxybindingid", "display_icons"],
             "properties": {
                 "proxybindingid": {
                     "description": "Which proxy these options apply to",
@@ -73,6 +74,10 @@
                     "description": "An array of display icons",
                     "type": "array",
                     "items": {
+                        "oneOf":[
+                            { "required": ["height", "width", "path"] },
+                            { "required": ["repeat"] }
+                        ],
                         "properties": {
                             "height": {
                                 "type": "number"
@@ -85,6 +90,7 @@
                             },
                             "repeat": {
                                 "type": "object",
+                                "required": ["start_size", "end_size", "increment", "path"],
                                 "properties": {
                                     "start_size": {
                                         "type": "number"
