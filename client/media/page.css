@@ -10,13 +10,30 @@
     max-width: 800px;
 }
 
+input[type="text"] {
+    height: 30px;
+}
+
+table ul {
+    padding-left: 0px;
+}
+
+select {
+    height: 30px;
+}
+
 table {
     margin: 8px 0px;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 4px
 }
 
 table tr {
     border-bottom: 1px solid #777;
+}
+
+table td {
+    vertical-align: top;
 }
 
 .full-width {
