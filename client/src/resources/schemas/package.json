@@ -140,7 +140,8 @@
                     "type": "string",
                     "description": "The control type for the driver",
                     "enum": [
-                        "lua_gen"
+                        "lua_gen",
+                        "av_gen"
                     ]
                 },
                 "controlmethod": {
@@ -148,8 +149,16 @@
                     "description": "Communication method for control",
                     "enum": [
                         "ip",
-                        "serial"
+                        "serial",
+                        "ir",
+                        "zigbee",
+                        "relay",
+                        "other"
                     ]
+                },
+                "serialsettings": {
+                    "type": "string",
+                    "default": "9600 8 none 1 none 232"
                 },
                 "notification_attachment_provider": {
                     "description": "Determines if the driver supports notifications",
@@ -159,6 +168,27 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/notification_attachment"
+                    }
+                },
+                "composer_categories": {
+                    "type": "array",
+                    "description": "The categories in which the driver should appear under",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "Controllers",
+                            "Lighting",
+                            "User Interface",
+                            "Audio/Video",
+                            "Motorization",
+                            "Sensors",
+                            "HVAC",
+                            "Security",
+                            "Camera",
+                            "Pool And Spa",
+                            "Storage",
+                            "Unknown"
+                        ]
                     }
                 },
                 "combo": {
@@ -245,10 +275,6 @@
                         },
                         "serialdelay": {
                             "type": "integer"
-                        },
-                        "serialsettings": {
-                            "type": "string",
-                            "default": "8 none 1 none 232"
                         },
                         "modes": {
                             "type": "string",
@@ -362,6 +388,18 @@
                             "items": {
                                 "$ref": "#/definitions/navigator_display_option"
                             }
+                        }
+                    }
+                },
+                "states":{
+                    "type": "array",
+                    "description": "States for contact sensors",
+                    "items": {
+                        "type" :"object",
+                        "properties": {
+                            "id": { "type": "integer", "minimum": 1, "maximum": 2},
+                            "small": { "type": "string"},
+                            "large": { "type": "string"}
                         }
                     }
                 }

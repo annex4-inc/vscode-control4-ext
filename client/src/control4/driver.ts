@@ -24,6 +24,7 @@ import { C4UI } from '.';
 import C4InterfaceIcon from './interface/C4InterfaceIcon';
 import { C4NavigatorDisplayOption } from './capabilities/C4NavigatorDisplayOption';
 import { C4WebviewUrl } from './capabilities/C4WebviewUrl';
+import { C4State } from './C4State';
 
 function getEnumKeyByEnumValue<T extends { [index: string]: string }>(myEnum: T, enumValue: string): keyof T | null {
     let keys = Object.keys(myEnum).filter(x => myEnum[x] == enumValue);
@@ -33,6 +34,10 @@ function getEnumKeyByEnumValue<T extends { [index: string]: string }>(myEnum: T,
 class ControlMethod {
     static IP: string = "ip";
     static SERIAL: string = "serial";
+    static IR: string = "ir";
+    static ZIGBEE: string = "zigbee";
+    static RELAY: string = "relay";
+    static OTHER: string = "other";
 }
 
 export class NotificationAttachment {
@@ -75,9 +80,11 @@ export class Driver {
     actions: C4Action[]
     events: C4Event[]
     proxies: C4Proxy[]
+    states: C4State[]
     UI: C4UI[]
     capabilities: any
 
+    serialsettings: string
     notification_attachment_provider: Boolean
     notification_attachments: NotificationAttachment[]
 
@@ -110,6 +117,7 @@ export class Driver {
         this.proxies = [];
         this.UI = [];
         this.capabilities = {};
+        this.states = [];
     }
 
     /**
@@ -240,6 +248,14 @@ export class Driver {
             })
         }
 
+        if (this.states && this.states.length > 0) {
+            var states = root.ele("states")
+
+            this.states.forEach((state: C4State) => {
+                states.import(state.toXml())
+            })
+        }
+
         if (this.connections && this.connections.length > 0) {
             var nConnections = root.ele("connections")
 
@@ -311,6 +327,10 @@ export class Driver {
             config.ele("script", { file: "driver.lua" });
         }
 
+        if (this.serialsettings) {
+            config.ele("serial_settings").txt(this.serialsettings)
+        }
+
         // Documentation is mandatory, even if empty
         config.ele("documentation", { file: this.documentation })
 
@@ -356,6 +376,12 @@ export class Driver {
                 driver.icon = icon;
                 driver.created = new Date(driver.created);
                 driver.modified = new Date();
+
+                if (driver.states) {
+                    driver.states = driver.states.map((state) => {
+                        return new C4State(state);
+                    })
+                }
                 
                 if (driver.capabilities) {
                     if (driver.capabilities.web_view_url) {

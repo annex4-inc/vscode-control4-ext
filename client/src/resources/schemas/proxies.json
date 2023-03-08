@@ -17,7 +17,53 @@
         "type": "string"
       },
       "proxy": {
-        "type": "string"
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "enum": [
+              "amplifier",
+              "aswitch",
+              "avswitch",
+              "blind",
+              "blindV2",
+              "cable",
+              "camera",
+              "contactsingle_motionsensor",
+              "cd",
+              "discchanger",
+              "doorstation",
+              "dvd",
+              "fan",
+              "ipod",
+              "intercomproxy",
+              "keypad_proxy",
+              "light",
+              "light_v2",
+              "load_controller",
+              "media_player",
+              "media_service",
+              "others",
+              "plasma",
+              "pool",
+              "projector",
+              "receiver",
+              "relay",
+              "satellite",
+              "security",
+              "securitypanel",
+              "thermostat",
+              "thermostatV2",
+              "tuner",
+              "tunerXM",
+              "tv",
+              "vcr",
+              "contact",
+              "uibutton"
+            ]
+          }
+        ]
       },
       "small_image": {
         "type": "string"
