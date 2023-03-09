@@ -70,18 +70,19 @@
 </script>
 
 <main>
-  <div class="page">
+  <form class="page">
     <label for="id">ID</label>
-    <input name="id" type="number" bind:value={value.id} />
+    <!-- svelte-ignore a11y-autofocus -->
+    <input autofocus name="id" type="number" bind:value={value.id} />
     <label for="name">Name</label>
     <input name="name" type="text" bind:value={value.name} />
     <label for="description">Description</label>
     <input name="description" type="text" bind:value={value.description} />
 
-    <button on:click={vscode.postMessage({ type: formType, value: value })}
+    <button on:click|preventDefault={vscode.postMessage({ type: formType, value: value })}
       >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
     >
-  </div>
+  </form>
 </main>
 
 <style>

@@ -69,16 +69,17 @@
 </script>
 
 <main>
-  <div class="page">
+  <form class="page">
     <label for="name">Name</label>
-    <input name="name" type="text" bind:value={value.name} />
+    <!-- svelte-ignore a11y-autofocus -->
+    <input autofocus name="name" type="text" bind:value={value.name} />
     <label for="command">Command</label>
     <input name="command" type="text" bind:value={value.command} />
 
-    <button on:click={vscode.postMessage({ type: formType, value: value })}
+    <button on:click|preventDefault={vscode.postMessage({ type: formType, value: value })}
       >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
     >
-  </div>
+  </form>
 </main>
 
 <style>

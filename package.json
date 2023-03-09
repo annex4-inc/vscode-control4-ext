@@ -413,6 +413,11 @@
                     "default": true,
                     "description": "Automatically deploy built drivers to the Control4 driver directory"
                 },
+                "control4.build.directory": {
+                    "type": "string",
+                    "default": "%USERPROFILE%\\Documents\\Control4\\Drivers",
+                    "description": "The directory to the Control4 drivers folder"
+                },
                 "control4.publish.author": {
                     "type": "string",
                     "default": "${env:USERNAME}"

@@ -144,9 +144,10 @@
 </script>
 
 <main>
-  <div class="page">
+  <form class="page">
     <label for="name">Name</label>
-    <input name="name" type="text" bind:value={value.name} />
+    <!-- svelte-ignore a11y-autofocus -->
+    <input autofocus name="name" type="text" bind:value={value.name} />
 
     <!-- Selection for value Type -->
     <label for="type">Type</label>
@@ -209,8 +210,8 @@
     <label for="readonly">Readonly</label>
     <input type="checkbox" bind:checked={value.readonly} />
 
-    <button on:click={submit}
+    <button on:click|preventDefault={submit}
       >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
     >
-  </div>
+    </form>
 </main>
