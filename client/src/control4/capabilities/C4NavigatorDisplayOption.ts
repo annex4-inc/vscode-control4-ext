@@ -4,6 +4,7 @@ import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
 import { asInt, Driver } from '../driver';
 import C4InterfaceIcon from '../interface/C4InterfaceIcon';
+import C4StateIcons from './C4StateIcons';
 
 @jsonObject
 export class C4NavigatorDisplayOption {
@@ -16,10 +17,14 @@ export class C4NavigatorDisplayOption {
     @jsonArrayMember(C4InterfaceIcon)
     display_icons?: C4InterfaceIcon[]
 
+    @jsonArrayMember(C4StateIcons)
+    state_icons?: C4StateIcons[]
+
     constructor(options?) {
         if (options) {
             this.proxybindingid = options.proxybindingid;
             this.display_icons = options.display_icons;
+            this.state_icons = options.state_icons;
             this.translation_url = options.translation_url;
         }
     }
@@ -49,6 +54,38 @@ export class C4NavigatorDisplayOption {
                 }).txt(this.display_icons[i].path)
             }
         }
+
+        console.log(this.state_icons);
+        console.log(node.toString());
+
+        if (!this.state_icons) {
+            return node
+        }
+
+        console.log(node.toString());
+
+        for (let s = 0; s < this.state_icons.length; s++) {
+            let state = icons.ele("state");
+            state.att("id", this.state_icons[s].id)
+
+            for (let i = 0; i < this.state_icons[s].icons.length; i++) {
+                let repeat = (this.state_icons[s].icons[i] as any).repeat
+    
+                if (repeat) {
+                    for (let k = repeat.start_size; k <= repeat.end_size; k += repeat.increment) {
+                        state.ele("Icon", {width: k, height: k}).txt(repeat.path.replace("%SIZE%", k));
+                    }  
+                } else {
+                    state.ele("Icon", {
+                        height: this.state_icons[s].icons[i].height,
+                        width: this.state_icons[s].icons[i].width
+                    }).txt(this.state_icons[s].icons[i].path)
+                }
+            }
+
+        }
+
+        console.log(node.toString());
 
         return node;
     }
