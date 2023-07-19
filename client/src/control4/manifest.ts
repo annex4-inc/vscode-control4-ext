@@ -79,7 +79,7 @@ export default class Manifest {
     async prepare(src: string, int: string) {
         return new Promise(async (resolve, reject) => {
             try {
-                await fsPromises.rmdir(int, { recursive: true })
+                await fsPromises.rm(int, { recursive: true })
 
                 fse.copy(src, int, async (err, data) => {
                     if (err) {
