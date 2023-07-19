@@ -55,9 +55,6 @@ export class C4NavigatorDisplayOption {
             }
         }
 
-        console.log(this.state_icons);
-        console.log(node.toString());
-
         if (!this.state_icons) {
             return node
         }
