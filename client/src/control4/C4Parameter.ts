@@ -58,7 +58,6 @@ export class C4Parameter {
     }) readonly: boolean
     @jsonArrayMember(String) items?: string[]
     @jsonMember password?: boolean
-
     @jsonMember({
         deserializer: value => {
             if (typeof (value) == "string") {

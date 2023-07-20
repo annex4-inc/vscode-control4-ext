@@ -108,7 +108,7 @@
             "properties": {
               "type": {
                 "enum": [
-                  "DYNAMIC_LIST"
+                  "DEVICE_SELECTOR"
                 ]
               }
             }

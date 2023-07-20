@@ -23,6 +23,7 @@
     type: "STRING",
     default: "",
     readonly: false,
+    multiselect: false,
     items: [],
   };
 
@@ -125,6 +126,7 @@
       case "STRING":
       case "PASSWORD":
       case "LABEL":
+      case "DEVICE_SELECTOR":
       case "DYNAMIC_LIST":
       case "LINK":
         delete v.minimum;
@@ -135,7 +137,7 @@
   }
 
   function validate() {
-    if (value.type == "LIST") {
+    if (value.type == "LIST" || value.type == "DEVICE_SELECTOR") {
       if (value.items == undefined) {
         value.items = [];
       }
@@ -161,7 +163,7 @@
     </select>
 
     <!-- If the type is a list the default and items need to be shown-->
-    {#if value.type == "LIST" && value.items}
+    {#if (value.type == "LIST" || value.type == "DEVICE_SELECTOR") && value.items}
       <ul>
         {#each value.items as item}
           <li class="list-item">
@@ -207,8 +209,13 @@
       <input name="default" type="text" bind:value={value.default} />
     {/if}
 
-    <label for="readonly">Readonly</label>
-    <input type="checkbox" bind:checked={value.readonly} />
+    {#if (value.type == "DEVICE_SELECTOR") }
+      <label for="multiselect">Multiselect</label>
+      <input type="checkbox" bind:checked={value.multiselect} />
+    {:else}
+      <label for="readonly">Readonly</label>
+      <input type="checkbox" bind:checked={value.readonly} />
+    {/if}
 
     <button on:click|preventDefault={submit}
       >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button

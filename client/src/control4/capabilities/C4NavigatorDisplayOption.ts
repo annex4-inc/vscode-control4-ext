@@ -59,8 +59,7 @@ export class C4NavigatorDisplayOption {
             return node
         }
 
-        console.log(node.toString());
-
+    
         for (let s = 0; s < this.state_icons.length; s++) {
             let state = icons.ele("state");
             state.att("id", this.state_icons[s].id)
@@ -81,8 +80,6 @@ export class C4NavigatorDisplayOption {
             }
 
         }
-
-        console.log(node.toString());
 
         return node;
     }

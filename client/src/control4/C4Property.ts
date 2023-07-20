@@ -57,6 +57,15 @@ export class C4Property {
     }) readonly: boolean
     @jsonArrayMember(String) items?: string[]
     @jsonMember password?: boolean
+    @jsonMember({
+        deserializer: value => {
+            if (typeof (value) == "string") {
+                return value.toLowerCase() == "true"
+            } else {
+                return value;
+            }
+        }
+    }) multiselect: boolean
 
     toXml() {
         let node = builder.create("property").root();
@@ -88,6 +97,7 @@ export class C4Property {
         a.minimum = typeof (obj.minimum) == 'string' ? Number.parseInt(obj.minimum) : obj.minimum;
         a.password = typeof (obj.password) == 'string' ? obj.password.toLowerCase() == "true" : obj.password;
         a.readonly = typeof (obj.readonly) == 'string' ? obj.readonly.toLowerCase() == "true" : obj.readonly;
+        a.multiselect = typeof (obj.multiselect) == 'string' ? obj.multiselect.toLowerCase() == "true" : obj.multiselect;
 
         return a
     }
