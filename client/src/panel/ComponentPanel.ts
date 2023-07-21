@@ -97,9 +97,10 @@ export class ComponentPanel {
     // Set the webview's initial html content
     this._update();
 
+    // IF THIS IS ENABLED THE INHERITED CLASS EVENT WILL NOT FIRE
     // Listen for when the panel is disposed
     // This happens when the user closes the panel or when the panel is closed programatically
-    this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
+    //this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
 
     // Update the content based on view changes
     this._panel.onDidChangeViewState(

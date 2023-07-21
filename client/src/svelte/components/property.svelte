@@ -127,6 +127,7 @@
       case "PASSWORD":
       case "LABEL":
       case "DEVICE_SELECTOR":
+        delete v.default;
       case "DYNAMIC_LIST":
       case "LINK":
         delete v.minimum;
@@ -163,7 +164,7 @@
     </select>
 
     <!-- If the type is a list the default and items need to be shown-->
-    {#if (value.type == "LIST" || value.type == "DEVICE_SELECTOR") && value.items}
+    {#if value.type == "LIST" && value.items}
       <ul>
         {#each value.items as item}
           <li class="list-item">
@@ -183,6 +184,18 @@
           </option>
         {/each}
       </select>
+    {:else if value.type == "DEVICE_SELECTOR" && value.items}
+      <ul>
+        {#each value.items as item}
+          <li class="list-item">
+            <input type="text" group={value.items} bind:value={item} />
+            <button on:click={removeItem(item)}>Remove</button>
+          </li>
+        {/each}
+        <li class="list-item">
+          <input type="text" group={value.items} on:change={addItem} />
+        </li>
+      </ul>          
     {:else if value.type == "RANGED_INTEGER" || value.type == "RANGED_FLOAT"}
       <div class="range">
         <div>
