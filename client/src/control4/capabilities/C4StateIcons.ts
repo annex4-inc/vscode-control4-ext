@@ -52,10 +52,11 @@ export default class C4StateIcons {
 
         option.id = value["@id"]
 
-        let icons = value.icons
+        let states = value
+        let icons = value.Icon
 
         if (icons) {
-            icons = Driver.CleanXmlArray(icons, "Icon")
+            icons = Driver.CleanXmlArray(states, "Icon")
 
             option.icons = icons.map((i) => {
                 return C4InterfaceIcon.fromXml(i)
