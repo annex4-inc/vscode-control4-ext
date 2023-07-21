@@ -124,14 +124,28 @@
 
     switch (v.type) {
       case "STRING":
+        delete v.multiselect;
+        break;
       case "PASSWORD":
+        delete v.multiselect;
+        break; 
       case "LABEL":
+        delete v.multiselect;
+        break; 
       case "DEVICE_SELECTOR":
         delete v.default;
+        break; 
       case "DYNAMIC_LIST":
+        delete v.multiselect;
+        break; 
       case "LINK":
         delete v.minimum;
         delete v.maximum;
+        delete v.multiselect;
+        break; 
+      case "LIST":
+        delete v.multiselect;
+        break;  
     }
 
     vscode.postMessage({ type: formType, value: v });
