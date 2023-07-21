@@ -16,5 +16,6 @@
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
     },
-    "debug.allowBreakpointsEverywhere": true
+    "debug.allowBreakpointsEverywhere": true,
+    "workbench.settings.openDefaultSettings": true
 }
