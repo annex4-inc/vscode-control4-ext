@@ -53,8 +53,9 @@ export class PanelManager {
           let created = await this.resource.Create(message.value);
 
           if (created) {
+            this.currentEntity = message.value;
             this.currentPanel._panel.title = `Update ${this.type}`;
-            this.currentPanel._panel.webview.postMessage({ command: "update", value: message.value })
+            this.currentPanel._panel.webview.postMessage({ command: "update", value: this.currentEntity })
           } else {
             vscode.window.showErrorMessage(`The entity already exists`);
           }
