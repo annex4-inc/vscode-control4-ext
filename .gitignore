@@ -2,10 +2,10 @@
 node_modules
 .vscode-test/
 
-**/node_mmodules
+**/node_modules
 **/tool
 **/out
-**/src/**/**.js
+
 
 *.vsix
 
