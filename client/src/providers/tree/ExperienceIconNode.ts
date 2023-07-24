@@ -6,11 +6,11 @@ import { TreeNode } from './TreeNode';
 import { C4ExperienceIcon } from '../../control4'
 
 export class ExperienceIconNode extends TreeNode<C4ExperienceIcon> {
-    constructor(name: string, c4icon: C4ExperienceIcon) {
-        super(name, c4icon, "info", c4icon.items && c4icon.items.length == 0);
+    constructor(name: string, experienceicons: C4ExperienceIcon) {
+        super(name, experienceicons, "info", experienceicons.sizes && experienceicons.sizes.length == 0);
 
-        this.description = c4icon.type;
-        this.tooltip = c4icon.type;
+        this.description = experienceicons.type;
+        this.tooltip = experienceicons.type;
     }
 
 
@@ -18,5 +18,5 @@ export class ExperienceIconNode extends TreeNode<C4ExperienceIcon> {
         return "C4ExperienceIcon"
     }
 
-    contextValue = "c4icon";
+    contextValue = "experienceicons";
 }

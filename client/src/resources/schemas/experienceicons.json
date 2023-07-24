@@ -2,141 +2,36 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "JSON schema for Control4 default and experience icons",
   "definitions": {
-    "c4icon": {
+    "experienceicons": {
+      "additionalProperties": false,
       "type": "object",
       "properties": {
-        "name": {
+        "id": {
+          "description": "The ID of the icon",
           "type": "string"
         },
         "type": {
           "id": "propertyType",
           "type": "string",
           "enum": [
-            "STRING",
-            "LABEL",
-            "RANGED_INTEGER",
-            "RANGED_FLOAT",
-            "SCROLL",
-            "TRACK",
-            "LIST",
-            "DYNAMIC_LIST",
-            "DEVICE_SELECTOR",
-            "COLOR_SELECTOR",
-            "CUSTOM_SELECT",
-            "LINK"
+            "Default_Icon",
+            "State_Icon"
           ]
         },
-        "default": {
-          "type": [
-            "string",
-            "integer"
-          ]
-        },
-        "password": {
-          "type": "boolean"
-        },
-        "minimum": {
-          "type": "integer"
-        },
-        "maximum": {
-          "type": "integer"
-        },
-        "items": {
+        "sizes": {
           "type": "array",
+          "description": "An array of image sizes",
           "items": {
             "type": "string"
           }
         },
-        "readonly": {
-          "type": "boolean",
-          "default": true
-        },
-        "tooltip": {
+        "template": {
+          "description": "The path to the file, subsititute %size% into the path where the sizes should be inserted",
+          "examples": ["controller://driver/DRIVER_FILE_NAME/icons/my_icon_%size%.png"],
           "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "multiselect": {
-          "type": "boolean"
         }
       },
-      "required": [
-        "name",
-        "type",
-        "default"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "type": {
-                "enum": [
-                  "RANGED_INTEGER",
-                  "RANGED_FLOAT",
-                  "SCROLL",
-                  "TRACK"
-                ]
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "minimum",
-              "maximum"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "type": {
-                "enum": [
-                  "LIST"
-                ]
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "items"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "type": {
-                "enum": [
-                  "DEVICE_SELECTOR"
-                ]
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "items",
-              "multiselect"
-            ]
-          }
-        }
-      ]
-    },
-    "ranged": {
-      "id": "#ranged",
-      "type": "object",
-      "properties": {
-        "minimum": {
-          "type": "integer"
-        },
-        "maximum": {
-          "type": "integer"
-        }
-      },
-      "required": [
-        "minimum",
-        "maximum"
-      ]
+      "required": ["id", "type", "sizes", "template"]
     }
   },
   "type": "array",
@@ -145,7 +40,7 @@
   "items": {
     "allOf": [
       {
-        "$ref": "#/definitions/property"
+        "$ref": "#/definitions/experienceicons"
       }
     ]
   }

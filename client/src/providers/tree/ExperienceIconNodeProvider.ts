@@ -28,12 +28,12 @@ export class ExperienceIconNodeProvider extends TreeNodeProvider<ExperienceIconN
       if (element) {
         var params = [];
 
-        if (!element.data.items) {
+        if (!element.data.sizes) {
           return;
         }
 
-        for (var i = 0; i < element.data.items.length; i++) {
-          let e = element.data.items[i]
+        for (var i = 0; i < element.data.sizes.length; i++) {
+          let e = element.data.sizes[i]
 
           params.push(new StringNode(e));
         }
@@ -47,9 +47,9 @@ export class ExperienceIconNodeProvider extends TreeNodeProvider<ExperienceIconN
     }
   }
 
-  getComponent(c4icon: C4ExperienceIcon): ExperienceIconNode {
+  getComponent(experienceicons: C4ExperienceIcon): ExperienceIconNode {
     try {
-      return new ExperienceIconNode(c4icon.name, c4icon);
+      return new ExperienceIconNode(experienceicons.id, experienceicons);
     } catch (err) {
       console.log(err)
     }

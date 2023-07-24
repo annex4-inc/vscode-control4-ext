@@ -3,78 +3,27 @@ import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
 
-export class IconType {
-    static readonly STRING: string = "STRING";
-    static readonly LIST: string = "LIST";
-    static readonly RANGED_INTEGER: string = "RANGED_INTEGER";
-    static readonly RANGED_FLOAT: string = "RANGED_FLOAT";
-    static readonly PASSWORD: string = "PASSWORD";
-    static readonly LABEL: string = "LABEL";
-    static readonly SCROLL: string = "SCROLL";
-    static readonly TRACK: string = "TRACK";
-    static readonly DEVICE: string = "DEVICE_SELECTOR";
-    static readonly COLOR: string = "COLOR_SELECTOR";
-    static readonly DYNAMIC: string = "DYNAMIC_LIST";
-    static readonly LINK: string = "LINK";
-    static readonly CUSTOM: string = "CUSTOM_SELECT";
+export class ExperienceIconType {
+    static readonly DEFAULT: string = "DEFAULT_ICON";
+    static readonly STATE: string = "STATE_ICON";
 }
 
 @jsonObject
 export class C4ExperienceIcon {
-    @jsonMember name: string
+    @jsonMember id: string
     @jsonMember type: string
-    @jsonMember({
-        deserializer: value => {
-            if (typeof (value) == "string") {
-                return Number.parseFloat(value)
-            } else {
-                return value;
-            }
-        }
-    }) minimum?: number
-    @jsonMember({
-        deserializer: value => {
-            if (typeof (value) == "string") {
-                return Number.parseFloat(value)
-            } else {
-                return value;
-            }
-        }
-    }) maximum?: number
-    @jsonMember({
-        deserializer: value => {
-            return value;
-        }
-    }) default: string | number
-    @jsonMember({
-        deserializer: value => {
-            if (typeof (value) == "string") {
-                return value.toLowerCase() == "true"
-            } else {
-                return value;
-            }
-        }
-    }) readonly: boolean
-    @jsonArrayMember(String) items?: string[]
-    @jsonMember password?: boolean
-    @jsonMember({
-        deserializer: value => {
-            if (typeof (value) == "string") {
-                return value.toLowerCase() == "true"
-            } else {
-                return value;
-            }
-        }
-    }) multiselect: boolean
+    //@jsonArrayMember(Number) sizes?: number[]
+    @jsonArrayMember(String) sizes?: string[]
+    @jsonMember template: string
 
     toXml() {
         let node = builder.create("property").root();
 
         for (const key in this) {
-            if (key == "items") {
+            if (key == "sizes") {
                 let items = node.ele("items")
 
-                this.items.forEach((i) => {
+                this.sizes.forEach((i) => {
                     items.ele("item").txt(i);
                 })
             } else {
@@ -89,15 +38,10 @@ export class C4ExperienceIcon {
     static fromXml(obj): C4ExperienceIcon {
         let a = new C4ExperienceIcon();
 
-        a.name = obj.name;
+        a.id = obj.id;
         a.type = obj.type;
-        a.items = obj.items ? obj.items.item : undefined;
-        a.default = typeof (obj.default) == "object" ? "" : obj.default;
-        a.maximum = typeof (obj.maximum) == 'string' ? Number.parseInt(obj.maximum) : obj.maximum;
-        a.minimum = typeof (obj.minimum) == 'string' ? Number.parseInt(obj.minimum) : obj.minimum;
-        a.password = typeof (obj.password) == 'string' ? obj.password.toLowerCase() == "true" : obj.password;
-        a.readonly = typeof (obj.readonly) == 'string' ? obj.readonly.toLowerCase() == "true" : obj.readonly;
-        a.multiselect = typeof (obj.multiselect) == 'string' ? obj.multiselect.toLowerCase() == "true" : obj.multiselect;
+        a.sizes = obj.sizes ? obj.sizes.item : undefined;
+        a.template = obj.template;
 
         return a
     }
