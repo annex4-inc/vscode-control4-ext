@@ -9,6 +9,7 @@ import { C4Event } from './C4Event';
 import { C4Action } from './C4Action';
 import { C4Command } from './C4Command';
 import { C4Property } from './C4Property';
+import { C4ExperienceIcon } from './C4ExperienceIcon';
 import { C4Connection, C4ConnectionClass, Direction } from './C4Connection';
 import { C4Proxy, C4ProxyClass, C4ProxyType } from './C4Proxy';
 
@@ -17,6 +18,7 @@ import CommandsResource from '../components/commands';
 import ConnectionsResource from '../components/connections';
 import EventsResource from '../components/events';
 import PropertiesResource from '../components/properties';
+import ExperienceIconsResource from '../components/experienceicons';
 import ProxiesResource from '../components/proxies';
 
 import { TypedJSON } from 'typedjson';
@@ -82,6 +84,7 @@ export class Driver {
     proxies: C4Proxy[]
     states: C4State[]
     UI: C4UI[]
+    experienceicons: C4ExperienceIcon[]
     capabilities: any
 
     serialsettings: string
@@ -118,6 +121,7 @@ export class Driver {
         this.UI = [];
         this.capabilities = {};
         this.states = [];
+        this.experienceicons = [];
     }
 
     /**
@@ -129,6 +133,7 @@ export class Driver {
         this.properties = await PropertiesResource.Reload();
         this.connections = await ConnectionsResource.Reload();
         this.events = await EventsResource.Reload();
+        this.experienceicons = await ExperienceIconsResource.Reload();
         this.proxies = await ProxiesResource.Reload();
     }
 
@@ -358,6 +363,14 @@ export class Driver {
             })
         }
 
+        if (this.experienceicons.length > 0) {
+            let experienceicons = config.ele("experienceicons");
+
+            this.experienceicons.forEach((i: C4ExperienceIcon) => {
+                experienceicons.import(i.toXml())
+            })
+        }
+
         return root.end({ prettyPrint: true, headless: true })
     }
 
@@ -555,6 +568,16 @@ export class Driver {
                     } catch (err) {
                         console.log(err.message)
                     }
+                })
+            }
+        }
+
+        if (devicedata.config.experienceicons) {
+            const experienceicons = this.CleanXmlArray(devicedata.config.experienceicons, "c4icon")
+
+            if (experienceicons) {
+                experienceicons.forEach(function (i) {
+                    d.experienceicons.push(C4ExperienceIcon.fromXml(i))
                 })
             }
         }

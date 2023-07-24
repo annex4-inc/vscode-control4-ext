@@ -7,6 +7,7 @@ import { C4Parameter } from './C4Parameter'
 import { C4Action } from './C4Action'
 import { C4Command } from './C4Command'
 import { C4UI } from './C4UI'
+import { C4ExperienceIcon } from './C4ExperienceIcon'
 
 export {
     C4Action,
@@ -17,5 +18,6 @@ export {
     C4Event,
     C4Proxy,
     C4Parameter,
-    C4UI
+    C4UI,
+    C4ExperienceIcon
 }

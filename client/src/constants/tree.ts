@@ -5,6 +5,7 @@ export class Views {
     public static readonly Events = "control4-events";
     public static readonly Commands = "control4-commands";
     public static readonly UI = "control4-ui";
+    public static readonly ExperienceIcons = "control4-experienceicons";
 }
 
 export class Commands {
@@ -41,5 +42,10 @@ export class Commands {
     public static UI = {
         Select: "select.C4UI",
         Remove: "remove.C4UI"
+    }
+
+    public static ExperienceIcons = {
+        Select: "select.C4ExperienceIcon",
+        Remove: "remove.C4ExperienceIcon"
     }
 }

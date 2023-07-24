@@ -232,6 +232,35 @@
                 "enablement": "view == control4-events"
             },
             {
+                "command": "control4.viewExperienceIcon",
+                "title": "View Experience Icon",
+                "enablement": "view == control4-experienceicons"
+            },
+            {
+                "command": "control4.refreshExperienceIcons",
+                "title": "Refresh Experience Icons",
+                "icon": "$(extensions-refresh)",
+                "enablement": "view == control4-experienceicons"
+            },
+            {
+                "command": "control4.addExperienceIcon",
+                "title": "Add Experience Icon",
+                "icon": "$(add)",
+                "enablement": "view == control4-experienceicons"
+            },
+            {
+                "command": "control4.moveExperienceIconUp",
+                "title": "Move Experience Icon Up",
+                "icon": "$(chevron-up)",
+                "enablement": "view == control4-experienceicons"
+            },
+            {
+                "command": "control4.moveExperienceIconDown",
+                "title": "Move Experience Icon Down",
+                "icon": "$(chevron-down)",
+                "enablement": "view == control4-experienceicons"
+            },
+            {
                 "command": "remove.C4Action",
                 "title": "Remove Action",
                 "enablement": "view == control4-actions"
@@ -255,6 +284,11 @@
                 "command": "remove.C4Connection",
                 "title": "Remove Connection",
                 "enablement": "view == control4-connections"
+            },
+            {
+                "command": "remove.C4ExperienceIcon",
+                "title": "Remove Experience Icon",
+                "enablement": "view == control4-experienceicons"
             }
         ],
         "menus": {
@@ -302,6 +336,15 @@
                 {
                     "command": "control4.refreshConnections",
                     "when": "view == control4-connections",
+                    "group": "navigation"
+                },
+                {
+                    "command": "control4.addExperienceIcon",
+                    "when": "view == control4-experienceicons"
+                },
+                {
+                    "command": "control4.refreshExperienceIcons",
+                    "when": "view == control4-experienceicons",
                     "group": "navigation"
                 }
             ],
@@ -374,6 +417,20 @@
                 {
                     "command": "control4.moveConnectionDown",
                     "when": "view == control4-connections && viewItem == connection",
+                    "group": "inline"
+                },
+                {
+                    "command": "remove.C4ExperienceIcon",
+                    "when": "view == control4-experienceicons && viewItem == c4icon"
+                },
+                {
+                    "command": "control4.moveExperienceIconUp",
+                    "when": "view == control4-experienceicons && viewItem == c4icon",
+                    "group": "inline"
+                },
+                {
+                    "command": "control4.moveExperienceIconDown",
+                    "when": "view == control4-experienceicons && viewItem == c4icon",
                     "group": "inline"
                 }
             ]
@@ -453,6 +510,10 @@
                 {
                     "id": "control4-ui",
                     "name": "UI"
+                },
+                {
+                    "id": "control4-experienceicons",
+                    "name": "Experience Icons"
                 }
             ]
         },
@@ -489,6 +550,10 @@
             {
                 "view": "control4-ui",
                 "contents": "No UI found."
+            },
+            {
+                "view": "control4-experienceicons",
+                "contents": "No experience icons found.\n[Add Experience Icon](command:control4.addExperienceIcon)"
             }
         ],
         "jsonValidation": [
@@ -523,6 +588,10 @@
             {
                 "fileMatch": "ui.c4c",
                 "url": "./client/src/resources/schemas/ui.json"
+            },
+            {
+                "fileMatch": "experienceicons.c4c",
+                "url": "./client/src/resources/schemas/experienceicons.json"
             }
         ]
     },

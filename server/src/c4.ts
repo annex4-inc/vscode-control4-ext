@@ -120,6 +120,7 @@ let Resources: any = {
     actions: [],
     connections: [],
     events: [],
+    experienceicons: [],
     commands: []
 }
 
