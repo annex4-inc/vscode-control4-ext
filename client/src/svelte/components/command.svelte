@@ -29,7 +29,7 @@
   let formType = vscode.getState()?.formType || "create";
   let value = vscode.getState()?.value || d;
   // Allows us to bind to the new input element in the list array and set focus to it once created for better UX
-  let newInput;  
+  let newInput;
 
   onMount(async () => {
     let state = vscode.getState();
@@ -127,10 +127,9 @@
 
       event.target.value = "";
     }
-
+    newInput.focus();
     // This will cause a reactive update on the interface.
     value.params = value.params;
-    newInput.focus();
   }
 
   function removeItem(param, item) {
@@ -183,20 +182,23 @@
         <th>Default</th>
         <th style="width:32px">Actions</th>
       </tr>
-      {#each value.params as param}
+      {#each value.params as param, index}
         <tr>
           <td>
-            <input name="name" type="text" bind:value={param.name} />
+            {#if (index=(value.params.length-1))}
+              <!-- svelte-ignore a11y-autofocus -->
+              <input autofocus name="name" type="text" bind:value={param.name} />
+            {:else}
+              <input name="name" type="text" bind:value={param.name} />
+            {/if}
+            
           </td>
 
           <td>
             <!-- svelte-ignore a11y-no-onchange -->
-            <select
-              name="type"
-              bind:value={param.type}
+            <select name="type" bind:value={param.type}
               on:input={validate(param)}
-              on:change={validate(param)}
-            >
+              on:change={validate(param)} >
               {#each properties as p}
                 <option value={p.value} selected={param.type == p.value}>
                   {p.name}
@@ -259,7 +261,7 @@
                 bind:value={param.default}
               />
             {:else}
-              <input bind:this={newInput} name="default" type="text" bind:value={param.default} />
+              <input name="default" type="text" bind:value={param.default} />
             {/if}
           </td>
           <td class="align-center">
