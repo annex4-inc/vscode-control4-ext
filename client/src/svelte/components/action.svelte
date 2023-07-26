@@ -66,17 +66,21 @@
         return;
     }
   });
+
+  function submit() {
+    vscode.postMessage({ type: formType, value: value });
+  }
 </script>
 
 <main>
-  <form class="page">
+  <form class="page" on:submit|preventDefault={submit}>
     <label for="name">Name</label>
     <!-- svelte-ignore a11y-autofocus -->
     <input autofocus name="name" type="text" bind:value={value.name} />
     <label for="command">Command</label>
     <input name="command" type="text" bind:value={value.command} />
 
-    <button on:click|preventDefault={vscode.postMessage({ type: formType, value: value })}
+    <button on:click|preventDefault={submit}
       >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
     >
   </form>

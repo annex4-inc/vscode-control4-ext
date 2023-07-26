@@ -24,8 +24,8 @@
 
   let formType = vscode.getState()?.formType || "create";
   let value = vscode.getState()?.value || d;
-
-  //Object.assign(value, d);
+  // Allows us to bind to the new input element in the list array and set focus to it once created for better UX
+  let newInput;
 
   onMount(async () => {
     console.log("MOUNT");
@@ -89,6 +89,7 @@
 
       item.target.value = "";
     }
+    newInput.focus();
   }
 
   function removeItem(item) {
@@ -130,10 +131,21 @@
       value.sizes = [];
     }
   }
+
+	function onKeyUp(e) {
+		 switch(e.key) {
+			 case "Enter":
+        //value.id = "Enter";
+        break;
+			 case "Tab":
+        //value.id = "Tab";
+        break;
+		 }
+	}
 </script>
 
 <main>
-  <form class="page">
+  <form class="page" on:submit|preventDefault={submit}>
     <label for="id">Icon Name</label>
     <!-- svelte-ignore a11y-autofocus -->
     <input autofocus name="id" type="text" bind:value={value.id} />
@@ -156,11 +168,11 @@
         {#each value.sizes as size}
           <li class="list-item">
             <input type="number" group={value.sizes} bind:value={size} />
-            <button on:click={removeItem(size)}>Remove</button>
+            <button type="button" on:click|preventDefault={removeItem(size)}>Remove</button>
           </li>
         {/each}
         <li class="list-item">
-          <input type="number" group={value.sizes} on:change={addItem} />
+          <input bind:this={newInput} type="number" group={value.sizes} on:change={addItem} />
         </li>
       </ul>
     {/if}
@@ -173,3 +185,4 @@
     >
     </form>
 </main>
+<svelte:window on:keyup={onKeyUp}/>

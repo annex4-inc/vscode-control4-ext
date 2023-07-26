@@ -31,8 +31,8 @@
 
   let formType = vscode.getState()?.formType || "create";
   let value = vscode.getState()?.value || d;
-
-  //Object.assign(value, d);
+  // Allows us to bind to the new input element in the list array and set focus to it once created for better UX
+  let newInput;
 
   onMount(async () => {
     console.log("MOUNT");
@@ -96,6 +96,7 @@
 
       event.target.value = "";
     }
+    newInput.focus();
   }
 
   function removeItem(item) {
@@ -161,7 +162,7 @@
 </script>
 
 <main>
-  <form class="page">
+  <form class="page" on:submit|preventDefault={submit}>
     <label for="name">Name</label>
     <!-- svelte-ignore a11y-autofocus -->
     <input autofocus name="name" type="text" bind:value={value.name} />
@@ -183,11 +184,11 @@
         {#each value.items as item}
           <li class="list-item">
             <input type="text" group={value.items} bind:value={item} />
-            <button on:click={removeItem(item)}>Remove</button>
+            <button type="button" on:click={removeItem(item)}>Remove</button>
           </li>
         {/each}
         <li class="list-item">
-          <input type="text" group={value.items} on:change={addItem} />
+          <input bind:this={newInput} type="text" group={value.items} on:change={addItem} />
         </li>
       </ul>
       <label for="default">Default</label>
@@ -203,11 +204,11 @@
         {#each value.items as item}
           <li class="list-item">
             <input type="text" group={value.items} bind:value={item} />
-            <button on:click={removeItem(item)}>Remove</button>
+            <button type="button" on:click={removeItem(item)}>Remove</button>
           </li>
         {/each}
         <li class="list-item">
-          <input type="text" group={value.items} on:change={addItem} />
+          <input bind:this={newInput} type="text" group={value.items} on:change={addItem} />
         </li>
       </ul>          
     {:else if value.type == "RANGED_INTEGER" || value.type == "RANGED_FLOAT"}

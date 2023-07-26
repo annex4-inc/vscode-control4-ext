@@ -28,6 +28,8 @@
 
   let formType = vscode.getState()?.formType || "create";
   let value = vscode.getState()?.value || d;
+  // Allows us to bind to the new input element in the list array and set focus to it once created for better UX
+  let newInput;  
 
   onMount(async () => {
     let state = vscode.getState();
@@ -128,6 +130,7 @@
 
     // This will cause a reactive update on the interface.
     value.params = value.params;
+    newInput.focus();
   }
 
   function removeItem(param, item) {
@@ -150,10 +153,14 @@
       delete param.items;
     }
   }
+
+  function submit() {
+    vscode.postMessage({type: formType, value: value,});
+  }
 </script>
 
 <main>
-  <form class="page-wide">
+  <form class="page-wide" on:submit|preventDefault={submit}>
     <label for="name">Name</label>
     <!-- svelte-ignore a11y-autofocus -->
     <input autofocus name="name" type="text" bind:value={value.name} />
@@ -164,7 +171,7 @@
     <div class="toolbar">
       <label for="params">Parameters</label>
       <div class="actions">
-        <button class="round-button" on:click={addParameter}>+</button>
+        <button type="button" class="round-button" on:click={addParameter}>+</button>
       </div>
     </div>
 
@@ -205,15 +212,11 @@
                 {#each param.items as item}
                   <li class="list-item">
                     <input type="text" group={param.items} bind:value={item} />
-                    <button on:click={removeItem(param, item)}>Remove</button>
+                    <button type="button" on:click={removeItem(param, item)}>Remove</button>
                   </li>
                 {/each}
                 <li class="list-item">
-                  <input
-                    type="text"
-                    group={param.items}
-                    on:change={(event) => addItem(param, event)}
-                  />
+                  <input bind:this={newInput} type="text" group={param.items} on:change={(event) => addItem(param, event)} />
                 </li>
               </ul>
             {:else if param.type == "RANGED_INTEGER" || param.type == "RANGED_FLOAT"}
@@ -256,20 +259,17 @@
                 bind:value={param.default}
               />
             {:else}
-              <input name="default" type="text" bind:value={param.default} />
+              <input bind:this={newInput} name="default" type="text" bind:value={param.default} />
             {/if}
           </td>
           <td class="align-center">
-            <button class="round-button" on:click={removeParameter(param)}>-</button>
+            <button type="button" class="round-button" on:click={removeParameter(param)}>-</button>
           </td>
         </tr>
       {/each}
     </table>
-    <button
-      on:click|preventDefault={vscode.postMessage({
-        type: formType,
-        value: value,
-      })}>{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
+    <button on:click|preventDefault={submit}
+      >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
     >
   </form>
 </main>

@@ -67,10 +67,14 @@
         return;
     }
   });
+
+  function submit() {
+    vscode.postMessage({ type: formType, value: value });
+  }
 </script>
 
 <main>
-  <form class="page">
+  <form class="page" on:submit|preventDefault={submit}>
     <label for="id">ID</label>
     <!-- svelte-ignore a11y-autofocus -->
     <input autofocus name="id" type="number" bind:value={value.id} />
@@ -79,7 +83,7 @@
     <label for="description">Description</label>
     <input name="description" type="text" bind:value={value.description} />
 
-    <button on:click|preventDefault={vscode.postMessage({ type: formType, value: value })}
+    <button on:click|preventDefault={submit}
       >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
     >
   </form>
