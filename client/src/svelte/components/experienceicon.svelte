@@ -21,6 +21,7 @@
   };
 
   import { onDestroy, onMount } from "svelte";
+  import Tooltip from './Tooltip.svelte';
 
   let formType = vscode.getState()?.formType || "create";
   let value = vscode.getState()?.value || d;
@@ -146,10 +147,16 @@
 
 <main>
   <form class="page" on:submit|preventDefault={submit}>
-    <label for="id">Icon Name</label>
-    <!-- svelte-ignore a11y-autofocus -->
-    <input autofocus name="id" type="text" bind:value={value.id} />
-
+      <div class="icons">
+        <label for="id">Icon Name</label>
+        <Tooltip title="Enter the file name without the size or extension. File should be a PNG">
+          <div class="icon">
+            <i class="codicon codicon-info"></i>
+          </div>
+        </Tooltip>
+      </div>
+      <!-- svelte-ignore a11y-autofocus -->
+      <input autofocus name="id" type="text" bind:value={value.id} />
     <!-- Selection for value Type -->
     <label for="type">Type</label>
     <!-- svelte-ignore a11y-no-onchange -->
@@ -162,7 +169,14 @@
     </select>
 
     <!-- The sizes need to be shown-->
-    <label for="sizes">Sizes</label> 
+    <div class="icons">
+      <label for="sizes">Sizes</label> 
+      <Tooltip title="Enter the size of the image. Std: 70, 90, 300, 512, 1024">
+        <div class="icon">
+          <i class="codicon codicon-info"></i>
+        </div>
+      </Tooltip>
+    </div>
     {#if value.sizes}
       <ul>
         {#each value.sizes as size}
@@ -177,7 +191,14 @@
       </ul>
     {/if}
 
-    <label for="template">Link Template</label>
+    <div class="icons">
+      <label for="template">Link Template</label>
+      <Tooltip title="Enter the path of file: controller://driver/DRIVER_FILE_NAME/icons/my_icon_%size%.png">
+        <div class="icon">
+          <i class="codicon codicon-info"></i>
+        </div>
+      </Tooltip>
+    </div>
     <input name="template" type="text" bind:value={value.template} />
 
     <button on:click|preventDefault={submit}

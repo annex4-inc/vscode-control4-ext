@@ -7,7 +7,9 @@ export abstract class Control4EditorProvider implements vscode.CustomTextEditorP
     public async resolveCustomTextEditor(document: vscode.TextDocument, webviewPanel: vscode.WebviewPanel, _token: vscode.CancellationToken): Promise<void> {
         webviewPanel.webview.options = { 
             enableScripts: true,
-            localResourceRoots: [vscode.Uri.joinPath(this.context.extensionUri, "media")]
+            localResourceRoots: [
+                vscode.Uri.joinPath(this.context.extensionUri, "media")
+            ]
         };
         webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 

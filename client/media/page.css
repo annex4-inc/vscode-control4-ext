@@ -119,3 +119,28 @@ table td {
     grid-column-end: span 1;
     grid-row-start: 1;
 }
+
+.tooltip {
+    color: black;
+    border: 1px solid #ddd;
+    box-shadow: 1px 1px 1px #ddd;
+    background: white;
+    border-radius: 4px;
+    padding: 4px;
+    position: absolute;
+    font-weight: bold;
+}
+
+.tooltipContainer {
+    display:inline-block;
+}
+
+.icons {
+	display: table-cell;
+}
+
+.icons .icon {
+    vertical-align: middle;
+    display: inline-block;
+    padding-left: .5em;
+}

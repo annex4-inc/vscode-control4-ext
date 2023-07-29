@@ -7,7 +7,7 @@ import { TreeNode } from './TreeNode';
 
 export default class ActionNode extends TreeNode<C4Action> {
     constructor(name: string, action: C4Action) {
-        super(name, action, "code", action.params && action.params.length == 0);
+        super(name, action, "github-action", action.params && action.params.length == 0);
     }
 
     getNameOfType() {

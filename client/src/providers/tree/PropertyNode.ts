@@ -7,7 +7,7 @@ import { C4Property } from '../../control4'
 
 export class PropertyNode extends TreeNode<C4Property> {
     constructor(name: string, property: C4Property) {
-        super(name, property, "info", property.items && property.items.length == 0);
+        super(name, property, "symbol-property", property.items && property.items.length == 0);
 
         this.description = property.type;
         this.tooltip = property.type;

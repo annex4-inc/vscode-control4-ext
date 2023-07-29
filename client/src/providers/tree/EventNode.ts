@@ -7,7 +7,7 @@ import { TreeNode } from './TreeNode';
 
 export default class EventNode extends TreeNode<C4Event> {
     constructor(name: string, event: C4Event) {
-        super(name, event, "bell")
+        super(name, event, "symbol-event")
         
         this.description = `[${event.id}] ${event.description}`;
         this.tooltip = event.description;

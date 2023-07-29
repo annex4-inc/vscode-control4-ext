@@ -7,7 +7,7 @@ import { C4ExperienceIcon } from '../../control4'
 
 export class ExperienceIconNode extends TreeNode<C4ExperienceIcon> {
     constructor(name: string, experienceicons: C4ExperienceIcon) {
-        super(name, experienceicons, "info", experienceicons.sizes && experienceicons.sizes.length == 0);
+        super(name, experienceicons, "device-camera", experienceicons.sizes && experienceicons.sizes.length == 0);
 
         this.description = experienceicons.type;
         this.tooltip = experienceicons.type;

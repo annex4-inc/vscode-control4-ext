@@ -7,7 +7,7 @@ import { TreeNode } from './TreeNode';
 
 export default class CommandNode extends TreeNode<C4Command> {
     constructor(name: string, command: C4Command) {
-        super(name, command, "bell-dot", command.params && command.params.length == 0);
+        super(name, command, "terminal-cmd", command.params && command.params.length == 0);
         
         this.tooltip = command.description;
         this.description = command.description;

@@ -26,7 +26,8 @@ export class PanelManager {
       retainContextWhenHidden: true,
       localResourceRoots: [
         vscode.Uri.joinPath(extensionUri, "client", "out"),
-        vscode.Uri.joinPath(extensionUri, "client", "media")
+        vscode.Uri.joinPath(extensionUri, "client", "media"),
+        vscode.Uri.joinPath(extensionUri, "client", "node_modules", "@vscode/codicons")
       ]
     })
 
