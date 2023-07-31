@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { BuildStage } from '../builder';
-import { ReadFileContents, WriteFileContents } from '../../utility';
+import { ReadFileContents, WriteFileContents, FileExists } from '../../utility';
 
 export default class MergeStage implements BuildStage {
     static r = new RegExp(/require\s*?[\[\[]*?['"(]+(.+)['"]+\)/, "gm");
@@ -11,8 +11,19 @@ export default class MergeStage implements BuildStage {
         return literal_string.replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, '\\$&');
     }
 
+    async FindModule(_source: string, module: string) {
+        let file = path.join(_source, ... module.split('.')) + ".lua"
+        let exists = await FileExists(file);
+
+        if (!exists) {
+            file = path.join(_source, "../", ... module.split('.')) + ".lua"
+        }
+
+        return file
+    }
+
     async GetModules(_source: string, module: string) {
-        let fileDocument = await ReadFileContents(path.join(_source, ... module.split('.')) + ".lua");
+        let fileDocument = await ReadFileContents(await this.FindModule(_source, module));
         let modules = [];
 
         // Get the modules for this dependency
@@ -41,10 +52,10 @@ export default class MergeStage implements BuildStage {
 
         // Create module data for each require statement
         for (const match of matches) {
-            let fileDocument = await ReadFileContents(path.join(_source, ... match[1].split('.')) + ".lua");
+            let file = await this.FindModule(_source, match[1])
+            let fileDocument = await ReadFileContents(file);
             let nestedPackages = await this.GetModules(_source, match[1])
 
-            // Recursively retrieve modules
             for (const nested of nestedPackages) {
                 let doc = await ReadFileContents(path.join(_source, ... nested.split('.')) + ".lua");
 
@@ -53,7 +64,6 @@ export default class MergeStage implements BuildStage {
                 }
             }
 
-            // Check to make sure the library exists, if not don't include it.
             if (fileDocument) {
                 modules = modules + `package.preload['${match[1]}'] = (function(...)\n ${fileDocument}\n end)\n`
             }            
