@@ -70,7 +70,7 @@
 </script>
 
 <main>
-  <form class="page">
+  <div class="page">
     <label for="id">ID</label>
     <!-- svelte-ignore a11y-autofocus -->
     <input autofocus name="id" type="number" bind:value={value.id} />
@@ -82,7 +82,7 @@
     <button on:click|preventDefault={vscode.postMessage({ type: formType, value: value })}
       >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
     >
-  </form>
+  </div>
 </main>
 
 <style>

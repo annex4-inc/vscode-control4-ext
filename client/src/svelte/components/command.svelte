@@ -153,7 +153,7 @@
 </script>
 
 <main>
-  <form class="page-wide">
+  <div class="page-wide">
     <label for="name">Name</label>
     <!-- svelte-ignore a11y-autofocus -->
     <input autofocus name="name" type="text" bind:value={value.name} />
@@ -271,5 +271,5 @@
         value: value,
       })}>{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
     >
-  </form>
+  </div>
 </main>

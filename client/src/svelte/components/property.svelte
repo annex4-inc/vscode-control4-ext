@@ -28,15 +28,16 @@
 
   import { onDestroy, onMount } from "svelte";
 
+  let first;
   let formType = vscode.getState()?.formType || "create";
   let value = vscode.getState()?.value || d;
 
   //Object.assign(value, d);
 
   onMount(async () => {
-    console.log("MOUNT");
-
     let state = vscode.getState();
+
+    first.focus();
 
     console.log(state);
 
@@ -86,15 +87,23 @@
   });
 
   function addItem(event) {
-    if (value.items == undefined) {
-      value.items = [];
+    try {
+      event.preventDefault();
+
+      if (value.items == undefined) {
+        value.items = [];
+      }
+
+      if (event != "" && event != null && event != undefined) {
+        // Reconstruct the array so svelte updates the interface
+        value.items = [...value.items, event.target.value];
+
+        event.target.value = "";
+      }
+    } catch (err) {
+      console.log(err)
     }
 
-    if (event != "" && event != null && event != undefined) {
-      value.items = [...value.items, event.target.value];
-
-      event.target.value = "";
-    }
   }
 
   function removeItem(item) {
@@ -110,6 +119,8 @@
   }
 
   function submit() {
+    console.log("Submit!")
+
     let v = {};
 
     Object.assign(v, value);
@@ -125,8 +136,17 @@
       case "STRING":
       case "PASSWORD":
       case "LABEL":
-      case "DYNAMIC_LIST":
       case "LINK":
+        delete v.minimum;
+        delete v.maximum;
+      case "RANGED_INTEGER":
+      case "RANGED_FLOAT":
+      case "TRACK":
+      case "SCROLL":
+        delete v.items;
+        break;
+      case "DYNAMIC_LIST":
+      case "DEVICE_SELECTOR":
         delete v.minimum;
         delete v.maximum;
     }
@@ -135,7 +155,7 @@
   }
 
   function validate() {
-    if (value.type == "LIST") {
+    if (value.type == "LIST" || value.type == "DEVICE_SELECTOR") {
       if (value.items == undefined) {
         value.items = [];
       }
@@ -144,10 +164,10 @@
 </script>
 
 <main>
-  <form class="page">
+  <div class="page" >
     <label for="name">Name</label>
     <!-- svelte-ignore a11y-autofocus -->
-    <input autofocus name="name" type="text" bind:value={value.name} />
+    <input bind:this={first} name="name" type="text" bind:value={value.name} />
 
     <!-- Selection for value Type -->
     <label for="type">Type</label>
@@ -161,7 +181,7 @@
     </select>
 
     <!-- If the type is a list the default and items need to be shown-->
-    {#if value.type == "LIST" && value.items}
+    {#if (value.type == "LIST" || value.type == "DEVICE_SELECTOR") && value.items}
       <ul>
         {#each value.items as item}
           <li class="list-item">
@@ -181,7 +201,7 @@
           </option>
         {/each}
       </select>
-    {:else if value.type == "RANGED_INTEGER" || value.type == "RANGED_FLOAT"}
+    {:else if value.type == "RANGED_INTEGER" || value.type == "RANGED_FLOAT" || value.type == "SCROLL" || value.type == "TRACK"}
       <div class="range">
         <div>
           <label for="minimum">Minimum</label>
@@ -210,8 +230,11 @@
     <label for="readonly">Readonly</label>
     <input type="checkbox" bind:checked={value.readonly} />
 
-    <button on:click|preventDefault={submit}
-      >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
-    >
-    </form>
+    {#if value.type == "DEVICE_SELECTOR"}
+    <label for="multiselect">Multiselect</label>
+    <input type="checkbox" bind:checked={value.multiselect} />
+    {/if}
+
+    <button on:click={submit}>{formType.charAt(0).toUpperCase() + formType.slice(1)}</button>
+  </div>
 </main>
