@@ -69,7 +69,7 @@ export class PanelManager {
 
     this.subscribe();
   }
-
+  
   public createOrShow(extensionUri: vscode.Uri, entity: any) {
     if (!this.currentPanel) {
       let panel = PanelManager.createPanel(extensionUri, `control4.${this.type.toLocaleLowerCase()}`)
@@ -80,9 +80,17 @@ export class PanelManager {
     }
 
     try {
-      if (this.currentPanel) {
+      if (this.currentPanel._panel) {
         // Always reveal the panel in column one
-        this.currentPanel._panel.reveal(vscode.ViewColumn.One);
+        try {
+          this.currentPanel._panel.reveal(vscode.ViewColumn.One);
+        } catch (err) {
+          let panel = PanelManager.createPanel(extensionUri, `control4.${this.type.toLocaleLowerCase()}`)
+
+          this.currentPanel = new ComponentPanel(panel, extensionUri, this.script);
+    
+          this.subscribe();
+        }
         
         if (entity == null) {
           this.currentPanel._panel.title = `Create ${this.type}`;
