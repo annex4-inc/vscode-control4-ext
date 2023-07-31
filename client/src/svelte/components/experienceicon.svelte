@@ -10,6 +10,7 @@
   const d = {
     id: "",
     type: "Default Icon",
+    iconstate: "",
     sizes: [
       "70",
       "90",
@@ -17,7 +18,7 @@
       "512",
       "1024"
     ],
-    template: "controller://driver/DRIVER_FILE_NAME/icons/my_icon_%size%.png"
+    path: "controller://driver/DRIVER_FILE_NAME/icons/my_icon_%size%.png"
   };
 
   import { onDestroy, onMount } from "svelte";
@@ -168,6 +169,19 @@
       {/each}
     </select>
 
+    <!-- If the type is a state icon the we need a state id-->
+    {#if value.type == "State_Icon"}
+      <div class="icons">
+        <label for="state">Icon State</label>
+        <Tooltip title="Enter the state ID for this icon.">
+          <div class="icon">
+            <i class="codicon codicon-info"></i>
+          </div>
+        </Tooltip>
+      </div>
+      <!-- svelte-ignore a11y-autofocus -->
+      <input autofocus name="iconstate" type="text" bind:value={value.iconstate} />
+    {/if}
     <!-- The sizes need to be shown-->
     <div class="icons">
       <label for="sizes">Sizes</label> 
@@ -192,14 +206,14 @@
     {/if}
 
     <div class="icons">
-      <label for="template">Link Template</label>
+      <label for="path">Icon Path</label>
       <Tooltip title="Enter the path of file: controller://driver/DRIVER_FILE_NAME/icons/my_icon_%size%.png">
         <div class="icon">
           <i class="codicon codicon-info"></i>
         </div>
       </Tooltip>
     </div>
-    <input name="template" type="text" bind:value={value.template} />
+    <input name="path" type="text" bind:value={value.path} />
 
     <button on:click|preventDefault={submit}
       >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button

@@ -4,15 +4,15 @@ import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
 
 export class ExperienceIconType {
-    static readonly DEFAULT: string = "DEFAULT_ICON";
-    static readonly STATE: string = "STATE_ICON";
+    static readonly DEFAULT: string = "Default_Icon";
+    static readonly STATE: string = "State_Icon";
 }
 
 @jsonObject
 export class C4ExperienceIcon {
     @jsonMember id: string
     @jsonMember type: string
-    //@jsonArrayMember(Number) sizes?: number[]
+    @jsonMember iconstate: string
     @jsonArrayMember(String) sizes?: string[]
     @jsonMember template: string
 
@@ -40,6 +40,7 @@ export class C4ExperienceIcon {
 
         a.id = obj.id;
         a.type = obj.type;
+        a.iconstate = obj.iconstate;
         a.sizes = obj.sizes ? obj.sizes.item : undefined;
         a.template = obj.template;
 

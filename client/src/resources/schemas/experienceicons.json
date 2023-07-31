@@ -18,6 +18,10 @@
             "State_Icon"
           ]
         },
+        "iconstate": {
+          "description": "The state of the icon",
+          "type": "string"
+        },
         "sizes": {
           "type": "array",
           "description": "An array of image sizes",
@@ -25,13 +29,13 @@
             "type": "string"
           }
         },
-        "template": {
+        "path": {
           "description": "The path to the file, subsititute %size% into the path where the sizes should be inserted",
           "examples": ["controller://driver/DRIVER_FILE_NAME/icons/my_icon_%size%.png"],
           "type": "string"
         }
       },
-      "required": ["id", "type", "sizes", "template"]
+      "required": ["id", "type", "sizes", "path"]
     }
   },
   "type": "array",
