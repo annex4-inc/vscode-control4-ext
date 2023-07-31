@@ -71,8 +71,10 @@ export class Driver {
     control: string
     controlmethod: ControlMethod
     driver: string
+
     agent: boolean
     combo: boolean
+    jit: boolean
 
     connections: C4Connection[]
     properties: C4Property[]
@@ -88,6 +90,13 @@ export class Driver {
     notification_attachment_provider: Boolean
     schedule_default: C4Schedule
     notification_attachments: NotificationAttachment[]
+
+    /*
+    auto_update: boolean
+    minimum_auto_update_version: number
+    minimum_os_version: string
+    force_auto_update: false
+    */
 
     encrypted: boolean
 
@@ -109,6 +118,7 @@ export class Driver {
         this.documentation = "www/documentation.html";
         this.agent = false;
         this.combo = false;
+        this.jit = true;
 
         this.connections = [];
         this.properties = [];
@@ -322,11 +332,11 @@ export class Driver {
 
         var config = root.ele("config");
 
-        if (this.encrypted) {
-            config.ele("script", { file: "driver.lua", encryption: "2" });
-        } else {
-            config.ele("script", { file: "driver.lua" });
-        }
+        config.ele("script", {
+            ...(this.jit && { jit: "1"}),
+            ...(this.encrypted && { encryption: "2"}),
+            file: "driver.lua"
+        })
 
         if (this.serialsettings) {
             config.ele("serial_settings").txt(this.serialsettings)

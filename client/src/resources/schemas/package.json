@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "JSON schema for NPM package.json files",
     "definitions": {
         "notification_attachment": {
@@ -46,6 +46,34 @@
                 }
             }
         },
+        "display_icon": {
+            "description": "An array of display icons",
+            "type": "array",
+            "items": {
+                "oneOf":[
+                    { "required": ["height", "width", "path"] },
+                    { "required": ["sizes", "path"] }
+                ],
+                "properties": {
+                    "height": {
+                        "description": "The height of the icon in pixels",
+                        "type": "number"
+                    },
+                    "width": {
+                        "description": "The width of the icon in pixels",
+                        "type": "number"
+                    },
+                    "path": {
+                        "description": "The path to the icon",
+                        "type": "string"
+                    },
+                    "sizes": {
+                        "description": "An array of sizes to create entries for",
+                        "type": "array", "items": { "type": "number" }
+                    }
+                }
+            }
+        },
         "web_view_url": {
             "type": "object",
             "properties": {
@@ -71,40 +99,19 @@
                     "type": "string"
                 },
                 "display_icons": {
-                    "description": "An array of display icons",
-                    "type": "array",
-                    "items": {
-                        "oneOf":[
-                            { "required": ["height", "width", "path"] },
-                            { "required": ["repeat"] }
-                        ],
-                        "properties": {
-                            "height": {
-                                "type": "number"
-                            },
-                            "width": {
-                                "type": "number"
-                            },
-                            "path": {
-                                "type": "string"
-                            },
-                            "repeat": {
-                                "type": "object",
-                                "required": ["start_size", "end_size", "increment", "path"],
-                                "properties": {
-                                    "start_size": {
-                                        "type": "number"
-                                    },
-                                    "end_size": {
-                                        "type": "number"
-                                    },
-                                    "increment": {
-                                        "type": "number"
-                                    },
-                                    "path": {
-                                        "type": "string"
-                                    }
-                                }
+                    "description": "The icons for the webview",
+                    "type": "object",
+                    "properties": {
+                        "defaults": { 
+                            "description": "The default icon that appears for the webview when it has no state",
+                            "$ref": "#/definitions/display_icon"
+                        },
+                        "states": { 
+                            "description": "The various state icons that appear for the webview",
+                            "type": "object",
+                            "additionalProperties": {
+                                "description": "The ID of the state",
+                                "$ref": "#/definitions/display_icon"
                             }
                         }
                     }
@@ -194,6 +201,10 @@
                 "combo": {
                     "type": "boolean",
                     "description": "Tells Director that this driver does not use a proxy but provides its own UI within Composer."
+                },
+                "jit": {
+                    "type": "boolean",
+                    "description": "Marks the driver as jit compatible"
                 },
                 "documentation": {
                     "type": "string",
@@ -400,6 +411,21 @@
                             "id": { "type": "integer", "minimum": 1, "maximum": 2},
                             "small": { "type": "string"},
                             "large": { "type": "string"}
+                        }
+                    }
+                },
+                "minimum_os_version": {
+                    "description": "The minimum OS version for this driver",
+                    "type": "string"
+                },
+                "tabs": {
+                    "type": "array",
+                    "description": "Extra tabs in Composer",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "name": {"type": "string"},
+                            "file": {"type": "string"}
                         }
                     }
                 }

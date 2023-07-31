@@ -13,11 +13,14 @@
         "maximum": 5999,
         "default": 5001
       },
+      "primary": {
+        "type": "boolean"
+      },
       "name": {
         "type": "string"
       },
       "proxy": {
-        "oneOf": [
+        "anyOf": [
           {
             "type": "string"
           },

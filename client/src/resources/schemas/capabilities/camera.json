@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JSON schema for Control4 camera capabilities",
+  "definitions": {
+    "capability": {
+      "type": "object",
+      "properties": {
+        "modes": { "type" : "string", "default": "SNAPSHOT,MJPEG,H264,H264I", "pattern": "[^ ]+" },
+        "has_pan": {"type": "boolean"},
+        "has_pan_scan": {"type": "boolean"},
+        "has_tilt": {"type": "boolean"},
+        "has_tilt_scan": {"type": "boolean"},
+        "has_home": {"type": "boolean"},
+        "has_zoom": {"type": "boolean"},
+        "number_presets": {"type": "number", "default": 0},
+        "default_http_port": {"type": "number", "default": 80},
+        "default_rtsp_port": {"type": "number", "default": 554},
+        "default_authentication_required": {"type": "boolean"},
+        "default_authentication_type": { "type" : "string", "default": "BASIC" },
+        "default_username": { "type" : "string", "default": "" },
+        "default_password": { "type" : "string", "default": "" },
+        "address_readonly": {"type": "boolean"},
+        "http_port_readonly": {"type": "boolean"},
+        "show_test_url": {"type": "boolean"},
+        "use_http_for_h264": {"type": "boolean"},
+        "has_camera": {"type": "boolean"},
+        "has_display": {"type": "boolean"},
+        "has_buttons": {"type": "boolean"},
+        "can_set_aec": {"type": "boolean"},
+        "is_doorstation": {"type": "boolean"}
+      }
+    }
+  },
+  "type": "object",
+  "$ref": "#/definitions/capability"
+}
+

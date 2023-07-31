@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JSON schema for Control4 thermostat capabilities",
+  "definitions": {
+    "capability": {
+      "type": "object",
+      "properties": {
+        "can_calibrate": {"type": "boolean", "description": "Indicates if the device is capable of calibrating itself"},
+        "can_change_scale": { "type": "boolean", "description": "Boolean to enable/disable Navigator UIs and ComposerPro from being able to change the scale of the hardware" },
+        "can_cool": { "type": "boolean", "description": "Indicates if this thermostat supports cooling. Recommended to use HVAC Modes instead"},
+        "can_heat": { "type": "boolean", "description": "Indicates if this thermostat supports heating. Recommended to use HVAC Modes instead"},
+
+        "can_do_auto": { "type": "boolean", "description": "Indicates if this thermostat can automatically switch from heat to cool. If the device can deadband enforcement, it will be done on the UIs as specified with the deadband capabilities. Recommended to use HVAC Modes instead"},
+        "can_inc_dec_setpoints": { "type": "boolean", "description": "Indicates if the device has internal commands to increment and decrement both heat and cool setpoints independently"},
+        "can_lock_buttons": { "type": "boolean", "description": "Indicates if the buttons on the thermostat can be locked out to prevent changes"},
+        "can_preset": { "type": "boolean", "description": "Indicates if the device supports the preset functionality including custom_fields. This does not including scheduling as preset_scheduling is a feature that is currently not supported"},
+        "can_preset_schedule": { "type": "boolean", "description": "Indicates if the thermostat will support the SET_EVENTS commands for running presets based on scheduling created in Navigators"},
+
+        "can_dehumidify": { "type": "boolean", "description": "Indicates if this thermostat supports dehumidify control. Recommended to use HVAC Modes instead"},
+        "can_humidify": { "type": "boolean", "description": "Indicates if this thermostat supports humidify control. Recommended to use HVAC Modes instead"},
+        "has_humidity": {"type": "boolean", "description": "Indicates if the device can report the current humidity."},
+
+        "current_temperature_max_c": { "type": "integer", "default":48, "description": "Double indicating the maximum temperature that the thermostat will report in C"},
+        "current_temperature_min_c": { "type": "integer", "default":-40, "description": "Double indicating the minimum temperature that the thermostat will report in C"},
+        "current_temperature_max_f": { "type": "integer", "default":120, "description": "Double indicating the maximum temperature that the thermostat will report in F"},
+        "current_temperature_min_f": { "type": "integer", "default":-40, "description": "Double indicating the minimum temperature that the thermostat will report in F"},
+        "current_temperature_resolution_c": { "type": "integer", "default":1, "description": "Double indicating the increments that the temperature will follow, such as .1, .5, 1, 2, 5, etc."},
+        "current_temperature_resolution_f": { "type": "integer", "default":1, "description": "Double indicating the increments that the temperature will follow, such as .1, .5, 1, 2, 5, etc."},
+
+        "has_extras": {"type": "boolean", "description": "Indicates if the device has extras commands support"},
+        "has_connection_status":  {"type": "boolean", "description": "Indicates if the device reports online/offline status of the hardware device, this is often forgotten about but very important to implement in new protocol drivers drivers."},
+        "has_outdoor_temperature": {"type": "boolean", "description": "Indicates if the device can provide an outdoor temperature"},
+        "has_remote_sensor": {"type": "boolean", "description": "Indicates if this thermostat has a remote sensor"},
+        "has_single_setpoint": {"type": "boolean", "description": "Indicates if the device is single setpoint.  can_heat, can_cool and can_auto should be set to false if this option is used"},
+        "has_temperature": {"type": "boolean", "description": "Indicates if the device can provide a temperature of the thermostat/room"},
+        "has_vacation_mode": {"type": "boolean", "description": "Indicates if this thermostat supports vacation mode "},
+
+        "fan_modes": { "type": "string", "default":"Auto,Low,Medium,High", "pattern": "[^ ]+", "description": "This is a comma delimited list of possible fan modes this thermostat supports"},
+        "fan_states": { "type": "string", "default":"Off,On,Low,Med,Circulate", "pattern": "[^ ]+", "description": "This is a comma delimited list of all the possible states that the HVAC system fan supports"},
+        "humidity_modes": { "type": "string", "default":"Off,Humidify,Dehumidify,Auto", "pattern": "[^ ]+", "description": "This is a comma delimited list of all the possible states that the HVAC system fan supports"},
+        "humidity_states": { "type": "string", "default":"Off,Humidifying,Dehumidifying", "pattern": "[^ ]+", "description": "This is a comma delimited list of all the possible states that the HVAC system fan supports"},
+        "hvac_modes": { "type": "string", "default":"Off,Heat,Cool", "pattern": "[^ ]+", "description": "This is a comma delimited list of all the possible states that the HVAC system fan supports"},
+        "hvac_states": { "type": "string", "default":"Off,Heat,Cool,Heating", "pattern": "[^ ]+", "description": "This is a comma delimited list of all the possible states that the HVAC system fan supports"},
+
+        "hold_modes": {"type": "array", "items": {
+          "anyOf": [
+            {"const": "Off"},
+            {"const": "2 Hours"},
+            {"const": "Until Next"},
+            {"const": "Permanent"}
+          ]
+        }},
+
+        "preset_fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "text": { "type": "string" },
+                    "value": { "type": "string" }
+                  }
+                }
+              },
+              "id": { "type": "string" },
+              "label": { "type": "string" },
+              "type": { "anyOf": [{"const": "list"}, {"const": "number"}, {"const": "string"}]}
+            },
+            "required": ["id"],
+            "allOf": [{
+              "if": {
+                "properties": {
+                  "type": {"const": "list"}
+                }
+              },
+              "then": {
+                "required": ["id", "items"]
+              }
+            }]
+          }
+        }
+      }
+    }
+  },
+  "type": "object",
+  "$ref": "#/definitions/capability"
+}
