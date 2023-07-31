@@ -7,8 +7,7 @@ import * as cp from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as fse from 'fs-extra';
-import { ForceWrite, GetDirents, ReadFileContents } from "../utility"
-
+import { ForceWrite } from "../utility"
 
 const fsPromises = fs.promises;
 
@@ -79,7 +78,7 @@ export default class Manifest {
     async prepare(src: string, int: string) {
         return new Promise(async (resolve, reject) => {
             try {
-                await fsPromises.rmdir(int, { recursive: true })
+                await fsPromises.rm(int, { recursive: true, force: true })
 
                 fse.copy(src, int, async (err, data) => {
                     if (err) {
