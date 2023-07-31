@@ -17,7 +17,6 @@ export default class CopyToOutputStage implements BuildStage {
         return new Promise(async (resolve, reject) => {
             try {
                 if (vscode.workspace.getConfiguration('control4.build').get<boolean>('exportToDriverLocation')) {
-                    // @ts-expect-error
                     let root = (this.pkg.control4 && this.pkg.control4.agent) ? 
                         path.join(process.env.USERPROFILE, "Documents", "Control4", "Agents") :
                         path.join(process.env.USERPROFILE, "Documents", "Control4", "Drivers")
