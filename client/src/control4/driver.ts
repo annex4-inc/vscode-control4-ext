@@ -21,10 +21,10 @@ import ProxiesResource from '../components/proxies';
 
 import { TypedJSON } from 'typedjson';
 import { C4UI } from '.';
-import C4InterfaceIcon from './interface/C4InterfaceIcon';
 import { C4NavigatorDisplayOption } from './capabilities/C4NavigatorDisplayOption';
 import { C4WebviewUrl } from './capabilities/C4WebviewUrl';
 import { C4State } from './C4State';
+import { C4Schedule } from './capabilities/C4Schedule';
 
 function getEnumKeyByEnumValue<T extends { [index: string]: string }>(myEnum: T, enumValue: string): keyof T | null {
     let keys = Object.keys(myEnum).filter(x => myEnum[x] == enumValue);
@@ -86,6 +86,7 @@ export class Driver {
 
     serialsettings: string
     notification_attachment_provider: Boolean
+    schedule_default: C4Schedule
     notification_attachments: NotificationAttachment[]
 
     encrypted: boolean
@@ -180,8 +181,7 @@ export class Driver {
         }
 
         root.ele("control").txt(this.control);
-        //@ts-ignore
-        root.ele("controlmethod").txt(this.controlmethod);
+        root.ele("controlmethod").txt(this.controlmethod as string);
         root.ele("driver").txt(this.driver);
 
         if (this.proxies && this.proxies.length > 0) {
@@ -209,8 +209,9 @@ export class Driver {
                 } else if (key == "web_view_url") {
                     value.forEach((url : C4WebviewUrl) => {
                         nCapabilities.import(url.toXml())
-
                     })
+                } else if (key == "schedule_default") {
+                    nCapabilities.import((value as C4Schedule).toXml())
                 } else if (typeof (value) == "object") {
                     if (value.attributes) {
                         if (typeof (value.value) == "object") {
@@ -395,6 +396,10 @@ export class Driver {
                             return new C4NavigatorDisplayOption(option)
                         })
                     }
+
+                    if (driver.capabilities.schedule_default) {
+                        driver.capabilities.schedule_default = new C4Schedule(driver.capabilities.schedule_default)
+                    }
                 }
 
                 await driver.load()
@@ -473,8 +478,8 @@ export class Driver {
         d.manufacturer = devicedata.manufacturer
         d.name = devicedata.name
         d.model = devicedata.model
-        d.created = new Date(devicedata.created)
-        d.modified = new Date(devicedata.modified)
+        d.created = devicedata.created ? new Date(devicedata.created) : new Date();
+        d.modified = devicedata.modified ? new Date(devicedata.modified) : new Date();
         d.version = devicedata.version
         d.icon = icon
         d.control = devicedata.control
@@ -483,26 +488,38 @@ export class Driver {
 
         if (devicedata.capabilities) {
             Object.keys(devicedata.capabilities).forEach(function (key: string) {
-                let value: any = devicedata.capabilities[key];
+                try {
+                    let value: any = devicedata.capabilities[key];
 
-                if (key == "navigator_display_option") {
-                    if (!d.capabilities[key]) {
-                        d.capabilities[key] = [];
+                    if (key == "navigator_display_option") {
+                        if (!d.capabilities[key]) {
+                            d.capabilities[key] = [];
+                        }
+    
+                        d.capabilities[key].push(C4NavigatorDisplayOption.fromXml(value))
+                    } else if (key == "web_view_url") {
+                        if (!d.capabilities[key]) {
+                            d.capabilities[key] = [];
+                        }
+    
+                        d.capabilities[key].push(C4WebviewUrl.fromXml(value))
+                    } else if (key == "schedule_default") {
+                        d.capabilities[key] = C4Schedule.fromXml(value)
+                    } else if (key == "UI") {
+                        d.UI.push(C4UI.fromXml(value));
+                    } else if (value && typeof(value) === "string") {
+                        if (value.match("[Tt][Rr][Uu][Ee]") || value.match("[Ff][Aa][Ll][Ss][Ee]")) {
+                            d.capabilities[key] = asBoolean(value);
+                        } else {
+                            d.capabilities[key] = value
+                        }
+                    } else if (value && typeof(value) === "object") {
+                        d.capabilities[key] = "";
+                    } else {
+                        d.capabilities[key] = value;
                     }
-
-                    d.capabilities[key].push(C4NavigatorDisplayOption.fromXml(value))
-                } else if (key == "web_view_url") {
-                    if (!d.capabilities[key]) {
-                        d.capabilities[key] = [];
-                    }
-
-                    d.capabilities[key].push(C4WebviewUrl.fromXml(value))
-                } else if (key == "UI") {
-                    d.UI.push(C4UI.fromXml(value));
-                } else if (value && (value.match("[Tt][Rr][Uu][Ee]") || value.match("[Ff][Aa][Ll][Ss][Ee]"))) {
-                    d.capabilities[key] = asBoolean(value);
-                } else {
-                    d.capabilities[key] = value;
+                } catch (err: any) {
+                    throw new Error(`Failed to parse ${key}`)
                 }
             });
         }
@@ -577,10 +594,10 @@ export class Driver {
     }
 }
 
-export const asInt = function (v) {
+export const asInt = function (v: string) {
     return typeof (v) == "string" ? Number.parseInt(v) : v
 }
 
-export const asBoolean = function (v) {
-    return v ? v.toLowerCase() == "true" : v
+export const asBoolean = function (v: string): boolean {
+    return typeof (v) == "string" ? v.toLowerCase() == "true" : v
 }

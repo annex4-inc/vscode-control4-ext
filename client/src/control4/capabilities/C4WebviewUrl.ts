@@ -2,6 +2,7 @@
 import 'reflect-metadata';
 import { jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
+import { asInt } from '../driver';
 
 @jsonObject
 export class C4WebviewUrl {
@@ -30,7 +31,7 @@ export class C4WebviewUrl {
     static fromXml(obj): C4WebviewUrl {
         let url = new C4WebviewUrl();
 
-        url.proxybindingid = obj["@proxybindingid"]
+        url.proxybindingid = obj["@proxybindingid"] ? asInt(obj["@proxybindingid"]) : 5001
         url.value = obj["#"]
 
         return url
