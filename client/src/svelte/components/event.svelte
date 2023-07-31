@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   //@ts-expect-error Automatically included by vscode
   const vscode = acquireVsCodeApi();
 
@@ -8,6 +8,7 @@
     id: 1,
     name: "",
     description: "",
+    sort_order: 0
   };
 
   let formType = vscode.getState()?.formType || "create";
@@ -78,6 +79,8 @@
     <input name="name" type="text" bind:value={value.name} />
     <label for="description">Description</label>
     <input name="description" type="text" bind:value={value.description} />
+    <label for="sort_order">Sort Order</label>
+    <input name="sort_order" type="number" bind:value={value.sort_order} />
 
     <button on:click|preventDefault={vscode.postMessage({ type: formType, value: value })}
       >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
