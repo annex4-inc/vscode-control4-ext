@@ -25,6 +25,7 @@ import { TypedJSON } from 'typedjson';
 import { C4UI } from '.';
 import C4InterfaceIcon from './interface/C4InterfaceIcon';
 import { C4NavigatorDisplayOption } from './capabilities/C4NavigatorDisplayOption';
+import { C4NavigatorDisplayOption2 } from './capabilities/C4NavigatorDisplayOption2';
 import { C4WebviewUrl } from './capabilities/C4WebviewUrl';
 import { C4State } from './C4State';
 
@@ -201,7 +202,7 @@ export class Driver {
             })
         }
 
-        if (Object.keys(this.capabilities).length > 0) {
+        if (Object.keys(this.capabilities).length == 0) {
             var nCapabilities = root.ele("capabilities");
 
             Object.keys(this.capabilities).forEach((key) => {
@@ -236,6 +237,15 @@ export class Driver {
                     nCapabilities.ele(key).txt(this.capabilities[key]);
                 }
             })
+        } else if (this.experienceicons.length > 0) {
+            var nCapabilities = root.ele("capabilities");
+            //let experienceicons = nCapabilities.ele("navigator_display_option");
+            let dOptions = new C4NavigatorDisplayOption2(this.experienceicons, this.filename);
+            nCapabilities.import(dOptions.toXml())
+/*             this.experienceicons.forEach((i: C4ExperienceIcon) => {
+                experienceicons.import(i.toXml())
+            }) */
+
         }
 
         if (this.notification_attachment_provider == true) {
@@ -364,11 +374,12 @@ export class Driver {
         }
 
         if (this.experienceicons.length > 0) {
-            let experienceicons = config.ele("experienceicons");
+            var nCapabilities = root.ele("capabilities2");
+            let experienceicons = nCapabilities.ele("display_icons");
 
-            this.experienceicons.forEach((i: C4ExperienceIcon) => {
+/*             this.experienceicons.forEach((i: C4ExperienceIcon) => {
                 experienceicons.import(i.toXml())
-            })
+            }) */
         }
 
         return root.end({ prettyPrint: true, headless: true })
@@ -403,11 +414,11 @@ export class Driver {
                         })
                     }
 
-                    if (driver.capabilities.navigator_display_option) {
+/*                     if (driver.capabilities.navigator_display_option) {
                         driver.capabilities.navigator_display_option = driver.capabilities.navigator_display_option.map((option) => {
                             return new C4NavigatorDisplayOption(option)
                         })
-                    }
+                    } */
                 }
 
                 await driver.load()
@@ -572,15 +583,15 @@ export class Driver {
             }
         }
 
-        if (devicedata.config.experienceicons) {
-            const experienceicons = this.CleanXmlArray(devicedata.config.experienceicons, "c4icon")
+/*         if (devicedata.config.experienceicons) {
+            const experienceicons = this.CleanXmlArray(devicedata.config.experienceicons, "experienceicon")
 
             if (experienceicons) {
                 experienceicons.forEach(function (i) {
                     d.experienceicons.push(C4ExperienceIcon.fromXml(i))
                 })
             }
-        }
+        } */
 
         if (devicedata.proxies) {
             const proxies = this.CleanXmlArray(devicedata.proxies, "proxy")

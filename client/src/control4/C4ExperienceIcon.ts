@@ -14,25 +14,29 @@ export class C4ExperienceIcon {
     @jsonMember type: string
     @jsonMember iconstate: string
     @jsonArrayMember(String) sizes?: string[]
-    @jsonMember template: string
+    @jsonMember path: string
 
     toXml() {
-        let node = builder.create("property").root();
-
-        for (const key in this) {
-            if (key == "sizes") {
-                let items = node.ele("items")
-
-                this.sizes.forEach((i) => {
-                    items.ele("item").txt(i);
-                })
-            } else {
-                //@ts-ignore
-                node.ele(key).txt(this[key])
-            }
+        if (this.type == "State_Icon") {
+            let state = builder.create("state").root()
+            state.att("id", this.iconstate.toString())   
+            this.sizes.forEach((size) => {
+                state.ele("Icon", {
+                    height: size,
+                    width: size
+                }).txt(this.path.replace(/%SIZE%/gi, '_' + size))
+            })      
+            return state;   
+        } else {
+/*             let node = dIcon
+            this.sizes.forEach((size) => {
+                node.ele("Icon", {
+                    height: size,
+                    width: size
+                }).txt(this.path.replace(/%SIZE%/gi, '_' + size))
+            })
+            return node; */
         }
-
-        return node;
     }
 
     static fromXml(obj): C4ExperienceIcon {
@@ -42,7 +46,7 @@ export class C4ExperienceIcon {
         a.type = obj.type;
         a.iconstate = obj.iconstate;
         a.sizes = obj.sizes ? obj.sizes.item : undefined;
-        a.template = obj.template;
+        a.path = obj.path;
 
         return a
     }

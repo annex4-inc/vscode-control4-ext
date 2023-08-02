@@ -1,10 +1,10 @@
-
 import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
 import { asInt, Driver } from '../driver';
 import C4InterfaceIcon from '../interface/C4InterfaceIcon';
 import C4StateIcons from './C4StateIcons';
+import { XMLBuilder } from 'xmlbuilder2/lib/interfaces';
 
 @jsonObject
 export class C4DisplayIcons {
