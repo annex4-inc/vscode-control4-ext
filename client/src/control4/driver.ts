@@ -25,7 +25,7 @@ import { TypedJSON } from 'typedjson';
 import { C4UI } from '.';
 import C4InterfaceIcon from './interface/C4InterfaceIcon';
 import { C4NavigatorDisplayOption } from './capabilities/C4NavigatorDisplayOption';
-import { C4NavigatorDisplayOption2 } from './capabilities/C4NavigatorDisplayOption2';
+import { C4NavigatorDisplayOptions } from './capabilities/C4NavigatorDisplayOptions';
 import { C4WebviewUrl } from './capabilities/C4WebviewUrl';
 import { C4State } from './C4State';
 
@@ -240,7 +240,7 @@ export class Driver {
         } else if (this.experienceicons.length > 0) {
             var nCapabilities = root.ele("capabilities");
             //let experienceicons = nCapabilities.ele("navigator_display_option");
-            let dOptions = new C4NavigatorDisplayOption2(this.experienceicons, this.filename);
+            let dOptions = new C4NavigatorDisplayOptions(this.experienceicons, this.filename);
             nCapabilities.import(dOptions.toXml())
 /*             this.experienceicons.forEach((i: C4ExperienceIcon) => {
                 experienceicons.import(i.toXml())

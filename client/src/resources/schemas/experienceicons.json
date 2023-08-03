@@ -29,13 +29,13 @@
             "type": "string"
           }
         },
-        "path": {
-          "description": "The path to the file, subsititute %size% into the path where the sizes should be inserted",
-          "examples": ["controller://driver/DRIVER_FILE_NAME/icons/my_icon_%size%.png"],
+        "relpath": {
+          "description": "The relative path from the root dir without leading or trailing /",
+          "examples": ["icons/driver"],
           "type": "string"
         }
       },
-      "required": ["id", "type", "sizes", "path"]
+      "required": ["id", "type", "sizes", "relpath"]
     }
   },
   "type": "array",

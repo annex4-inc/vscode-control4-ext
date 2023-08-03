@@ -3,13 +3,10 @@ import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
 import { asInt, Driver } from '../driver';
-import C4InterfaceIcon from '../interface/C4InterfaceIcon';
-import C4StateIcons from './C4StateIcons';
-import { C4DisplayIcons } from './C4DisplayIcons';
 import { C4ExperienceIcon } from '../C4ExperienceIcon';
 
 @jsonObject
-export class C4NavigatorDisplayOption2 {
+export class C4NavigatorDisplayOptions {
     @jsonMember
     proxybindingid: number
 
@@ -47,7 +44,7 @@ export class C4NavigatorDisplayOption2 {
             this.default_icons = defaultIcos;
             this.state_icons = stateIcos;
             this.driver_filename = driverfilename || "";
-            this.icon_path_template = "controller://driver/%DRIVERFILENAME%/icons/device/%ICONFILENAME%%SIZE%.png";
+            this.icon_path_template = "controller://driver/%DRIVERFILENAME%/%RELPATH%/%ICONFILENAME%%SIZE%.png".replace(/%DRIVERFILENAME%/gi, this.driver_filename);
         }
     }
 
@@ -61,13 +58,11 @@ export class C4NavigatorDisplayOption2 {
         } 
 
         let displayicons = node.ele("display_icons");
-        let iconPath = this.icon_path_template.replace(/%DRIVERFILENAME%/gi, this.driver_filename)
 
         if (this.default_icons) {
             this.default_icons.forEach((i: C4ExperienceIcon) => {
                 i.sizes.forEach((size) => {
-                    iconPath = iconPath.replace(/%SIZE%/gi, '_' + size)
-                    iconPath = iconPath.replace(/%ICONFILENAME%/gi, i.id)
+                    let iconPath = this.icon_path_template.replace(/%RELPATH%/gi, i.relpath || "icons/device").replace(/%ICONFILENAME%/gi, i.id).replace(/%SIZE%/gi, '_' + size)
                     displayicons.ele("Icon", {
                         height: size,
                         width: size
@@ -78,15 +73,15 @@ export class C4NavigatorDisplayOption2 {
 
         if (this.state_icons) {
             this.state_icons.forEach((i: C4ExperienceIcon) => {
-                displayicons.import(i.toXml());
+                displayicons.import(i.toXml(this.icon_path_template));
             })  
         }
 
         return node;
     }
 
-    static fromXml(value: any): C4NavigatorDisplayOption2 {
-        let option = new C4NavigatorDisplayOption2();
+    static fromXml(value: any): C4NavigatorDisplayOptions {
+        let option = new C4NavigatorDisplayOptions();
 
         option.proxybindingid = asInt(value["@proxybindingid"])
         option.translation_url = value.translation_url

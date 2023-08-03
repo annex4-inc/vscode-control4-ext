@@ -14,9 +14,9 @@ export class C4ExperienceIcon {
     @jsonMember type: string
     @jsonMember iconstate: string
     @jsonArrayMember(String) sizes?: string[]
-    @jsonMember path: string
+    @jsonMember relpath: string
 
-    toXml() {
+    toXml(iconPathTemplate: string) {
         if (this.type == "State_Icon") {
             let state = builder.create("state").root()
             state.att("id", this.iconstate.toString())   
@@ -24,7 +24,7 @@ export class C4ExperienceIcon {
                 state.ele("Icon", {
                     height: size,
                     width: size
-                }).txt(this.path.replace(/%SIZE%/gi, '_' + size))
+                }).txt(iconPathTemplate.replace(/%RELPATH%/gi, this.relpath || "icons/device").replace(/%ICONFILENAME%/gi, this.id).replace(/%SIZE%/gi, '_' + size))
             })      
             return state;   
         } else {
@@ -33,7 +33,7 @@ export class C4ExperienceIcon {
                 node.ele("Icon", {
                     height: size,
                     width: size
-                }).txt(this.path.replace(/%SIZE%/gi, '_' + size))
+                }).txt(iconPathTemplate.replace(/%RELPATH%/gi, this.relpath || "icons/device").replace(/%ICONFILENAME%/gi, this.id).replace(/%SIZE%/gi, '_' + size))
             })
             return node; */
         }
@@ -46,7 +46,7 @@ export class C4ExperienceIcon {
         a.type = obj.type;
         a.iconstate = obj.iconstate;
         a.sizes = obj.sizes ? obj.sizes.item : undefined;
-        a.path = obj.path;
+        a.relpath = obj.relpath;
 
         return a
     }

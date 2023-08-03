@@ -18,7 +18,7 @@
       "512",
       "1024"
     ],
-    path: "controller://driver/DRIVER_FILE_NAME/icons/my_icon_%size%.png"
+    relpath: "icons/device"
   };
 
   import { onDestroy, onMount } from "svelte";
@@ -206,14 +206,14 @@
     {/if}
 
     <div class="icons">
-      <label for="path">Icon Path</label>
-      <Tooltip title="Enter the path of file: controller://driver/DRIVER_FILE_NAME/icons/my_icon_%size%.png">
+      <label for="relpath">Relative Icon Path</label>
+      <Tooltip title="Enter the the path to icons relative to root without leading or trailing /. Default: icons/device">
         <div class="icon">
           <i class="codicon codicon-info"></i>
         </div>
       </Tooltip>
     </div>
-    <input name="path" type="text" bind:value={value.path} />
+    <input name="relpath" type="text" bind:value={value.relpath} />
 
     <button on:click|preventDefault={submit}
       >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
