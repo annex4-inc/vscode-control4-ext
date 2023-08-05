@@ -2,9 +2,11 @@
   //@ts-expect-error Automatically included by vscode
   const vscode = acquireVsCodeApi();
 
-  const experienceicons = [
-    { name: "Default Icon", value: "Default_Icon" },
-    { name: "State Icon", value: "State_Icon" },
+  const displayicons = [
+    { name: "Default Icon", value: "DEFAULT_ICON" },
+    { name: "State Icon", value: "STATE_ICON" },
+    { name: "Proxy Binding Id", value: "PROXY_ID" },
+    { name: "Translation URL", value: "TRANSLATIONS_URL" },
   ];
 
   const d = {
@@ -18,7 +20,9 @@
       "512",
       "1024"
     ],
-    relpath: "icons/device"
+    relpath: "icons/device",
+    proxybindingid: 5001,
+    transurl: "translations",
   };
 
   import { onDestroy, onMount } from "svelte";
@@ -118,11 +122,33 @@
       }
     }
 
+      console.log(v.type);
     switch (v.type) {
-      case "Default_Icon":
+      case "DEFAULT_ICON":
+        delete v.proxybindingid;
+        delete v.transurl;
+        delete v.iconstate;
         break;
-      case "State_Icon":
-        break;  
+      case "STATE_ICON":
+        delete v.proxybindingid;
+        delete v.transurl;
+        break;
+      case "PROXY_ID":
+        v.id = "Proxy Id";
+        delete v.iconstate;
+        delete v.sizes;
+        delete v.relpath;
+        delete v.transurl;
+        break;
+      case "TRANSLATIONS_URL":
+        v.id = "Translations URL";
+        delete v.iconstate;
+        delete v.sizes;
+        delete v.relpath;
+        delete v.proxybindingid;
+        break;
+      default:
+        break;
     }
 
     vscode.postMessage({ type: formType, value: v });
@@ -148,6 +174,8 @@
 
 <main>
   <form class="page" on:submit|preventDefault={submit}>
+    <!-- If the type is an icon the we need ico fields -->
+    {#if value.type == "DEFAULT_ICON" || value.type == "STATE_ICON"}  
       <div class="icons">
         <label for="id">Icon Name</label>
         <Tooltip title="Enter the file name without the size or extension. File should be a PNG">
@@ -158,21 +186,50 @@
       </div>
       <!-- svelte-ignore a11y-autofocus -->
       <input autofocus name="id" type="text" bind:value={value.id} />
+    {:else if value.type == "PROXY_ID"}
+      <div class="icons">
+        <label for="proxybindingid">Proxy Id</label>
+        <Tooltip title="Enter the Navigator Options Proxy Id. Default: 5001">
+          <div class="icon">
+            <i class="codicon codicon-info"></i>
+          </div>
+        </Tooltip>
+      </div>
+      <!-- svelte-ignore a11y-autofocus -->
+      <input autofocus name="proxybindingid" type="number" bind:value={value.proxybindingid} />
+    {:else if value.type == "TRANSLATIONS_URL"}
+      <div class="icons">
+        <label for="transurl">Relative Translation URL Path</label>
+        <Tooltip title="Enter the the path to translation url relative to root without leading or trailing /. Default: translations">
+          <div class="icon">
+            <i class="codicon codicon-info"></i>
+          </div>
+        </Tooltip>
+      </div>
+      <!-- svelte-ignore a11y-autofocus -->
+      <input autofocus name="transurl" type="text" bind:value={value.transurl} />
+    {/if}
     <!-- Selection for value Type -->
-    <label for="type">Type</label>
+    <div class="icons">
+      <label for="type">Type</label>
+      <Tooltip title="Select Nav Option Type. Should only have one Proxy ID, Translation URL, and Default Icon">
+        <div class="icon">
+          <i class="codicon codicon-info"></i>
+        </div>
+      </Tooltip>
+    </div>
     <!-- svelte-ignore a11y-no-onchange -->
     <select name="type" bind:value={value.type} on:input={validate} on:change="{validate}">
-      {#each experienceicons as i}
+      {#each displayicons as i}
         <option value={i.value} selected={value.type == i.value}>
           {i.name}
         </option>
       {/each}
     </select>
-
     <!-- If the type is a state icon the we need a state id-->
-    {#if value.type == "State_Icon"}
+    {#if value.type == "STATE_ICON"}
       <div class="icons">
-        <label for="state">Icon State</label>
+        <label for="iconstate">Icon State</label>
         <Tooltip title="Enter the state ID for this icon.">
           <div class="icon">
             <i class="codicon codicon-info"></i>
@@ -182,38 +239,41 @@
       <!-- svelte-ignore a11y-autofocus -->
       <input autofocus name="iconstate" type="text" bind:value={value.iconstate} />
     {/if}
-    <!-- The sizes need to be shown-->
-    <div class="icons">
-      <label for="sizes">Sizes</label> 
-      <Tooltip title="Enter the size of the image. Std: 70, 90, 300, 512, 1024">
-        <div class="icon">
-          <i class="codicon codicon-info"></i>
-        </div>
-      </Tooltip>
-    </div>
-    {#if value.sizes}
-      <ul>
-        {#each value.sizes as size}
+    <!-- If the type is an icon the we need size fields and relative icon path-->
+    {#if value.type == "DEFAULT_ICON" || value.type == "STATE_ICON"} 
+      <!-- The sizes need to be shown-->
+      <div class="icons">
+        <label for="sizes">Sizes</label> 
+        <Tooltip title="Enter the size of the image. Std: 70, 90, 300, 512, 1024">
+          <div class="icon">
+            <i class="codicon codicon-info"></i>
+          </div>
+        </Tooltip>
+      </div>
+      {#if value.sizes}
+        <ul>
+          {#each value.sizes as size}
+            <li class="list-item">
+              <input type="number" group={value.sizes} bind:value={size} />
+              <button type="button" on:click|preventDefault={removeItem(size)}>Remove</button>
+            </li>
+          {/each}
           <li class="list-item">
-            <input type="number" group={value.sizes} bind:value={size} />
-            <button type="button" on:click|preventDefault={removeItem(size)}>Remove</button>
+            <input bind:this={newInput} type="number" group={value.sizes} on:change={addItem} />
           </li>
-        {/each}
-        <li class="list-item">
-          <input bind:this={newInput} type="number" group={value.sizes} on:change={addItem} />
-        </li>
-      </ul>
-    {/if}
+        </ul>
+      {/if}
 
-    <div class="icons">
-      <label for="relpath">Relative Icon Path</label>
-      <Tooltip title="Enter the the path to icons relative to root without leading or trailing /. Default: icons/device">
-        <div class="icon">
-          <i class="codicon codicon-info"></i>
-        </div>
-      </Tooltip>
-    </div>
-    <input name="relpath" type="text" bind:value={value.relpath} />
+      <div class="icons">
+        <label for="relpath">Relative Icon Path</label>
+        <Tooltip title="Enter the the path to icons relative to root without leading or trailing /. Default: icons/device">
+          <div class="icon">
+            <i class="codicon codicon-info"></i>
+          </div>
+        </Tooltip>
+      </div>
+      <input name="relpath" type="text" bind:value={value.relpath} />
+    {/if}
 
     <button on:click|preventDefault={submit}
       >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button

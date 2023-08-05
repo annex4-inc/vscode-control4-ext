@@ -3,7 +3,14 @@ import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
 import { asInt, Driver } from '../driver';
-import { C4ExperienceIcon } from '../C4ExperienceIcon';
+import { C4DisplayIcon, DisplayIconType } from './C4DisplayIcon';
+
+export class NavigatorDisplayOptionType {
+    static readonly DEFAULT: string = "DEFAULT_ICON";
+    static readonly STATE: string = "STATE_ICON";
+    static readonly PROXY: string = "PROXY_ID";
+    static readonly TRANSLATIONS_URL: string = "TRANSLATIONS_URL";
+}
 
 @jsonObject
 export class C4NavigatorDisplayOptions {
@@ -19,25 +26,25 @@ export class C4NavigatorDisplayOptions {
     @jsonMember
     icon_path_template?: string
 
-    @jsonArrayMember(C4ExperienceIcon)
-    default_icons?: C4ExperienceIcon[]
+    @jsonArrayMember(C4DisplayIcon)
+    default_icons?: C4DisplayIcon[]
 
-    @jsonArrayMember(C4ExperienceIcon)
-    state_icons?: C4ExperienceIcon[]
+    @jsonArrayMember(C4DisplayIcon)
+    state_icons?: C4DisplayIcon[]
 
     constructor(options?, driverfilename?) {
         if (options) {
             let proxyId = options.find(function (ei) {
-                return ei.type === 'PROXY_ID';
+                return ei.type === NavigatorDisplayOptionType.PROXY;
             });
             let transURL = options.find(function (tu) {
-                return tu.type === 'TRANSLATION_URL';
+                return tu.type === NavigatorDisplayOptionType.TRANSLATIONS_URL;
             });
             let stateIcos = options.filter(function (states) {
-                return states.type === 'State_Icon';
+                return states.type === DisplayIconType.STATE;
             });
             let defaultIcos = options.filter(function (dflt) {
-                return dflt.type === 'Default_Icon';
+                return dflt.type === DisplayIconType.DEFAULT;
             });
             this.proxybindingid = proxyId || 5001;
             this.translation_url = transURL;
@@ -60,7 +67,7 @@ export class C4NavigatorDisplayOptions {
         let displayicons = node.ele("display_icons");
 
         if (this.default_icons) {
-            this.default_icons.forEach((i: C4ExperienceIcon) => {
+            this.default_icons.forEach((i: C4DisplayIcon) => {
                 i.sizes.forEach((size) => {
                     let iconPath = this.icon_path_template.replace(/%RELPATH%/gi, i.relpath || "icons/device").replace(/%ICONFILENAME%/gi, i.id).replace(/%SIZE%/gi, '_' + size)
                     displayicons.ele("Icon", {
@@ -72,7 +79,7 @@ export class C4NavigatorDisplayOptions {
         }
 
         if (this.state_icons) {
-            this.state_icons.forEach((i: C4ExperienceIcon) => {
+            this.state_icons.forEach((i: C4DisplayIcon) => {
                 displayicons.import(i.toXml(this.icon_path_template));
             })  
         }

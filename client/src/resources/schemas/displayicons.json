@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "JSON schema for Control4 default and experience icons",
+  "title": "JSON schema for Control4 default and display icons",
   "definitions": {
-    "experienceicons": {
+    "displayicons": {
       "additionalProperties": false,
       "type": "object",
       "properties": {
@@ -14,8 +14,10 @@
           "id": "propertyType",
           "type": "string",
           "enum": [
-            "Default_Icon",
-            "State_Icon"
+            "DEFAULT_ICON",
+            "STATE_ICON",
+            "PROXY_ID",
+            "TRANSLATIONS_URL"
           ]
         },
         "iconstate": {
@@ -30,12 +32,21 @@
           }
         },
         "relpath": {
-          "description": "The relative path from the root dir without leading or trailing /",
+          "description": "The relative path from the root dir to icons without leading or trailing /",
           "examples": ["icons/driver"],
+          "type": "string"
+        },
+        "proxybindingid": {
+          "description": "The Proxy Id for Nav Options",
+          "type": "integer"
+        },
+        "transurl": {
+          "description": "The relative path from the root dir to translations without leading or trailing /",
+          "examples": ["translations"],
           "type": "string"
         }
       },
-      "required": ["id", "type", "sizes", "relpath"]
+      "required": ["id", "type"]
     }
   },
   "type": "array",
@@ -44,7 +55,7 @@
   "items": {
     "allOf": [
       {
-        "$ref": "#/definitions/experienceicons"
+        "$ref": "#/definitions/displayicons"
       }
     ]
   }

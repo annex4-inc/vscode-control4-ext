@@ -13,7 +13,7 @@ import CommandsResource from './components/commands';
 import ConnectionsResource from './components/connections';
 import ProxiesResource from './components/proxies';
 import UIResource from "./components/ui";
-import ExperienceIconsResource from "./components/experienceicons";
+import DisplayIconsResource from "./components/displayicons";
 
 // Retrieve the package, settings, and tasks from json template
 import pjson from "./resources/package.json";
@@ -66,7 +66,7 @@ async function control4Create() {
     await ConnectionsResource.initialize();
     await ProxiesResource.initialize();
     await UIResource.initialize();
-    await ExperienceIconsResource.initialize();
+    await DisplayIconsResource.initialize();
 
     // Initialize vscode settings
     await WriteIfNotExists(path.join(root, ".vscode", "settings.json"), JSON.stringify(templateSettings, null, 2));
@@ -93,7 +93,7 @@ async function control4Import() {
   await ConnectionsResource.initialize();
   await ProxiesResource.initialize();
   await UIResource.initialize();
-  await ExperienceIconsResource.initialize();
+  await DisplayIconsResource.initialize();
 
   p.then(async (result: vscode.Uri[]) => {
     let c4z = result[0];
@@ -127,7 +127,7 @@ async function control4Import() {
             CommandsResource.Write(driver.commands),
             ProxiesResource.Write(driver.proxies),
             UIResource.Write(driver.UI),
-            ExperienceIconsResource.Write(driver.experienceicons)
+            DisplayIconsResource.Write(driver.displayicons)
           ])
 
           // Initialize vscode settings

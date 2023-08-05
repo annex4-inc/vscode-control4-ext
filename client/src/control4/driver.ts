@@ -9,7 +9,7 @@ import { C4Event } from './C4Event';
 import { C4Action } from './C4Action';
 import { C4Command } from './C4Command';
 import { C4Property } from './C4Property';
-import { C4ExperienceIcon } from './C4ExperienceIcon';
+import { C4DisplayIcon } from './capabilities/C4DisplayIcon';
 import { C4Connection, C4ConnectionClass, Direction } from './C4Connection';
 import { C4Proxy, C4ProxyClass, C4ProxyType } from './C4Proxy';
 
@@ -18,13 +18,12 @@ import CommandsResource from '../components/commands';
 import ConnectionsResource from '../components/connections';
 import EventsResource from '../components/events';
 import PropertiesResource from '../components/properties';
-import ExperienceIconsResource from '../components/experienceicons';
+import DisplayIconsResource from '../components/displayicons';
 import ProxiesResource from '../components/proxies';
 
 import { TypedJSON } from 'typedjson';
 import { C4UI } from '.';
 import C4InterfaceIcon from './interface/C4InterfaceIcon';
-import { C4NavigatorDisplayOption } from './capabilities/C4NavigatorDisplayOption';
 import { C4NavigatorDisplayOptions } from './capabilities/C4NavigatorDisplayOptions';
 import { C4WebviewUrl } from './capabilities/C4WebviewUrl';
 import { C4State } from './C4State';
@@ -85,7 +84,7 @@ export class Driver {
     proxies: C4Proxy[]
     states: C4State[]
     UI: C4UI[]
-    experienceicons: C4ExperienceIcon[]
+    displayicons: C4DisplayIcon[]
     capabilities: any
 
     serialsettings: string
@@ -122,7 +121,7 @@ export class Driver {
         this.UI = [];
         this.capabilities = {};
         this.states = [];
-        this.experienceicons = [];
+        this.displayicons = [];
     }
 
     /**
@@ -134,7 +133,7 @@ export class Driver {
         this.properties = await PropertiesResource.Reload();
         this.connections = await ConnectionsResource.Reload();
         this.events = await EventsResource.Reload();
-        this.experienceicons = await ExperienceIconsResource.Reload();
+        this.displayicons = await DisplayIconsResource.Reload();
         this.proxies = await ProxiesResource.Reload();
     }
 
@@ -209,9 +208,9 @@ export class Driver {
                 let value = this.capabilities[key]
 
                 if (key == "navigator_display_option") {
-                    value.forEach((option : C4NavigatorDisplayOption) => {
+/*                     value.forEach((option : C4NavigatorDisplayOption) => {
                         nCapabilities.import(option.toXml())
-                    });
+                    }); */
                 } else if (key == "web_view_url") {
                     value.forEach((url : C4WebviewUrl) => {
                         nCapabilities.import(url.toXml())
@@ -237,13 +236,13 @@ export class Driver {
                     nCapabilities.ele(key).txt(this.capabilities[key]);
                 }
             })
-        } else if (this.experienceicons.length > 0) {
+        } else if (this.displayicons.length > 0) {
             var nCapabilities = root.ele("capabilities");
-            //let experienceicons = nCapabilities.ele("navigator_display_option");
-            let dOptions = new C4NavigatorDisplayOptions(this.experienceicons, this.filename);
+            //let displayicons = nCapabilities.ele("navigator_display_option");
+            let dOptions = new C4NavigatorDisplayOptions(this.displayicons, this.filename);
             nCapabilities.import(dOptions.toXml())
-/*             this.experienceicons.forEach((i: C4ExperienceIcon) => {
-                experienceicons.import(i.toXml())
+/*             this.displayicons.forEach((i: C4DisplayIcon) => {
+                displayicons.import(i.toXml())
             }) */
 
         }
@@ -373,12 +372,12 @@ export class Driver {
             })
         }
 
-        if (this.experienceicons.length > 0) {
+        if (this.displayicons.length > 0) {
             var nCapabilities = root.ele("capabilities2");
-            let experienceicons = nCapabilities.ele("display_icons");
+            let displayicons = nCapabilities.ele("display_icons");
 
-/*             this.experienceicons.forEach((i: C4ExperienceIcon) => {
-                experienceicons.import(i.toXml())
+/*             this.displayicons.forEach((i: C4DisplayIcon) => {
+                displayicons.import(i.toXml())
             }) */
         }
 
@@ -514,7 +513,7 @@ export class Driver {
                         d.capabilities[key] = [];
                     }
 
-                    d.capabilities[key].push(C4NavigatorDisplayOption.fromXml(value))
+                    // d.capabilities[key].push(C4NavigatorDisplayOption.fromXml(value))
                 } else if (key == "web_view_url") {
                     if (!d.capabilities[key]) {
                         d.capabilities[key] = [];
@@ -583,12 +582,12 @@ export class Driver {
             }
         }
 
-/*         if (devicedata.config.experienceicons) {
-            const experienceicons = this.CleanXmlArray(devicedata.config.experienceicons, "experienceicon")
+/*         if (devicedata.config.displayicons) {
+            const displayicons = this.CleanXmlArray(devicedata.config.displayicons, "displayicon")
 
-            if (experienceicons) {
-                experienceicons.forEach(function (i) {
-                    d.experienceicons.push(C4ExperienceIcon.fromXml(i))
+            if (displayicons) {
+                displayicons.forEach(function (i) {
+                    d.displayicons.push(C4DisplayIcon.fromXml(i))
                 })
             }
         } */

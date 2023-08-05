@@ -27,11 +27,11 @@ export class PropertyPanel extends SveltePanel {
         */
 
         if (property == null) {
-          PropertyPanel.currentPanel._panel.title = `Create Experience Icon`;
+          PropertyPanel.currentPanel._panel.title = `Create Display Icon`;
           PropertyPanel.currentPanel._panel.webview.postMessage({ command: "create" })
         } else {
           console.log(property)
-          PropertyPanel.currentPanel._panel.title = `Experience Icon: ${property.name}`;
+          PropertyPanel.currentPanel._panel.title = `Display Icon: ${property.name}`;
           PropertyPanel.currentPanel._currentProperty = property;
           PropertyPanel.currentPanel._panel.webview.postMessage({ command: "update", property: property })
         }

@@ -8,7 +8,7 @@ import { CommandNodeProvider } from './providers/tree/CommandNodeProvider';
 import { ActionNodeProvider } from './providers/tree/ActionNodeProvider';
 import { ConnectionNodeProvider } from './providers/tree/ConnectionNodeProvider';
 import { UINodeProvider } from './providers/tree/UINodeProvider';
-import { ExperienceIconNodeProvider } from './providers/tree/ExperienceIconNodeProvider';
+import { DisplayIconNodeProvider } from './providers/tree/DisplayIconNodeProvider';
 
 
 import * as path from 'path';
@@ -20,7 +20,7 @@ import PropertiesResource from "./components/properties"
 import EventsResource from "./components/events"
 import CommandsResource from "./components/commands"
 import ConnectionsResource from "./components/connections"
-import ExperienceIconsResource from "./components/experienceicons"
+import DisplayIconsResource from "./components/displayicons"
 //import ProxiesResource from "./components/proxies"
 
 import { Views, Commands } from './constants/tree';
@@ -57,7 +57,7 @@ export function activate(context: vscode.ExtensionContext) {
   const actionsProvider = new ActionNodeProvider(workspacePath);
   const connectionsProvider = new ConnectionNodeProvider(workspacePath);
   const uiProvider = new UINodeProvider(workspacePath);
-  const experienceiconsProvider = new ExperienceIconNodeProvider(workspacePath);
+  const displayiconsProvider = new DisplayIconNodeProvider(workspacePath);
 
   // Register the disposables of the tree node providers
   Register(context, propertiesProvider.register(Views.Properties, Commands.Properties.Select, Commands.Properties.Remove));
@@ -66,7 +66,7 @@ export function activate(context: vscode.ExtensionContext) {
   Register(context, actionsProvider.register(Views.Actions, Commands.Actions.Select, Commands.Actions.Remove));
   Register(context, connectionsProvider.register(Views.Connections, Commands.Connections.Select, Commands.Connections.Remove));
   Register(context, uiProvider.register(Views.UI, Commands.UI.Select, Commands.UI.Remove));
-  Register(context, experienceiconsProvider.register(Views.ExperienceIcons, Commands.ExperienceIcons.Select, Commands.ExperienceIcons.Remove));
+  Register(context, displayiconsProvider.register(Views.DisplayIcons, Commands.DisplayIcons.Select, Commands.DisplayIcons.Remove));
   //Register(context, parametersProvider.register(Views.Parameters, Commands.Parameters.Select, Commands.Parameters.Rmeove))
 
   context.subscriptions.push(vscode.tasks.registerTaskProvider(Control4BuildTaskProvider.BuildType, new Control4BuildTaskProvider(workspacePath, context)));
@@ -120,7 +120,7 @@ export function activate(context: vscode.ExtensionContext) {
     { name: "Command", plural: "Commands", resource: CommandsResource, provider: commandsProvider, panel: undefined },
     { name: "Event", plural: "Events", resource: EventsResource, provider: eventsProvider, panel: undefined},
     { name: "Connection", plural: "Connections", resource: ConnectionsResource, provider: connectionsProvider, panel: undefined },
-    { name: "ExperienceIcon", plural: "ExperienceIcons", resource: ExperienceIconsResource, provider: experienceiconsProvider, panel: undefined }
+    { name: "DisplayIcon", plural: "DisplayIcons", resource: DisplayIconsResource, provider: displayiconsProvider, panel: undefined }
 
   ]
 

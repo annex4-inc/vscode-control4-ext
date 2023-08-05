@@ -232,33 +232,33 @@
                 "enablement": "view == control4-events"
             },
             {
-                "command": "control4.viewExperienceIcon",
-                "title": "View Experience Icon",
-                "enablement": "view == control4-experienceicons"
+                "command": "control4.viewDisplayIcon",
+                "title": "View Icon/Nav Option",
+                "enablement": "view == control4-displayicons"
             },
             {
-                "command": "control4.refreshExperienceIcons",
-                "title": "Refresh Experience Icons",
+                "command": "control4.refreshDisplayIcons",
+                "title": "Refresh Icons/Nav Options",
                 "icon": "$(extensions-refresh)",
-                "enablement": "view == control4-experienceicons"
+                "enablement": "view == control4-displayicons"
             },
             {
-                "command": "control4.addExperienceIcon",
-                "title": "Add Experience Icon",
+                "command": "control4.addDisplayIcon",
+                "title": "Add Icon/Nav Option",
                 "icon": "$(add)",
-                "enablement": "view == control4-experienceicons"
+                "enablement": "view == control4-displayicons"
             },
             {
-                "command": "control4.moveExperienceIconUp",
-                "title": "Move Experience Icon Up",
+                "command": "control4.moveDisplayIconUp",
+                "title": "Move Icon/Nav Option Up",
                 "icon": "$(chevron-up)",
-                "enablement": "view == control4-experienceicons"
+                "enablement": "view == control4-displayicons"
             },
             {
-                "command": "control4.moveExperienceIconDown",
-                "title": "Move Experience Icon Down",
+                "command": "control4.moveDisplayIconDown",
+                "title": "Move Icon/Nav Option Down",
                 "icon": "$(chevron-down)",
-                "enablement": "view == control4-experienceicons"
+                "enablement": "view == control4-displayicons"
             },
             {
                 "command": "remove.C4Action",
@@ -286,9 +286,9 @@
                 "enablement": "view == control4-connections"
             },
             {
-                "command": "remove.C4ExperienceIcon",
-                "title": "Remove Experience Icon",
-                "enablement": "view == control4-experienceicons"
+                "command": "remove.C4DisplayIcon",
+                "title": "Remove Display Icon",
+                "enablement": "view == control4-displayicons"
             }
         ],
         "menus": {
@@ -339,12 +339,12 @@
                     "group": "navigation"
                 },
                 {
-                    "command": "control4.addExperienceIcon",
-                    "when": "view == control4-experienceicons"
+                    "command": "control4.addDisplayIcon",
+                    "when": "view == control4-displayicons"
                 },
                 {
-                    "command": "control4.refreshExperienceIcons",
-                    "when": "view == control4-experienceicons",
+                    "command": "control4.refreshDisplayIcons",
+                    "when": "view == control4-displayicons",
                     "group": "navigation"
                 }
             ],
@@ -420,17 +420,17 @@
                     "group": "inline"
                 },
                 {
-                    "command": "remove.C4ExperienceIcon",
-                    "when": "view == control4-experienceicons && viewItem == c4icon"
+                    "command": "remove.C4DisplayIcon",
+                    "when": "view == control4-displayicons && viewItem == dispicon"
                 },
                 {
-                    "command": "control4.moveExperienceIconUp",
-                    "when": "view == control4-experienceicons && viewItem == c4icon",
+                    "command": "control4.moveDisplayIconUp",
+                    "when": "view == control4-displayicons && viewItem == dispicon",
                     "group": "inline"
                 },
                 {
-                    "command": "control4.moveExperienceIconDown",
-                    "when": "view == control4-experienceicons && viewItem == c4icon",
+                    "command": "control4.moveDisplayIconDown",
+                    "when": "view == control4-displayicons && viewItem == dispicon",
                     "group": "inline"
                 }
             ]
@@ -512,8 +512,8 @@
                     "name": "UI"
                 },
                 {
-                    "id": "control4-experienceicons",
-                    "name": "Experience Icons"
+                    "id": "control4-displayicons",
+                    "name": "Display Icons/Nav Options"
                 }
             ]
         },
@@ -522,7 +522,7 @@
                 {
                     "id": "control4",
                     "title": "Control4",
-                    "icon": "./client/media/annex4.svg"
+                    "icon": "./client/media/control4.svg"
                 }
             ]
         },
@@ -552,8 +552,8 @@
                 "contents": "No UI found."
             },
             {
-                "view": "control4-experienceicons",
-                "contents": "No experience icons found.\n[Add Experience Icon](command:control4.addExperienceIcon)"
+                "view": "control4-displayicons",
+                "contents": "No icons / nav options found.\n[Add Icon / Nav Option](command:control4.addDisplayIcon)"
             }
         ],
         "jsonValidation": [
@@ -590,8 +590,8 @@
                 "url": "./client/src/resources/schemas/ui.json"
             },
             {
-                "fileMatch": "experienceicons.c4c",
-                "url": "./client/src/resources/schemas/experienceicons.json"
+                "fileMatch": "displayicons.c4c",
+                "url": "./client/src/resources/schemas/displayicons.json"
             }
         ]
     },

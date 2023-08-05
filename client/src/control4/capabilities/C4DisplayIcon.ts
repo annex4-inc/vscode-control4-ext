@@ -1,23 +1,32 @@
-
 import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
 
-export class ExperienceIconType {
-    static readonly DEFAULT: string = "Default_Icon";
-    static readonly STATE: string = "State_Icon";
+export class DisplayIconType {
+    static readonly DEFAULT: string = "DEFAULT_ICON";
+    static readonly STATE: string = "STATE_ICON";
 }
 
 @jsonObject
-export class C4ExperienceIcon {
+export class C4DisplayIcon {
     @jsonMember id: string
     @jsonMember type: string
-    @jsonMember iconstate: string
+    @jsonMember iconstate?: string
     @jsonArrayMember(String) sizes?: string[]
-    @jsonMember relpath: string
+    @jsonMember relpath?: string
+    @jsonMember transurl?: string
+    @jsonMember({
+        deserializer: value => {
+            if (typeof (value) == "string") {
+                return Number.parseFloat(value)
+            } else {
+                return value;
+            }
+        }
+    }) proxybindingid?: number
 
     toXml(iconPathTemplate: string) {
-        if (this.type == "State_Icon") {
+        if (this.type == DisplayIconType.STATE) {
             let state = builder.create("state").root()
             state.att("id", this.iconstate.toString())   
             this.sizes.forEach((size) => {
@@ -39,8 +48,8 @@ export class C4ExperienceIcon {
         }
     }
 
-    static fromXml(obj): C4ExperienceIcon {
-        let a = new C4ExperienceIcon();
+    static fromXml(obj): C4DisplayIcon {
+        let a = new C4DisplayIcon();
 
         a.id = obj.id;
         a.type = obj.type;

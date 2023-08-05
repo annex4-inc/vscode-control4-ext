@@ -1,24 +1,24 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { ExperienceIconNode } from './ExperienceIconNode';
+import { DisplayIconNode } from './DisplayIconNode';
 import { StringNode } from './StringNode';
 import { TreeNodeProvider } from './TreeNodeProvider';
-import { C4ExperienceIcon } from '../../control4/C4ExperienceIcon'
+import { C4DisplayIcon } from '../../control4/capabilities/C4DisplayIcon'
 import { TypedJSON } from 'typedjson';
 
-export class ExperienceIconNodeProvider extends TreeNodeProvider<ExperienceIconNode> {
+export class DisplayIconNodeProvider extends TreeNodeProvider<DisplayIconNode> {
   private _componentPath: string
 
   constructor(workspaceRoot: string) {
     super(workspaceRoot);
 
-    this._componentPath = path.join(workspaceRoot, 'components', 'experienceicons.c4c');
+    this._componentPath = path.join(workspaceRoot, 'components', 'displayicons.c4c');
 
-    this.watchFile('experienceicons.c4c');
+    this.watchFile('displayicons.c4c');
   }
 
-  getChildren(element?: ExperienceIconNode): Thenable<ExperienceIconNode[]> {
+  getChildren(element?: DisplayIconNode): Thenable<DisplayIconNode[]> {
     if (!this.workspaceRoot) {
       vscode.window.showInformationMessage('No dependency in empty workspace');
       return Promise.resolve([]);
@@ -47,15 +47,15 @@ export class ExperienceIconNodeProvider extends TreeNodeProvider<ExperienceIconN
     }
   }
 
-  getComponent(experienceicons: C4ExperienceIcon): ExperienceIconNode {
+  getComponent(displayicons: C4DisplayIcon): DisplayIconNode {
     try {
-      return new ExperienceIconNode(experienceicons.id, experienceicons);
+      return new DisplayIconNode(displayicons.id, displayicons);
     } catch (err) {
       console.log(err)
     }
   }
 
   resolveTypes(components) {
-    return TypedJSON.parseAsArray<C4ExperienceIcon>(components, C4ExperienceIcon);
+    return TypedJSON.parseAsArray<C4DisplayIcon>(components, C4DisplayIcon);
   }
 }
