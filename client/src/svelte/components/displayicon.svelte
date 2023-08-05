@@ -14,11 +14,11 @@
     type: "Default Icon",
     iconstate: "",
     sizes: [
-      "70",
-      "90",
-      "300",
-      "512",
-      "1024"
+      70,
+      90,
+      300,
+      512,
+      1024
     ],
     relpath: "icons/device",
     proxybindingid: 5001,
@@ -91,7 +91,8 @@
     }
 
     if (item != "" && item != null && item != undefined) {
-      value.sizes = [...value.sizes, item.target.value];
+      //Have to coerce new size entry to number or it creates a text entry.
+      value.sizes = [...value.sizes, Number(item.target.value)];
 
       item.target.value = "";
     }

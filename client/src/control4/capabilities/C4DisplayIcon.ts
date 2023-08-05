@@ -12,13 +12,13 @@ export class C4DisplayIcon {
     @jsonMember id: string
     @jsonMember type: string
     @jsonMember iconstate?: string
-    @jsonArrayMember(String) sizes?: string[]
+    @jsonArrayMember(Number) sizes?: number[]
     @jsonMember relpath?: string
     @jsonMember transurl?: string
     @jsonMember({
         deserializer: value => {
             if (typeof (value) == "string") {
-                return Number.parseFloat(value)
+                return Number.parseInt(value)
             } else {
                 return value;
             }
@@ -28,7 +28,7 @@ export class C4DisplayIcon {
     toXml(iconPathTemplate: string) {
         if (this.type == DisplayIconType.STATE) {
             let state = builder.create("state").root()
-            state.att("id", this.iconstate.toString())   
+            state.att("id", this.iconstate)   
             this.sizes.forEach((size) => {
                 state.ele("Icon", {
                     height: size,

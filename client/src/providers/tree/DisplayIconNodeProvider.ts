@@ -35,7 +35,8 @@ export class DisplayIconNodeProvider extends TreeNodeProvider<DisplayIconNode> {
         for (var i = 0; i < element.data.sizes.length; i++) {
           let e = element.data.sizes[i]
 
-          params.push(new StringNode(e));
+          //params.push(new StringNode(e));
+          params.push(e);
         }
 
         return Promise.resolve(params);

@@ -8,7 +8,7 @@ import { C4Action } from './C4Action'
 import { C4Command } from './C4Command'
 import { C4UI } from './C4UI'
 import { C4DisplayIcon } from './capabilities/C4DisplayIcon'
-
+import { C4NavigatorDisplayOptions, NavigatorDisplayOptionType } from './capabilities/C4NavigatorDisplayOptions'
 export {
     C4Action,
     C4Command,
@@ -19,5 +19,6 @@ export {
     C4Proxy,
     C4Parameter,
     C4UI,
-    C4DisplayIcon
+    C4DisplayIcon,
+    NavigatorDisplayOptionType
 }

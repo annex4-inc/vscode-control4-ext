@@ -28,7 +28,7 @@
           "type": "array",
           "description": "An array of image sizes",
           "items": {
-            "type": "string"
+            "type": "number"
           }
         },
         "relpath": {
@@ -38,7 +38,7 @@
         },
         "proxybindingid": {
           "description": "The Proxy Id for Nav Options",
-          "type": "integer"
+          "type": "number"
         },
         "transurl": {
           "description": "The relative path from the root dir to translations without leading or trailing /",
