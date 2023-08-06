@@ -5,13 +5,6 @@ import * as builder from 'xmlbuilder2';
 import { asInt, Driver } from '../driver';
 import { C4DisplayIcon, DisplayIconType } from './C4DisplayIcon';
 
-export class NavigatorDisplayOptionType {
-    static readonly DEFAULT: string = "DEFAULT_ICON";
-    static readonly STATE: string = "STATE_ICON";
-    static readonly PROXY: string = "PROXY_ID";
-    static readonly TRANSLATIONS_URL: string = "TRANSLATIONS_URL";
-}
-
 @jsonObject
 export class C4NavigatorDisplayOptions {
     @jsonMember
@@ -26,6 +19,9 @@ export class C4NavigatorDisplayOptions {
     @jsonMember
     icon_path_template?: string
 
+    @jsonMember
+    translation_url_template?: string
+
     @jsonArrayMember(C4DisplayIcon)
     default_icons?: C4DisplayIcon[]
 
@@ -35,10 +31,10 @@ export class C4NavigatorDisplayOptions {
     constructor(options?, driverfilename?) {
         if (options) {
             let proxyId = options.find(function (ei) {
-                return ei.type === NavigatorDisplayOptionType.PROXY;
+                return ei.type === DisplayIconType.PROXY;
             });
             let transURL = options.find(function (tu) {
-                return tu.type === NavigatorDisplayOptionType.TRANSLATIONS_URL;
+                return tu.type === DisplayIconType.TRANSLATIONS_URL;
             });
             let stateIcos = options.filter(function (states) {
                 return states.type === DisplayIconType.STATE;
@@ -46,12 +42,13 @@ export class C4NavigatorDisplayOptions {
             let defaultIcos = options.filter(function (dflt) {
                 return dflt.type === DisplayIconType.DEFAULT;
             });
-            this.proxybindingid = proxyId || 5001;
-            this.translation_url = transURL;
+            this.proxybindingid = proxyId.proxybindingid || 5001;
             this.default_icons = defaultIcos;
             this.state_icons = stateIcos;
             this.driver_filename = driverfilename || "";
             this.icon_path_template = "controller://driver/%DRIVERFILENAME%/%RELPATH%/%ICONFILENAME%%SIZE%.png".replace(/%DRIVERFILENAME%/gi, this.driver_filename);
+            this.translation_url = transURL;
+            this.translation_url_template = "controller://driver/%DRIVERFILENAME%/%RELPATH%";
         }
     }
 

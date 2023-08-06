@@ -5,6 +5,8 @@ import * as builder from 'xmlbuilder2';
 export class DisplayIconType {
     static readonly DEFAULT: string = "DEFAULT_ICON";
     static readonly STATE: string = "STATE_ICON";
+    static readonly PROXY: string = "PROXY_ID";
+    static readonly TRANSLATIONS_URL: string = "TRANSLATIONS_URL";
 }
 
 @jsonObject
