@@ -233,30 +233,30 @@
             },
             {
                 "command": "control4.viewDisplayIcon",
-                "title": "View Icon/Nav Option",
+                "title": "View Nav Disp Option",
                 "enablement": "view == control4-displayicons"
             },
             {
                 "command": "control4.refreshDisplayIcons",
-                "title": "Refresh Icons/Nav Options",
+                "title": "Refresh Nav Disp Options",
                 "icon": "$(extensions-refresh)",
                 "enablement": "view == control4-displayicons"
             },
             {
                 "command": "control4.addDisplayIcon",
-                "title": "Add Icon/Nav Option",
+                "title": "Add Nav Disp Option",
                 "icon": "$(add)",
                 "enablement": "view == control4-displayicons"
             },
             {
                 "command": "control4.moveDisplayIconUp",
-                "title": "Move Icon/Nav Option Up",
+                "title": "Move Nav Disp Option Up",
                 "icon": "$(chevron-up)",
                 "enablement": "view == control4-displayicons"
             },
             {
                 "command": "control4.moveDisplayIconDown",
-                "title": "Move Icon/Nav Option Down",
+                "title": "Move Nav Disp Option Down",
                 "icon": "$(chevron-down)",
                 "enablement": "view == control4-displayicons"
             },
@@ -287,7 +287,7 @@
             },
             {
                 "command": "remove.C4DisplayIcon",
-                "title": "Remove Display Icon",
+                "title": "Remove Nav Disp Option",
                 "enablement": "view == control4-displayicons"
             }
         ],
@@ -421,16 +421,16 @@
                 },
                 {
                     "command": "remove.C4DisplayIcon",
-                    "when": "view == control4-displayicons && viewItem == dispicon"
+                    "when": "view == control4-displayicons  && viewItem == displayicon"
                 },
                 {
                     "command": "control4.moveDisplayIconUp",
-                    "when": "view == control4-displayicons && viewItem == dispicon",
+                    "when": "view == control4-displayicons && viewItem == displayicon",
                     "group": "inline"
                 },
                 {
                     "command": "control4.moveDisplayIconDown",
-                    "when": "view == control4-displayicons && viewItem == dispicon",
+                    "when": "view == control4-displayicons && viewItem == displayicon",
                     "group": "inline"
                 }
             ]
@@ -513,7 +513,7 @@
                 },
                 {
                     "id": "control4-displayicons",
-                    "name": "Display Icons/Nav Options"
+                    "name": "Navigator Display Options"
                 }
             ]
         },
@@ -553,7 +553,7 @@
             },
             {
                 "view": "control4-displayicons",
-                "contents": "No icons / nav options found.\n[Add Icon / Nav Option](command:control4.addDisplayIcon)"
+                "contents": "No Nav Display Options found.\n[Add Nav Display Option](command:control4.addDisplayIcon)"
             }
         ],
         "jsonValidation": [

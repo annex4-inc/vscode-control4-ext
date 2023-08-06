@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "JSON schema for Control4 default and display icons",
   "definitions": {
-    "displayicons": {
+    "displayicon": {
       "additionalProperties": false,
       "type": "object",
       "properties": {
@@ -55,7 +55,7 @@
   "items": {
     "allOf": [
       {
-        "$ref": "#/definitions/displayicons"
+        "$ref": "#/definitions/displayicon"
       }
     ]
   }

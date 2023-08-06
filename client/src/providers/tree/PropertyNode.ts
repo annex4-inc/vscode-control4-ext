@@ -3,11 +3,58 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { TreeNode } from './TreeNode';
-import { C4Property } from '../../control4'
+import { C4Property } from '../../control4';
+import { PropertyType } from '../../control4/C4Property';
 
 export class PropertyNode extends TreeNode<C4Property> {
     constructor(name: string, property: C4Property) {
-        super(name, property, "symbol-property", property.items && property.items.length == 0);
+
+        let navIcon = "symbol-property";
+        
+        switch (property.type) {
+            case PropertyType.STRING:
+                navIcon = "symbol-string";
+                break;
+            case PropertyType.LIST:
+                navIcon = "list-ordered";
+                break;
+            case PropertyType.RANGED_INTEGER:
+            case PropertyType.RANGED_FLOAT:
+                navIcon = "symbol-numeric";
+                break;
+            case PropertyType.PASSWORD:
+                navIcon = "symbol-namespace";
+                break;
+            case PropertyType.LABEL:
+                navIcon = "tag";
+                break;
+            case PropertyType.SCROLL:
+                navIcon = "arrow-both";
+                break;
+            case PropertyType.TRACK:
+                navIcon = "arrow-both";
+                break;
+            case PropertyType.DEVICE:
+                navIcon = "desktop-download";
+                break;
+            case PropertyType.COLOR:
+                navIcon = "symbol-color";
+                break;
+            case PropertyType.DYNAMIC:
+                navIcon = "list-tree";
+                break;
+            case PropertyType.LINK:
+                navIcon = "link";
+                break;
+            case PropertyType.CUSTOM:
+                navIcon = "symbol-class";
+                break;
+            default:
+                navIcon = "symbol-property";
+                break;
+        }
+
+        super(name, property, navIcon, property.items && property.items.length == 0);
 
         this.description = property.type;
         this.tooltip = property.type;

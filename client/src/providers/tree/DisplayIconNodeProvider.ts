@@ -35,8 +35,7 @@ export class DisplayIconNodeProvider extends TreeNodeProvider<DisplayIconNode> {
         for (var i = 0; i < element.data.sizes.length; i++) {
           let e = element.data.sizes[i]
 
-          //params.push(new StringNode(e));
-          params.push(e);
+          params.push(new StringNode(e.toString()));
         }
 
         return Promise.resolve(params);
@@ -48,9 +47,9 @@ export class DisplayIconNodeProvider extends TreeNodeProvider<DisplayIconNode> {
     }
   }
 
-  getComponent(displayicons: C4DisplayIcon): DisplayIconNode {
+  getComponent(displayicon: C4DisplayIcon): DisplayIconNode {
     try {
-      return new DisplayIconNode(displayicons.id, displayicons);
+      return new DisplayIconNode(displayicon.id, displayicon);
     } catch (err) {
       console.log(err)
     }
