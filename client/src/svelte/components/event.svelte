@@ -11,11 +11,14 @@
     sort_order: 0
   };
 
+  let first;
   let formType = vscode.getState()?.formType || "create";
   let value = vscode.getState()?.value || d;
 
   onMount(async () => {
     console.log("MOUNT");
+
+    first.focus()
 
     let state = vscode.getState();
 
@@ -68,13 +71,16 @@
         return;
     }
   });
+
+  function submit() {
+    vscode.postMessage({ type: formType, value: value })
+  }
 </script>
 
 <main>
-  <div class="page">
+  <form class="page" on:submit|preventDefault={submit}>
     <label for="id">ID</label>
-    <!-- svelte-ignore a11y-autofocus -->
-    <input autofocus name="id" type="number" bind:value={value.id} />
+    <input bind:this={first} name="id" type="number" bind:value={value.id} />
     <label for="name">Name</label>
     <input name="name" type="text" bind:value={value.name} />
     <label for="description">Description</label>
@@ -82,10 +88,10 @@
     <label for="sort_order">Sort Order</label>
     <input name="sort_order" type="number" bind:value={value.sort_order} />
 
-    <button on:click|preventDefault={vscode.postMessage({ type: formType, value: value })}
-      >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
-    >
-  </div>
+    <button type="submit">
+      {formType.charAt(0).toUpperCase() + formType.slice(1)}
+    </button>
+  </form>
 </main>
 
 <style>

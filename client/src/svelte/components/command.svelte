@@ -26,13 +26,14 @@
 
   import { onDestroy, onMount } from "svelte";
 
+  let first;
   let formType = vscode.getState()?.formType || "create";
   let value = vscode.getState()?.value || d;
 
   onMount(async () => {
     let state = vscode.getState();
 
-    console.log(state);
+    first.focus();
 
     if (state && state.value) {
       value = state.value;
@@ -80,8 +81,6 @@
   });
 
   function addParameter() {
-    console.log("ADD PARAMETER");
-
     if (value.params == undefined) {
       value.params = [
         {
@@ -106,12 +105,12 @@
   }
 
   function removeParameter(parameter) {
-    console.log("REMOVE PARAMETER");
-
-    for (let i = value.params.length - 1; i >= 0; i--) {
-      if (value.params[i] == parameter) {
-        value.params = value.params.filter((p) => p !== parameter);
-      }
+    if (value.params) {
+      for (let i = value.params.length - 1; i >= 0; i--) {
+        if (value.params[i] == parameter) {
+          value.params = value.params.filter((p) => p !== parameter);
+        }
+      }  
     }
   }
 
@@ -150,13 +149,16 @@
       delete param.items;
     }
   }
+
+  function submit() {
+    vscode.postMessage({ type: formType, value: value })
+  }
 </script>
 
 <main>
-  <div class="page-wide">
+  <form class="page-wide" on:submit|preventDefault={submit}>
     <label for="name">Name</label>
-    <!-- svelte-ignore a11y-autofocus -->
-    <input autofocus name="name" type="text" bind:value={value.name} />
+    <input bind:this={first} name="name" type="text" bind:value={value.name} />
 
     <label for="description">Description</label>
     <input name="description" type="text" bind:value={value.description} />
@@ -164,7 +166,7 @@
     <div class="toolbar">
       <label for="params">Parameters</label>
       <div class="actions">
-        <button class="round-button" on:click={addParameter}>+</button>
+        <button type="button" class="round-button" on:click|preventDefault={addParameter}>+</button>
       </div>
     </div>
 
@@ -176,100 +178,99 @@
         <th>Default</th>
         <th style="width:32px">Actions</th>
       </tr>
-      {#each value.params as param}
-        <tr>
-          <td>
-            <input name="name" type="text" bind:value={param.name} />
-          </td>
+      {#if value.params}
+        {#each value.params as param}
+          <tr>
+            <td>
+              <input name="name" type="text" bind:value={param.name} />
+            </td>
 
-          <td>
-            <!-- svelte-ignore a11y-no-onchange -->
-            <select
-              name="type"
-              bind:value={param.type}
-              on:input={validate(param)}
-              on:change={validate(param)}
-            >
-              {#each properties as p}
-                <option value={p.value} selected={param.type == p.value}>
-                  {p.name}
-                </option>
-              {/each}
-            </select>
-          </td>
-
-          <td>
-            <!-- If the type is a list the default and items need to be shown-->
-            {#if param.type == "LIST" && param.items}
-              <ul>
-                {#each param.items as item}
-                  <li class="list-item">
-                    <input type="text" group={param.items} bind:value={item} />
-                    <button on:click={removeItem(param, item)}>Remove</button>
-                  </li>
-                {/each}
-                <li class="list-item">
-                  <input
-                    type="text"
-                    group={param.items}
-                    on:change={(event) => addItem(param, event)}
-                  />
-                </li>
-              </ul>
-            {:else if param.type == "RANGED_INTEGER" || param.type == "RANGED_FLOAT"}
-              <div class="range">
-                <div>
-                  <label for="minimum">Minimum</label>
-                  <input
-                    name="minimum"
-                    type="number"
-                    bind:value={param.minimum}
-                  />
-                </div>
-
-                <div class="maximum">
-                  <label for="maximum">Maximum</label>
-                  <input
-                    name="maximum"
-                    type="number"
-                    bind:value={param.maximum}
-                  />
-                </div>
-              </div>
-            {/if}
-          </td>
-          <td>
-            {#if param.type == "LIST" && param.items}
-              <select name="type" bind:value={param.default}>
-                {#each param.items as p}
-                  <option value={p} selected={p == param.default}>
-                    {p}
+            <td>
+              <!-- svelte-ignore a11y-no-onchange -->
+              <select
+                name="type"
+                bind:value={param.type}
+                on:input={validate(param)}
+                on:change={validate(param)}
+              >
+                {#each properties as p}
+                  <option value={p.value} selected={param.type == p.value}>
+                    {p.name}
                   </option>
                 {/each}
               </select>
-            {:else if param.type == "RANGED_INTEGER" || param.type == "RANGED_FLOAT"}
-              <input
-                name="default"
-                type="number"
-                min={param.minimum}
-                max={param.maximum}
-                bind:value={param.default}
-              />
-            {:else}
-              <input name="default" type="text" bind:value={param.default} />
-            {/if}
-          </td>
-          <td class="align-center">
-            <button class="round-button" on:click={removeParameter(param)}>-</button>
-          </td>
-        </tr>
-      {/each}
+            </td>
+
+            <td>
+              <!-- If the type is a list the default and items need to be shown-->
+              {#if param.type == "LIST" && param.items}
+                <ul>
+                  {#each param.items as item}
+                    <li class="list-item">
+                      <input type="text" group={param.items} bind:value={item} />
+                      <button type="button" on:click|preventDefault={removeItem(param, item)}>Remove</button>
+                    </li>
+                  {/each}
+                  <li class="list-item">
+                    <input
+                      type="text"
+                      group={param.items}
+                      on:change={(event) => addItem(param, event)}
+                    />
+                  </li>
+                </ul>
+              {:else if param.type == "RANGED_INTEGER" || param.type == "RANGED_FLOAT"}
+                <div class="range">
+                  <div>
+                    <label for="minimum">Minimum</label>
+                    <input
+                      name="minimum"
+                      type="number"
+                      bind:value={param.minimum}
+                    />
+                  </div>
+
+                  <div class="maximum">
+                    <label for="maximum">Maximum</label>
+                    <input
+                      name="maximum"
+                      type="number"
+                      bind:value={param.maximum}
+                    />
+                  </div>
+                </div>
+              {/if}
+            </td>
+            <td>
+              {#if param.type == "LIST" && param.items}
+                <select name="type" bind:value={param.default}>
+                  {#each param.items as p}
+                    <option value={p} selected={p == param.default}>
+                      {p}
+                    </option>
+                  {/each}
+                </select>
+              {:else if param.type == "RANGED_INTEGER" || param.type == "RANGED_FLOAT"}
+                <input
+                  name="default"
+                  type="number"
+                  min={param.minimum}
+                  max={param.maximum}
+                  bind:value={param.default}
+                />
+              {:else}
+                <input name="default" type="text" bind:value={param.default} />
+              {/if}
+            </td>
+            <td class="align-center">
+              <button type="button" class="round-button" on:click|preventDefault={removeParameter(param)}>-</button>
+            </td>
+          </tr>
+        {/each}
+      {/if}
     </table>
-    <button
-      on:click|preventDefault={vscode.postMessage({
-        type: formType,
-        value: value,
-      })}>{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
-    >
-  </div>
+    <button type="submit">
+      {formType.charAt(0).toUpperCase() + formType.slice(1)}
+    </button>
+  </form>
 </main>

@@ -2,15 +2,17 @@ import * as vscode from 'vscode';
 
 export class ComponentPanel {
   public _viewType: string;
+  public _panel: vscode.WebviewPanel;
+  public _disposed: boolean;
 
   public readonly _svelteScript: string;
-  public readonly _panel: vscode.WebviewPanel;
   public readonly _extensionUri: vscode.Uri;
 
   public _disposables: vscode.Disposable[] = [];
 
   public dispose() {
-    this._panel.dispose();
+    this._panel = null;
+    this._disposed = true;
 
     while (this._disposables.length) {
       const x = this._disposables.pop();
@@ -85,21 +87,20 @@ export class ComponentPanel {
     this._panel.webview.html = this._getHtmlForWebview(webview);
   }
 
-  public subscribe() {
-    console.log("SUBSCRIBE ROOT")
-  }
-
   public constructor(panel: vscode.WebviewPanel, extensionUri: vscode.Uri, svelteScript: string) {
     this._panel = panel;
     this._extensionUri = extensionUri;
     this._svelteScript = svelteScript;
+    this._disposed = false;
 
     // Set the webview's initial html content
     this._update();
 
     // Listen for when the panel is disposed
     // This happens when the user closes the panel or when the panel is closed programatically
-    this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
+    this._panel.onDidDispose(() => {
+      this.dispose()
+    }, null, this._disposables);
 
     // Update the content based on view changes
     this._panel.onDidChangeViewState(
@@ -111,7 +112,5 @@ export class ComponentPanel {
       null,
       this._disposables
     );
-
-    this.subscribe();
   }
 }

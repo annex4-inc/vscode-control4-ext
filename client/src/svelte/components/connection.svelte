@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   //@ts-expect-error Automatically included by vscode
   const vscode = acquireVsCodeApi();
 
@@ -30,13 +30,16 @@
     {name: 'Video', value: 5 },
     {name: 'Audio', value: 6 },
     {name: 'Room', value: 7 },
-]
+  ]
 
+  let first;
   let formType = vscode.getState()?.formType || "create";
   let value = vscode.getState()?.value || d;
 
   onMount(async () => {
     let state = vscode.getState();
+
+    first.focus()
 
     if (state && state.value) {
       value = state.value;
@@ -100,7 +103,7 @@
     }
   }
 
-  function removeItem(item: any) {
+  function removeItem(item) {
     if (value.classes == undefined) {
       value.classes = [];
     }
@@ -111,13 +114,16 @@
       }
     }
   }
+
+  function submit() {
+    vscode.postMessage({ type: formType, value: value })
+  }
 </script>
 
 <main>
-  <div class="page">
+  <form class="page" on:submit|preventDefault={submit}>
     <label for="id">ID</label>
-    <!-- svelte-ignore a11y-autofocus -->
-    <input autofocus name="id" type="number" bind:value={value.id} />
+    <input bind:this={first} name="id" type="number" bind:value={value.id} />
 
     <label for="connectionname">Connection Name</label>
     <input name="connectionname" type="text" bind:value={value.connectionname} />
@@ -149,7 +155,7 @@
       {#each value.classes as cls}
         <li class="list-item">
           <input type="text" group={value.classes} bind:value={cls.classname} />
-          <button on:click={(event) => removeItem(cls)}>Remove</button>
+          <button type="button" on:click|preventDefault={(event) => removeItem(cls)}>Remove</button>
         </li>
       {/each}
       <li class="list-item">
@@ -160,10 +166,10 @@
     <label for="consumer">Consumer</label>
     <input type="checkbox" bind:checked={value.consumer} />
 
-    <button on:click|preventDefault={vscode.postMessage({ type: formType, value: value })}
-      >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
-    >
-  </div>
+    <button type="submit">
+      {formType.charAt(0).toUpperCase() + formType.slice(1)}
+    </button>
+  </form>
 </main>
 
 <style>

@@ -9,13 +9,14 @@
     command: "",
   };
 
+  let first;
   let formType = vscode.getState()?.formType || "create";
   let value = vscode.getState()?.value || d;
 
   onMount(async () => {
-    console.log("MOUNT");
-
     let state = vscode.getState();
+
+    first.focus();
 
     if (state && state.value) {
       value = state.value;
@@ -29,6 +30,10 @@
   onDestroy(() => {
     console.log("Destroy");
   });
+
+  function submit() {
+    vscode.postMessage({ type: formType, value: value })
+  }
 
   $: {
     vscode.setState({ value, formType });
@@ -69,17 +74,16 @@
 </script>
 
 <main>
-  <div class="page">
+  <form class="page" on:submit|preventDefault={submit} >
     <label for="name">Name</label>
-    <!-- svelte-ignore a11y-autofocus -->
-    <input autofocus name="name" type="text" bind:value={value.name} />
+    <input bind:this={first} name="name" type="text" bind:value={value.name} />
     <label for="command">Command</label>
     <input name="command" type="text" bind:value={value.command} />
 
-    <button on:click|preventDefault={vscode.postMessage({ type: formType, value: value })}
-      >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
-    >
-  </div>
+    <button type="submit">
+      {formType.charAt(0).toUpperCase() + formType.slice(1)}
+    </button>
+  </form>
 </main>
 
 <style>

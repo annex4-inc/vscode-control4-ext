@@ -88,8 +88,6 @@
 
   function addItem(event) {
     try {
-      event.preventDefault();
-
       if (value.items == undefined) {
         value.items = [];
       }
@@ -164,9 +162,8 @@
 </script>
 
 <main>
-  <div class="page" >
+  <form class="page" on:submit|preventDefault={submit}>
     <label for="name">Name</label>
-    <!-- svelte-ignore a11y-autofocus -->
     <input bind:this={first} name="name" type="text" bind:value={value.name} />
 
     <!-- Selection for value Type -->
@@ -186,11 +183,11 @@
         {#each value.items as item}
           <li class="list-item">
             <input type="text" group={value.items} bind:value={item} />
-            <button on:click={removeItem(item)}>Remove</button>
+            <button type="button" on:click|preventDefault={removeItem(item)}>Remove</button>
           </li>
         {/each}
         <li class="list-item">
-          <input type="text" group={value.items} on:change={addItem} />
+          <input type="text" group={value.items} on:change|preventDefault={addItem} />
         </li>
       </ul>
       <label for="default">Default</label>
@@ -235,6 +232,8 @@
     <input type="checkbox" bind:checked={value.multiselect} />
     {/if}
 
-    <button on:click={submit}>{formType.charAt(0).toUpperCase() + formType.slice(1)}</button>
-  </div>
+    <button type="submit">
+      {formType.charAt(0).toUpperCase() + formType.slice(1)}
+    </button>
+  </form>
 </main>
