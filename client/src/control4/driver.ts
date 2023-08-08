@@ -25,6 +25,7 @@ import { TypedJSON } from 'typedjson';
 import { C4UI } from '.';
 import C4InterfaceIcon from './interface/C4InterfaceIcon';
 import { C4NavigatorDisplayOptions } from './capabilities/C4NavigatorDisplayOptions';
+import { C4NavigatorDisplayOption } from './capabilities/C4NavigatorDisplayOption';
 import { C4WebviewUrl } from './capabilities/C4WebviewUrl';
 import { C4State } from './C4State';
 
@@ -239,7 +240,7 @@ export class Driver {
         } else if (this.displayicons.length > 0) {
             var nCapabilities = root.ele("capabilities");
             //let displayicons = nCapabilities.ele("navigator_display_option");
-            let dOptions = new C4NavigatorDisplayOptions(this.displayicons, this.filename);
+            let dOptions = new C4NavigatorDisplayOption(this.displayicons, this.filename);
             nCapabilities.import(dOptions.toXml())
 /*             this.displayicons.forEach((i: C4DisplayIcon) => {
                 displayicons.import(i.toXml())

@@ -4,6 +4,10 @@ import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
 import { asInt, Driver } from '../driver';
 import { C4DisplayIcon, DisplayIconType } from './C4DisplayIcon';
+import C4InterfaceIcon from '../interface/C4InterfaceIcon';
+import C4StateIcon from './C4StateIcon';
+import { C4DisplayIcons } from './C4DisplayIcons';
+import { C4State } from '../C4State';
 
 @jsonObject
 export class C4NavigatorDisplayOptions {
@@ -28,21 +32,28 @@ export class C4NavigatorDisplayOptions {
     @jsonArrayMember(C4DisplayIcon)
     state_icons?: C4DisplayIcon[]
 
+    @jsonMember(C4InterfaceIcon)
+    states?: {[key:string]: C4InterfaceIcon[]}
+
     constructor(options?, driverfilename?) {
         if (options) {
-            let proxyId = options.find(function (ei) {
-                return ei.type === DisplayIconType.PROXY;
+            let proxyId = options.find(function (p) {
+                return p.type === DisplayIconType.PROXY;
             });
-            let transURL = options.find(function (tu) {
-                return tu.type === DisplayIconType.TRANSLATIONS_URL;
+            let transURL = options.find(function (t) {
+                return t.type === DisplayIconType.TRANSLATIONS_URL;
             });
-            let stateIcos = options.filter(function (states) {
-                return states.type === DisplayIconType.STATE;
+            let stateIcos = options.filter(function (s) {
+                return s.type === DisplayIconType.STATE;
             });
-            let defaultIcos = options.filter(function (dflt) {
-                return dflt.type === DisplayIconType.DEFAULT;
+            let defaultIcos = options.filter(function (d) {
+                return d.type === DisplayIconType.DEFAULT;
             });
-            this.proxybindingid = proxyId.proxybindingid || 5001;
+
+            let dispIcons = C4DisplayIcons.fromInterface(defaultIcos, stateIcos);
+
+            this.proxybindingid = 5001;
+            //this.proxybindingid = proxyId.proxybindingid || 5001;
             this.default_icons = defaultIcos;
             this.state_icons = stateIcos;
             this.driver_filename = driverfilename || "";
