@@ -59,11 +59,33 @@ local myEnvironmentValue = [[ENV.my_environment_variable]]
 - [x] Add support for OpenSSL driver encryption instead of using DriverPackager.exe
 - [x] Add support for a build option which injects C4:AllowExecute(true)
 - [x] Add support for sending Lua script to driver
-- [ ] Add support for hooks in the language server
 - [ ] Add support for driver templates
-- [ ] Add support for C4:url userdata information
-    - [ ] Add completion information for Get, Post, Put, Custom, etc
-    - [ ] Add completion information for the OnDone callback function
+- [ ] Add support for contextual suggestions for connections, properties, events, commands, actions, etc.
+
+### These features have now been branched into the Lua LSP [addon](https://github.com/annex4-inc/lua-addon-control4): 
+- [x] Add support for hooks in the language server
+- [x] Add support for C4:url userdata information
+    - [x] Add completion information for Get, Post, Put, Custom, etc
+    - [x] Add completion information for the OnDone callback function
+
+### Templates
+- [ ] Television
+- [ ] Light
+- [ ] Camera
+- [ ] Thermostat
+- [ ] Amplifier
+- [ ] AV Switch
+- [ ] Security Panel
+- [ ] Media Player
+- [ ] Media Service
+- [ ] Blind
+- [ ] UI Button
+- [ ] Pool
+- [ ] Fan
+- [ ] Other (Combo)
+- [ ] Contact
+- [ ] Relay
+- [ ] Keypad
 
 ## Unit Testing
 * I recommend using [Busted](https://lunarmodules.github.io/busted/) for unit testing. If you're using Windows you can use  WSL to install it following the instructions below. I've included instructions to install the 'bit' library as well as this is included in the Control4 Lua sandbox.
