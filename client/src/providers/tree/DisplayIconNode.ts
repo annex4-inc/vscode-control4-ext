@@ -3,7 +3,8 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { TreeNode } from './TreeNode';
-import { C4DisplayIcon, DisplayIconType } from '../../control4/capabilities/C4DisplayIcon'
+import { C4DisplayIcon } from '../../control4/capabilities/C4DisplayIcon'
+import { NavDisplayOptionType } from '../../control4/capabilities/C4NavigatorDisplayOption';
 
 export class DisplayIconNode extends TreeNode<C4DisplayIcon> {
     constructor(name: string, displayicon: C4DisplayIcon) {
@@ -11,10 +12,10 @@ export class DisplayIconNode extends TreeNode<C4DisplayIcon> {
         let navIcon = "";
         
         switch (displayicon.type) {
-            case DisplayIconType.PROXY:
+            case NavDisplayOptionType.PROXY:
                 navIcon = "type-hierarchy";
                 break;
-            case DisplayIconType.TRANSLATIONS_URL:
+            case NavDisplayOptionType.TRANSLATIONS_URL:
                 navIcon = "globe";
                 break;
             default:

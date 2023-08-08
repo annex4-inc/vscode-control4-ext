@@ -53,7 +53,6 @@ export class C4NavigatorDisplayOptions {
             let dispIcons = C4DisplayIcons.fromInterface(defaultIcos, stateIcos);
 
             this.proxybindingid = 5001;
-            //this.proxybindingid = proxyId.proxybindingid || 5001;
             this.default_icons = defaultIcos;
             this.state_icons = stateIcos;
             this.driver_filename = driverfilename || "";
