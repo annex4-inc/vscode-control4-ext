@@ -12,6 +12,12 @@ export class NavDisplayOptionType {
     static readonly TRANSLATIONS_URL: string = "TRANSLATIONS_URL";
 }
 
+export class C4PathTemplates {
+    static readonly C4ROOT_PATH: string = "controller://driver/%DRIVERFILENAME%/";
+    static readonly ICON_PATH: string = "%RELPATH%/%ICONFILENAME%%SIZE%.png";
+    static readonly TRANS_URL_PATH: string = "%RELPATH%";    
+}
+
 @jsonObject
 export class C4NavigatorDisplayOption {
     @jsonMember
@@ -23,14 +29,14 @@ export class C4NavigatorDisplayOption {
     @jsonMember
     display_icons?: C4DisplayIcons
 
-    constructor(options?, driverfilename?) {
-        if (options) {
-            // Can only be one ProxyId so if there are multiple entries only return the first result.
+    constructor(options?, driverfilename: string = "new-driver", isinterface: boolean = false) {
+        if (options && isinterface) {
+            // Can only be one ProxyBindingId so if there are multiple entries only return the first result.
             // TODO - This can certainly be improved to prevent multiple entries or change NavOpt structure in interface.
             let proxyId = options.find(function (p) {
                 return p.type === NavDisplayOptionType.PROXY;
             });
-            // Can only be one TransURL  so if there are multiple entries only return the first result.
+            // Can only be one Translation_URL  so if there are multiple entries only return the first result.
             let transURL = options.find(function (t) {
                 return t.type === NavDisplayOptionType.TRANSLATIONS_URL;
             });
@@ -43,10 +49,16 @@ export class C4NavigatorDisplayOption {
                 return d.type === NavDisplayOptionType.DEFAULT;
             });
 
+            let root = C4PathTemplates.C4ROOT_PATH.replace(/%DRIVERFILENAME%/gi, driverfilename);
+
             this.proxybindingid = (typeof proxyId === 'undefined') ? 5001 : proxyId.proxybindingid;
-            this.display_icons = new C4DisplayIcons(C4DisplayIcons.fromInterface(defaultIcos, stateIcos));
-            this.translation_url = (typeof transURL === 'undefined') ? undefined : transURL.transurl;
+            this.display_icons = new C4DisplayIcons(C4DisplayIcons.fromInterface(defaultIcos, stateIcos, root + C4PathTemplates.ICON_PATH));
+            this.translation_url = (typeof transURL === 'undefined') ? undefined : root + transURL.translation_url;
             
+        } else if (options) {
+            this.proxybindingid = options.proxybindingid;
+            this.display_icons = new C4DisplayIcons(options.display_icons);
+            this.translation_url = options.translation_url;
         }
     }
 

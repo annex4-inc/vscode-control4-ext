@@ -5,6 +5,7 @@ import * as builder from 'xmlbuilder2';
 import { Driver } from '../driver';
 import C4InterfaceIcon from '../interface/C4InterfaceIcon';
 import C4StateIcon from './C4StateIcon';
+import { C4PathTemplates } from './C4NavigatorDisplayOption';
 
 @jsonObject
 export class C4DisplayIcons {
@@ -83,16 +84,17 @@ export class C4DisplayIcons {
         return option
     }
 
-    static fromInterface(default_icons ?: any, state_icons ?: any): C4DisplayIcons {
+    static fromInterface(default_icons ?: any, state_icons ?: any, path: string = C4PathTemplates.C4ROOT_PATH + C4PathTemplates.ICON_PATH): C4DisplayIcons {
         let display_icons = new C4DisplayIcons();
             display_icons.states = {}
 
         display_icons.defaults = default_icons.map((d) => {
-            return <C4InterfaceIcon>{ path: d.relpath, sizes: d.sizes }
+            let dpath = path.replace(/%RELPATH%/gi, d.relpath || "icons/device").replace(/%ICONFILENAME%/gi, d.id);
+            return <C4InterfaceIcon>{ path: dpath, sizes: d.sizes }
         })
 
         state_icons.forEach((s) => {
-            let state = C4StateIcon.fromInterface(s)
+            let state = C4StateIcon.fromInterface(s, path)
             display_icons.states[state.Id] = state.Icons
         })
 

@@ -179,7 +179,7 @@
     {#if value.type == "DEFAULT_ICON" || value.type == "STATE_ICON"}  
       <div class="icons">
         <label for="id">Icon Filename</label>
-        <Tooltip title="Enter the file name without the size or extension. File should be a PNG">
+        <Tooltip title="Enter the file name without the size or extension. File should be a PNG. If there is an '_' between filename and size add it here.">
           <div class="icon">
             <i class="codicon codicon-info"></i>
           </div>

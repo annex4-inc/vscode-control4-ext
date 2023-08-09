@@ -40,7 +40,7 @@
           "description": "The Proxy Id for Nav Options",
           "type": "number"
         },
-        "transurl": {
+        "translation_url": {
           "description": "The relative path from the root dir to translations without leading or trailing /",
           "examples": ["translations"],
           "type": "string"

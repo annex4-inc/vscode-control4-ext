@@ -239,7 +239,7 @@ export class Driver {
             })
         } else if (this.displayicons.length > 0) {
             var nCapabilities = root.ele("capabilities");
-            let dOptions = new C4NavigatorDisplayOption(this.displayicons, this.filename);
+            let dOptions = new C4NavigatorDisplayOption(this.displayicons, this.filename, true);
             nCapabilities.import(dOptions.toXml())
 
         }

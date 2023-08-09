@@ -16,7 +16,7 @@ export class C4DisplayIcon {
     @jsonMember iconstate?: string
     @jsonArrayMember(Number) sizes?: number[]
     @jsonMember relpath?: string
-    @jsonMember transurl?: string
+    @jsonMember translation_url?: string
     @jsonMember({
         deserializer: value => {
             if (typeof (value) == "string") {
