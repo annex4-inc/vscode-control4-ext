@@ -22,7 +22,7 @@
     ],
     relpath: "icons/device",
     proxybindingid: 5001,
-    transurl: "translations",
+    translation_url: "translations",
   };
 
   import { onDestroy, onMount } from "svelte";
@@ -127,19 +127,19 @@
     switch (v.type) {
       case "DEFAULT_ICON":
         delete v.proxybindingid;
-        delete v.transurl;
+        delete v.translation_url;
         delete v.iconstate;
         break;
       case "STATE_ICON":
         delete v.proxybindingid;
-        delete v.transurl;
+        delete v.translation_url;
         break;
       case "PROXY_ID":
         v.id = "Proxy Id";
         delete v.iconstate;
         delete v.sizes;
         delete v.relpath;
-        delete v.transurl;
+        delete v.translation_url;
         break;
       case "TRANSLATIONS_URL":
         v.id = "Translations URL";
@@ -178,7 +178,7 @@
     <!-- If the type is an icon the we need ico fields -->
     {#if value.type == "DEFAULT_ICON" || value.type == "STATE_ICON"}  
       <div class="icons">
-        <label for="id">Icon Name</label>
+        <label for="id">Icon Filename</label>
         <Tooltip title="Enter the file name without the size or extension. File should be a PNG">
           <div class="icon">
             <i class="codicon codicon-info"></i>
@@ -200,7 +200,7 @@
       <input autofocus name="proxybindingid" type="number" bind:value={value.proxybindingid} />
     {:else if value.type == "TRANSLATIONS_URL"}
       <div class="icons">
-        <label for="transurl">Relative Translation URL Path</label>
+        <label for="translation_url">Relative Translation URL Path</label>
         <Tooltip title="Enter the the path to translation url relative to root without leading or trailing /. Default: translations">
           <div class="icon">
             <i class="codicon codicon-info"></i>
@@ -208,7 +208,7 @@
         </Tooltip>
       </div>
       <!-- svelte-ignore a11y-autofocus -->
-      <input autofocus name="transurl" type="text" bind:value={value.transurl} />
+      <input autofocus name="translation_url" type="text" bind:value={value.translation_url} />
     {/if}
     <!-- Selection for value Type -->
     <div class="icons">
