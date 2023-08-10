@@ -1,24 +1,24 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
 import * as path from 'path';
-import { DisplayIconNode } from './DisplayIconNode';
+import { NavDisplayOptionNode } from './NavDisplayOptionNode';
 import { StringNode } from './StringNode';
 import { TreeNodeProvider } from './TreeNodeProvider';
-import { C4DisplayIcon } from '../../control4/capabilities/C4DisplayIcon'
+import { C4NavDisplayOption } from '../../control4/capabilities/C4NavDisplayOption'
 import { TypedJSON } from 'typedjson';
 
-export class DisplayIconNodeProvider extends TreeNodeProvider<DisplayIconNode> {
+export class NavDisplayOptionNodeProvider extends TreeNodeProvider<NavDisplayOptionNode> {
   private _componentPath: string
 
   constructor(workspaceRoot: string) {
     super(workspaceRoot);
 
-    this._componentPath = path.join(workspaceRoot, 'components', 'displayicons.c4c');
+    this._componentPath = path.join(workspaceRoot, 'components', 'navdisplayoptions.c4c');
 
-    this.watchFile('displayicons.c4c');
+    this.watchFile('navdisplayoptions.c4c');
   }
 
-  getChildren(element?: DisplayIconNode): Thenable<DisplayIconNode[]> {
+  getChildren(element?: NavDisplayOptionNode): Thenable<NavDisplayOptionNode[]> {
     if (!this.workspaceRoot) {
       vscode.window.showInformationMessage('No dependency in empty workspace');
       return Promise.resolve([]);
@@ -47,15 +47,15 @@ export class DisplayIconNodeProvider extends TreeNodeProvider<DisplayIconNode> {
     }
   }
 
-  getComponent(displayicon: C4DisplayIcon): DisplayIconNode {
+  getComponent(navdisplayoption: C4NavDisplayOption): NavDisplayOptionNode {
     try {
-      return new DisplayIconNode(displayicon.id, displayicon);
+      return new NavDisplayOptionNode(navdisplayoption.id, navdisplayoption);
     } catch (err) {
       console.log(err)
     }
   }
 
   resolveTypes(components) {
-    return TypedJSON.parseAsArray<C4DisplayIcon>(components, C4DisplayIcon);
+    return TypedJSON.parseAsArray<C4NavDisplayOption>(components, C4NavDisplayOption);
   }
 }

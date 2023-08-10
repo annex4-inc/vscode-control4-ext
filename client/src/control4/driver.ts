@@ -9,7 +9,7 @@ import { C4Event } from './C4Event';
 import { C4Action } from './C4Action';
 import { C4Command } from './C4Command';
 import { C4Property } from './C4Property';
-import { C4DisplayIcon } from './capabilities/C4DisplayIcon';
+import { C4NavDisplayOption } from './capabilities/C4NavDisplayOption';
 import { C4Connection, C4ConnectionClass, Direction } from './C4Connection';
 import { C4Proxy, C4ProxyClass, C4ProxyType } from './C4Proxy';
 
@@ -18,13 +18,12 @@ import CommandsResource from '../components/commands';
 import ConnectionsResource from '../components/connections';
 import EventsResource from '../components/events';
 import PropertiesResource from '../components/properties';
-import DisplayIconsResource from '../components/displayicons';
+import NavDisplayOptionsResource from '../components/navdisplayoptions';
 import ProxiesResource from '../components/proxies';
 
 import { TypedJSON } from 'typedjson';
 import { C4UI } from '.';
 import C4InterfaceIcon from './interface/C4InterfaceIcon';
-import { C4NavigatorDisplayOptions } from './capabilities/C4NavigatorDisplayOptions';
 import { C4NavigatorDisplayOption } from './capabilities/C4NavigatorDisplayOption';
 import { C4WebviewUrl } from './capabilities/C4WebviewUrl';
 import { C4State } from './C4State';
@@ -85,7 +84,7 @@ export class Driver {
     proxies: C4Proxy[]
     states: C4State[]
     UI: C4UI[]
-    displayicons: C4DisplayIcon[]
+    navdisplayoptions: C4NavDisplayOption[]
     capabilities: any
 
     serialsettings: string
@@ -122,7 +121,7 @@ export class Driver {
         this.UI = [];
         this.capabilities = {};
         this.states = [];
-        this.displayicons = [];
+        this.navdisplayoptions = [];
     }
 
     /**
@@ -134,7 +133,7 @@ export class Driver {
         this.properties = await PropertiesResource.Reload();
         this.connections = await ConnectionsResource.Reload();
         this.events = await EventsResource.Reload();
-        this.displayicons = await DisplayIconsResource.Reload();
+        this.navdisplayoptions = await NavDisplayOptionsResource.Reload();
         this.proxies = await ProxiesResource.Reload();
     }
 
@@ -237,9 +236,9 @@ export class Driver {
                     nCapabilities.ele(key).txt(this.capabilities[key]);
                 }
             })
-        } else if (this.displayicons.length > 0) {
+        } else if (this.navdisplayoptions.length > 0) {
             var nCapabilities = root.ele("capabilities");
-            let dOptions = new C4NavigatorDisplayOption(this.displayicons, this.filename, true);
+            let dOptions = new C4NavigatorDisplayOption(this.navdisplayoptions, this.filename, true);
             nCapabilities.import(dOptions.toXml())
 
         }
@@ -369,15 +368,6 @@ export class Driver {
             })
         }
 
-        if (this.displayicons.length > 0) {
-            var nCapabilities = root.ele("capabilities2");
-            let displayicons = nCapabilities.ele("display_icons");
-
-/*             this.displayicons.forEach((i: C4DisplayIcon) => {
-                displayicons.import(i.toXml())
-            }) */
-        }
-
         return root.end({ prettyPrint: true, headless: true })
     }
 
@@ -409,12 +399,6 @@ export class Driver {
                             return new C4WebviewUrl(url)
                         })
                     }
-
-/*                     if (driver.capabilities.navigator_display_option) {
-                        driver.capabilities.navigator_display_option = driver.capabilities.navigator_display_option.map((option) => {
-                            return new C4NavigatorDisplayOption(option)
-                        })
-                    } */
                 }
 
                 await driver.load()
@@ -505,11 +489,18 @@ export class Driver {
             Object.keys(devicedata.capabilities).forEach(function (key: string) {
                 let value: any = devicedata.capabilities[key];
 
+                // TODO - Implement import from XML
                 if (key == "navigator_display_option") {
                     if (!d.capabilities[key]) {
                         d.capabilities[key] = [];
                     }
+/*                     const navdisplayoptions = this.CleanXmlArray(devicedata.config.navdisplayoptions, "navdisplayoption")
 
+                    if (navdisplayoptions) {
+                        navdisplayoptions.forEach(function (i) {
+                            d.navdisplayoptions.push(C4NavDisplayOption.fromXml(i))
+                        })
+                    } */
                     // d.capabilities[key].push(C4NavigatorDisplayOption.fromXml(value))
                 } else if (key == "web_view_url") {
                     if (!d.capabilities[key]) {
@@ -578,16 +569,6 @@ export class Driver {
                 })
             }
         }
-
-/*         if (devicedata.config.displayicons) {
-            const displayicons = this.CleanXmlArray(devicedata.config.displayicons, "displayicon")
-
-            if (displayicons) {
-                displayicons.forEach(function (i) {
-                    d.displayicons.push(C4DisplayIcon.fromXml(i))
-                })
-            }
-        } */
 
         if (devicedata.proxies) {
             const proxies = this.CleanXmlArray(devicedata.proxies, "proxy")

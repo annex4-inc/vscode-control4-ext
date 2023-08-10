@@ -1,16 +1,10 @@
 import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
-
-export class DisplayIconType {
-    static readonly DEFAULT: string = "DEFAULT_ICON";
-    static readonly STATE: string = "STATE_ICON";
-    static readonly PROXY: string = "PROXY_ID";
-    static readonly TRANSLATIONS_URL: string = "TRANSLATIONS_URL";
-}
+import { NavDisplayOptionType } from './C4NavigatorDisplayOption';
 
 @jsonObject
-export class C4DisplayIcon {
+export class C4NavDisplayOption {
     @jsonMember id: string
     @jsonMember type: string
     @jsonMember iconstate?: string
@@ -28,7 +22,7 @@ export class C4DisplayIcon {
     }) proxybindingid?: number
 
     toXml(iconPathTemplate: string) {
-        if (this.type == DisplayIconType.STATE) {
+        if (this.type == NavDisplayOptionType.STATE) {
             let state = builder.create("state").root()
             state.att("id", this.iconstate)   
             this.sizes.forEach((size) => {
@@ -50,8 +44,8 @@ export class C4DisplayIcon {
         }
     }
 
-    static fromXml(obj): C4DisplayIcon {
-        let a = new C4DisplayIcon();
+    static fromXml(obj): C4NavDisplayOption {
+        let a = new C4NavDisplayOption();
 
         a.id = obj.id;
         a.type = obj.type;

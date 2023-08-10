@@ -2,7 +2,7 @@
   //@ts-expect-error Automatically included by vscode
   const vscode = acquireVsCodeApi();
 
-  const displayicons = [
+  const navdisplayoptions = [
     { name: "Default Icon", value: "DEFAULT_ICON" },
     { name: "State Icon", value: "STATE_ICON" },
     { name: "Proxy Binding Id", value: "PROXY_ID" },
@@ -221,7 +221,7 @@
     </div>
     <!-- svelte-ignore a11y-no-onchange -->
     <select name="type" bind:value={value.type} on:input={validate} on:change="{validate}">
-      {#each displayicons as i}
+      {#each navdisplayoptions as i}
         <option value={i.value} selected={value.type == i.value}>
           {i.name}
         </option>
