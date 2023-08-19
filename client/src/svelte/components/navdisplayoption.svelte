@@ -190,7 +190,7 @@
     {:else if value.type == "PROXY_ID"}
       <div class="icons">
         <label for="proxybindingid">Proxy Id</label>
-        <Tooltip title="Enter the Navigator Options Proxy Id. Default: 5001">
+        <Tooltip title="Enter the Navigator Options Proxy Id. Default: 5001. Only one ID allowed.">
           <div class="icon">
             <i class="codicon codicon-info"></i>
           </div>

@@ -54,7 +54,7 @@ export class C4NavDisplayOption {
         if(obj.proxybindingid) {
             let p = new C4NavDisplayOption();
             p.proxybindingid = obj.proxybindingid;
-            p.id = "Proxy Id";
+            p.id = "Proxy Binding Id";
             p.type = NavDisplayOptionType.PROXY;
             alloptions[0] = p;
         } else {
