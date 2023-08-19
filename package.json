@@ -508,12 +508,12 @@
                     "name": "Connections"
                 },
                 {
-                    "id": "control4-ui",
-                    "name": "UI"
-                },
-                {
                     "id": "control4-navdisplayoptions",
                     "name": "Navigator Display Options"
+                },
+                {
+                    "id": "control4-ui",
+                    "name": "UI"
                 }
             ]
         },
