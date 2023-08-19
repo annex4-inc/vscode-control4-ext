@@ -43,7 +43,7 @@ export default class C4InterfaceIcon {
         return node;
     }
 
-    static fromXml(obj): C4InterfaceIcon {
+    static fromXml(obj, sizes?: number[]): C4InterfaceIcon {
         let i = new C4InterfaceIcon()
 
         i.height = asInt(obj["@height"])

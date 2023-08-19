@@ -2,7 +2,7 @@
 import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
-import { Driver } from '../driver';
+import { Driver, asInt } from '../driver';
 import C4InterfaceIcon from '../interface/C4InterfaceIcon';
 import C4StateIcon from './C4StateIcon';
 import { C4PathTemplates } from './C4NavigatorDisplayOption';
@@ -72,7 +72,7 @@ export class C4DisplayIcons {
         let defaults = Driver.CleanXmlArray(value.display_icons, "Icon")
         let states = Driver.CleanXmlArray(value.display_icons, "state")
 
-        option.defaults = defaults.map((d) => {
+        option.defaults = defaults.map((d) => {           
             return C4InterfaceIcon.fromXml(d)
         })
 
@@ -97,6 +97,24 @@ export class C4DisplayIcons {
             let state = C4StateIcon.fromInterface(s, path)
             display_icons.states[state.Id] = state.Icons
         })
+
+        // Explore allowing multiple single State Icon entries with same state value.
+/*         let countList: {count:number} = state_icons.reduce(function(p, c){
+            p[c.iconstate] = (p[c.iconstate] || 0) + 1;
+            return p;
+          }, {});
+        console.log(countList);
+        Object.entries(countList).forEach(([key, count]) => {
+            if (count > 1) {
+                console.log(key, count);
+            }
+            
+        });
+        let result = state_icons.filter(function(obj){
+            return countList[obj.iconstate] > 1;
+          });
+
+        console.log(result); */
 
         return display_icons
     }

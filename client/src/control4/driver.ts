@@ -494,14 +494,15 @@ export class Driver {
                     if (!d.capabilities[key]) {
                         d.capabilities[key] = [];
                     }
-/*                     const navdisplayoptions = this.CleanXmlArray(devicedata.config.navdisplayoptions, "navdisplayoption")
+                    let c4navdisplayoptions = C4NavigatorDisplayOption.fromXml(value);
+                    d.navdisplayoptions = C4NavDisplayOption.toInterface(c4navdisplayoptions);
+/*                     const navdisplayoptions = this.CleanXmlArray(devicedata.capabilities.navigator_display_option, "navigator_display_option")
 
                     if (navdisplayoptions) {
                         navdisplayoptions.forEach(function (i) {
                             d.navdisplayoptions.push(C4NavDisplayOption.fromXml(i))
                         })
                     } */
-                    // d.capabilities[key].push(C4NavigatorDisplayOption.fromXml(value))
                 } else if (key == "web_view_url") {
                     if (!d.capabilities[key]) {
                         d.capabilities[key] = [];

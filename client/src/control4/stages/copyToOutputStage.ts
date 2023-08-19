@@ -41,7 +41,8 @@ export default class CopyToOutputStage implements BuildStage {
         if (result) {
             vscode.window.showInformationMessage(`"${this.pkg.name}.c4z" built at ${new Date().toLocaleTimeString()}`, { modal: false }, "Open Folder", "Ok").then(selection => {
                 if (selection === "Open Folder") {
-                  vscode.env.openExternal(vscode.Uri.file(result));
+                  // Open the target folder instead of the file iteself.
+                  vscode.env.openExternal(vscode.Uri.file(/^.*[\/\\]/.exec(result)[0]));
                 }
             });
 

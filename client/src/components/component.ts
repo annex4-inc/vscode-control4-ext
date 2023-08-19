@@ -70,7 +70,7 @@ export class Component {
     let items = this.data;
 
     for (let i = 0; i < items.length; i++) {
-      if (isMatch(items[i], item)) {
+      if ((isMatch(items[i], item)) || (isMatch(items[i].iconstate, item.iconstate))) {
         return false;
       }
     }

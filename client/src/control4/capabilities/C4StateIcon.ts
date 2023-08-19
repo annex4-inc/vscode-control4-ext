@@ -44,4 +44,5 @@ export default class C4StateIcon {
 
         return i;
     }
+
 }

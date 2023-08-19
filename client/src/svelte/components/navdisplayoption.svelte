@@ -231,7 +231,7 @@
     {#if value.type == "STATE_ICON"}
       <div class="icons">
         <label for="iconstate">Icon State</label>
-        <Tooltip title="Enter the state ID for this icon.">
+        <Tooltip title="Enter the state ID for this icon. Cannot have duplicates.">
           <div class="icon">
             <i class="codicon codicon-info"></i>
           </div>
