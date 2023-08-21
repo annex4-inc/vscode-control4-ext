@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   //@ts-expect-error Automatically included by vscode
   const vscode = acquireVsCodeApi();
 
@@ -30,8 +30,9 @@
     {name: 'Video', value: 5 },
     {name: 'Audio', value: 6 },
     {name: 'Room', value: 7 },
-]
+  ]
 
+  let first;
   let formType = vscode.getState()?.formType || "create";
   let value = vscode.getState()?.value || d;
   // Allows us to bind to the new input element in the list array and set focus to it once created for better UX
@@ -39,6 +40,8 @@
 
   onMount(async () => {
     let state = vscode.getState();
+
+    first.focus()
 
     if (state && state.value) {
       value = state.value;
@@ -103,7 +106,7 @@
     newInput.focus();
   }
 
-  function removeItem(item: any) {
+  function removeItem(item) {
     if (value.classes == undefined) {
       value.classes = [];
     }
@@ -116,15 +119,15 @@
   }
 
   function submit() {
-    vscode.postMessage({ type: formType, value: value });
+    vscode.postMessage({ type: formType, value: value })
   }
 </script>
 
 <main>
   <form class="page" on:submit|preventDefault={submit}>
+  <form class="page" on:submit|preventDefault={submit}>
     <label for="id">ID</label>
-    <!-- svelte-ignore a11y-autofocus -->
-    <input autofocus name="id" type="number" bind:value={value.id} />
+    <input bind:this={first} name="id" type="number" bind:value={value.id} />
 
     <label for="connectionname">Connection Name</label>
     <input name="connectionname" type="text" bind:value={value.connectionname} />
@@ -156,7 +159,7 @@
       {#each value.classes as cls}
         <li class="list-item">
           <input type="text" group={value.classes} bind:value={cls.classname} />
-          <button type="button" on:click={(event) => removeItem(cls)}>Remove</button>
+          <button type="button" on:click|preventDefault={(event) => removeItem(cls)}>Remove</button>
         </li>
       {/each}
       <li class="list-item">
@@ -167,9 +170,9 @@
     <label for="consumer">Consumer</label>
     <input type="checkbox" bind:checked={value.consumer} />
 
-    <button on:click|preventDefault={submit}
-      >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
-    >
+    <button type="submit">
+      {formType.charAt(0).toUpperCase() + formType.slice(1)}
+    </button>
   </form>
 </main>
 

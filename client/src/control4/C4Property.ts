@@ -2,6 +2,7 @@
 import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
+import { asBoolean } from './driver';
 
 export class PropertyType {
     static readonly STRING: string = "STRING";
@@ -23,6 +24,15 @@ export class PropertyType {
 export class C4Property {
     @jsonMember name: string
     @jsonMember type: string
+    @jsonMember({
+        deserializer: value => {
+            if (typeof(value) == "string") {
+                return asBoolean(value)
+            } else {
+                return value
+            }
+        }
+    }) multiselect?: boolean
     @jsonMember({
         deserializer: value => {
             if (typeof (value) == "string") {
@@ -92,6 +102,7 @@ export class C4Property {
         a.name = obj.name;
         a.type = obj.type;
         a.items = obj.items ? obj.items.item : undefined;
+        a.multiselect = obj.multiselect != null ? asBoolean(obj.multiselect) : false;
         a.default = typeof (obj.default) == "object" ? "" : obj.default;
         a.maximum = typeof (obj.maximum) == 'string' ? Number.parseInt(obj.maximum) : obj.maximum;
         a.minimum = typeof (obj.minimum) == 'string' ? Number.parseInt(obj.minimum) : obj.minimum;

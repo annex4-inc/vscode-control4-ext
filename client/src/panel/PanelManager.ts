@@ -39,6 +39,10 @@ export class PanelManager {
     this.currentPanel._panel.webview.onDidReceiveMessage(async (message) => {
       switch (message.type) {
         case 'update':
+          if (this.currentEntity == undefined) {
+            this.currentEntity = message.value;
+          }
+
           let updated = await this.resource.Update(this.currentEntity, message.value);
 
           if (!updated) {
@@ -79,29 +83,30 @@ export class PanelManager {
     this.subscribe();
   }
 
-  public createOrShow(extensionUri: vscode.Uri, entity: any) {
-    if (!this.currentPanel) {
+  public create(extensionUri: vscode.Uri, entity: any) {
+    if (!this.currentPanel || this.currentPanel._disposed) {
       let panel = PanelManager.createPanel(extensionUri, `control4.${this.type.toLocaleLowerCase()}`)
 
       this.currentPanel = new ComponentPanel(panel, extensionUri, this.script);
 
       this.subscribe();
     }
+  }
+  
+  public createOrShow(extensionUri: vscode.Uri, entity: any) {
+    this.create(extensionUri, entity);
+
+    this.currentPanel._panel.reveal(vscode.ViewColumn.One);
 
     try {
-      if (this.currentPanel) {
-        // Always reveal the panel in column one
-        this.currentPanel._panel.reveal(vscode.ViewColumn.One);
-        
-        if (entity == null) {
-          this.currentPanel._panel.title = `Create ${this.type}`;
-          this.currentPanel._panel.webview.postMessage({ command: "create" })
-        } else {
-          this.currentEntity = entity;
+      if (entity == null) {
+        this.currentPanel._panel.title = `Create ${this.type}`;
+        this.currentPanel._panel.webview.postMessage({ command: "create" })
+      } else {
+        this.currentEntity = entity;
 
-          this.currentPanel._panel.title = `Update ${this.type}`;
-          this.currentPanel._panel.webview.postMessage({ command: "update", value: entity })
-        }
+        this.currentPanel._panel.title = `Update ${this.type}`;
+        this.currentPanel._panel.webview.postMessage({ command: "update", value: entity })
       }
     } catch (err) {
       console.log(err);

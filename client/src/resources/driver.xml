@@ -1,12 +1,12 @@
 <devicedata>
-    <copyright>Copyright 2020 [COMPANY]</copyright>
+    <copyright>Copyright 2023 [COMPANY]</copyright>
     <creator>[AUTHOR]</creator>
     <manufacturer>[MANUFACTURER]</manufacturer>
     <name>[NAME]</name>
     <model>[MODEL]</model>
     <created>10/21/2019 12:44:00 AM</created>
     <modified>9/21/2020 4:04:32 PM</modified>
-    <version>0066</version>
+    <version>1</version>
     <small>devices_sm\c4.gif</small>
     <large>devices_lg\c4.gif</large>
     <control>lua_gen</control>

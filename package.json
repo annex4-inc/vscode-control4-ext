@@ -30,8 +30,6 @@
         "onLanguage:json",
         "onCommand:control4.package",
         "onCommand:control4.release",
-        "onCommand:control4.create",
-        "onCommand:control4.import",
         "onCustomEditor:control4.property"
     ],
     "main": "./client/out/extension",

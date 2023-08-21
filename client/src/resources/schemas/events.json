@@ -13,6 +13,10 @@
         },
         "description": {
           "type": "string"
+        },
+        "sort_order": {
+          "description": "Accepts a zero based list and will display the commands in the order of the number included in each commands",
+          "type": "number"
         }
       },
       "required": [

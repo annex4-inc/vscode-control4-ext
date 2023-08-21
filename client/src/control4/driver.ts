@@ -23,10 +23,11 @@ import ProxiesResource from '../components/proxies';
 
 import { TypedJSON } from 'typedjson';
 import { C4UI } from '.';
-import C4InterfaceIcon from './interface/C4InterfaceIcon';
 import { C4NavigatorDisplayOption } from './capabilities/C4NavigatorDisplayOption';
 import { C4WebviewUrl } from './capabilities/C4WebviewUrl';
 import { C4State } from './C4State';
+import { C4Schedule } from './capabilities/C4Schedule';
+import { C4Tab } from './C4Tab';
 
 function getEnumKeyByEnumValue<T extends { [index: string]: string }>(myEnum: T, enumValue: string): keyof T | null {
     let keys = Object.keys(myEnum).filter(x => myEnum[x] == enumValue);
@@ -73,8 +74,10 @@ export class Driver {
     control: string
     controlmethod: ControlMethod
     driver: string
+
     agent: boolean
     combo: boolean
+    jit: boolean
 
     connections: C4Connection[]
     properties: C4Property[]
@@ -83,13 +86,22 @@ export class Driver {
     events: C4Event[]
     proxies: C4Proxy[]
     states: C4State[]
+    tabs: C4Tab[]
     UI: C4UI[]
     navdisplayoptions: C4NavDisplayOption[]
     capabilities: any
 
     serialsettings: string
     notification_attachment_provider: Boolean
+    schedule_default: C4Schedule
     notification_attachments: NotificationAttachment[]
+
+    /*
+    auto_update: boolean
+    minimum_auto_update_version: number
+    minimum_os_version: string
+    force_auto_update: false
+    */
 
     encrypted: boolean
 
@@ -111,6 +123,7 @@ export class Driver {
         this.documentation = "www/documentation.html";
         this.agent = false;
         this.combo = false;
+        this.jit = true;
 
         this.connections = [];
         this.properties = [];
@@ -185,8 +198,7 @@ export class Driver {
         }
 
         root.ele("control").txt(this.control);
-        //@ts-ignore
-        root.ele("controlmethod").txt(this.controlmethod);
+        root.ele("controlmethod").txt(this.controlmethod as string);
         root.ele("driver").txt(this.driver);
 
         if (this.proxies && this.proxies.length > 0) {
@@ -214,8 +226,9 @@ export class Driver {
                 } else if (key == "web_view_url") {
                     value.forEach((url : C4WebviewUrl) => {
                         nCapabilities.import(url.toXml())
-
                     })
+                } else if (key == "schedule_default") {
+                    nCapabilities.import((value as C4Schedule).toXml())
                 } else if (typeof (value) == "object") {
                     if (value.attributes) {
                         if (typeof (value.value) == "object") {
@@ -331,11 +344,11 @@ export class Driver {
 
         var config = root.ele("config");
 
-        if (this.encrypted) {
-            config.ele("script", { file: "driver.lua", encryption: "2" });
-        } else {
-            config.ele("script", { file: "driver.lua" });
-        }
+        config.ele("script", {
+            ...(this.jit && { jit: "1"}),
+            ...(this.encrypted && { encryption: "2"}),
+            file: "driver.lua"
+        })
 
         if (this.serialsettings) {
             config.ele("serial_settings").txt(this.serialsettings)
@@ -343,6 +356,14 @@ export class Driver {
 
         // Documentation is mandatory, even if empty
         config.ele("documentation", { file: this.documentation })
+
+        if (this.tabs && this.tabs.length > 0) {
+            let tabs = config.ele("tabs");
+            
+            this.tabs.forEach((t: C4Tab) => {
+                tabs.import(t.toXml())
+            })
+        }
 
         if (this.commands && this.commands.length > 0) {
             let commands = config.ele("commands");
@@ -392,12 +413,22 @@ export class Driver {
                         return new C4State(state);
                     })
                 }
+
+                if (driver.tabs) {
+                    driver.tabs = driver.tabs.map((tab) => {
+                        return new C4Tab(tab)
+                    })
+                }
                 
                 if (driver.capabilities) {
                     if (driver.capabilities.web_view_url) {
                         driver.capabilities.web_view_url = driver.capabilities.web_view_url.map((url) => {
                             return new C4WebviewUrl(url)
                         })
+                    }
+
+                    if (driver.capabilities.schedule_default) {
+                        driver.capabilities.schedule_default = new C4Schedule(driver.capabilities.schedule_default)
                     }
                 }
 
@@ -477,8 +508,8 @@ export class Driver {
         d.manufacturer = devicedata.manufacturer
         d.name = devicedata.name
         d.model = devicedata.model
-        d.created = new Date(devicedata.created)
-        d.modified = new Date(devicedata.modified)
+        d.created = devicedata.created ? new Date(devicedata.created) : new Date();
+        d.modified = devicedata.modified ? new Date(devicedata.modified) : new Date();
         d.version = devicedata.version
         d.icon = icon
         d.control = devicedata.control
@@ -487,34 +518,46 @@ export class Driver {
 
         if (devicedata.capabilities) {
             Object.keys(devicedata.capabilities).forEach(function (key: string) {
-                let value: any = devicedata.capabilities[key];
+                try {
+                    let value: any = devicedata.capabilities[key];
 
                 // TODO - Implement import from XML
-                if (key == "navigator_display_option") {
-                    if (!d.capabilities[key]) {
-                        d.capabilities[key] = [];
-                    }
+                    if (key == "navigator_display_option") {
+                        if (!d.capabilities[key]) {
+                            d.capabilities[key] = [];
+                        }
                     let c4navdisplayoptions = C4NavigatorDisplayOption.fromXml(value);
                     d.navdisplayoptions = C4NavDisplayOption.toInterface(c4navdisplayoptions);
 /*                     const navdisplayoptions = this.CleanXmlArray(devicedata.capabilities.navigator_display_option, "navigator_display_option")
-
+    
                     if (navdisplayoptions) {
                         navdisplayoptions.forEach(function (i) {
-                            d.navdisplayoptions.push(C4NavDisplayOption.fromXml(i))
+                                d.navdisplayoptions.push(C4NavDisplayOption.fromXml(i))
                         })
                     } */
-                } else if (key == "web_view_url") {
-                    if (!d.capabilities[key]) {
-                        d.capabilities[key] = [];
+                    } else if (key == "web_view_url") {
+                        if (!d.capabilities[key]) {
+                            d.capabilities[key] = [];
+                        }
+    
+                        d.capabilities[key].push(C4WebviewUrl.fromXml(value))
+                    } else if (key == "schedule_default") {
+                        d.capabilities[key] = C4Schedule.fromXml(value)
+                    } else if (key == "UI") {
+                        d.UI.push(C4UI.fromXml(value));
+                    } else if (value && typeof(value) === "string") {
+                        if (value.match("[Tt][Rr][Uu][Ee]") || value.match("[Ff][Aa][Ll][Ss][Ee]")) {
+                            d.capabilities[key] = asBoolean(value);
+                        } else {
+                            d.capabilities[key] = value
+                        }
+                    } else if (value && typeof(value) === "object") {
+                        d.capabilities[key] = "";
+                    } else {
+                        d.capabilities[key] = value;
                     }
-
-                    d.capabilities[key].push(C4WebviewUrl.fromXml(value))
-                } else if (key == "UI") {
-                    d.UI.push(C4UI.fromXml(value));
-                } else if (value && (value.match("[Tt][Rr][Uu][Ee]") || value.match("[Ff][Aa][Ll][Ss][Ee]"))) {
-                    d.capabilities[key] = asBoolean(value);
-                } else {
-                    d.capabilities[key] = value;
+                } catch (err: any) {
+                    throw new Error(`Failed to parse ${key}`)
                 }
             });
         }
@@ -571,6 +614,20 @@ export class Driver {
             }
         }
 
+        if (devicedata.config.tabs) {
+            const tabs = this.CleanXmlArray(devicedata.config.tabs, "tab")
+
+            if (tabs) {
+                tabs.forEach(function (t) {
+                    try {
+                        t.tabs.push(C4Tab.fromXml(t))
+                    } catch (err) {
+                        console.log(err.message)
+                    }
+                })
+            }
+        }
+
         if (devicedata.proxies) {
             const proxies = this.CleanXmlArray(devicedata.proxies, "proxy")
 
@@ -589,10 +646,10 @@ export class Driver {
     }
 }
 
-export const asInt = function (v) {
+export const asInt = function (v: string) {
     return typeof (v) == "string" ? Number.parseInt(v) : v
 }
 
-export const asBoolean = function (v) {
-    return v ? v.toLowerCase() == "true" : v
+export const asBoolean = function (v: string): boolean {
+    return typeof (v) == "string" ? v.toLowerCase() == "true" : v
 }

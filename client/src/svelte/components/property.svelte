@@ -29,15 +29,16 @@
 
   import { onDestroy, onMount } from "svelte";
 
+  let first;
   let formType = vscode.getState()?.formType || "create";
   let value = vscode.getState()?.value || d;
   // Allows us to bind to the new input element in the list array and set focus to it once created for better UX
   let newInput;
 
   onMount(async () => {
-    console.log("MOUNT");
-
     let state = vscode.getState();
+
+    first.focus();
 
     console.log(state);
 
@@ -87,15 +88,22 @@
   });
 
   function addItem(event) {
-    if (value.items == undefined) {
-      value.items = [];
+    try {
+      if (value.items == undefined) {
+        value.items = [];
+      }
+
+      if (event != "" && event != null && event != undefined) {
+        // Reconstruct the array so svelte updates the interface
+        value.items = [...value.items, event.target.value];
+
+        event.target.value = "";
+      }
+      newInput.focus();
+    } catch (err) {
+      console.log(err)
     }
 
-    if (event != "" && event != null && event != undefined) {
-      value.items = [...value.items, event.target.value];
-
-      event.target.value = "";
-    }
     newInput.focus();
   }
 
@@ -112,6 +120,8 @@
   }
 
   function submit() {
+    console.log("Submit!")
+
     let v = {};
 
     Object.assign(v, value);
@@ -164,8 +174,7 @@
 <main>
   <form class="page" on:submit|preventDefault={submit}>
     <label for="name">Name</label>
-    <!-- svelte-ignore a11y-autofocus -->
-    <input autofocus name="name" type="text" bind:value={value.name} />
+    <input bind:this={first} name="name" type="text" bind:value={value.name} />
 
     <!-- Selection for value Type -->
     <label for="type">Type</label>
@@ -179,12 +188,12 @@
     </select>
 
     <!-- If the type is a list the default and items need to be shown-->
-    {#if value.type == "LIST" && value.items}
+    {#if (value.type == "LIST" || value.type == "DEVICE_SELECTOR") && value.items}
       <ul>
         {#each value.items as item}
           <li class="list-item">
             <input type="text" group={value.items} bind:value={item} />
-            <button type="button" on:click={removeItem(item)}>Remove</button>
+            <button type="button" on:click|preventDefault={removeItem(item)}>Remove</button>
           </li>
         {/each}
         <li class="list-item">
@@ -245,8 +254,9 @@
       <input type="checkbox" bind:checked={value.readonly} />
     {/if}
 
-    <button on:click|preventDefault={submit}
-      >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
-    >
-    </form>
+
+    <button type="submit">
+      {formType.charAt(0).toUpperCase() + formType.slice(1)}
+    </button>
+  </form>
 </main>

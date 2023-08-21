@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   //@ts-expect-error Automatically included by vscode
   const vscode = acquireVsCodeApi();
 
@@ -9,13 +9,14 @@
     command: "",
   };
 
+  let first;
   let formType = vscode.getState()?.formType || "create";
   let value = vscode.getState()?.value || d;
 
   onMount(async () => {
-    console.log("MOUNT");
-
     let state = vscode.getState();
+
+    first.focus();
 
     if (state && state.value) {
       value = state.value;
@@ -29,6 +30,10 @@
   onDestroy(() => {
     console.log("Destroy");
   });
+
+  function submit() {
+    vscode.postMessage({ type: formType, value: value })
+  }
 
   $: {
     vscode.setState({ value, formType });
@@ -67,22 +72,18 @@
     }
   });
 
-  function submit() {
-    vscode.postMessage({ type: formType, value: value });
-  }
 </script>
 
 <main>
   <form class="page" on:submit|preventDefault={submit}>
     <label for="name">Name</label>
-    <!-- svelte-ignore a11y-autofocus -->
-    <input autofocus name="name" type="text" bind:value={value.name} />
+    <input bind:this={first} name="name" type="text" bind:value={value.name} />
     <label for="command">Command</label>
     <input name="command" type="text" bind:value={value.command} />
 
-    <button on:click|preventDefault={submit}
-      >{formType.charAt(0).toUpperCase() + formType.slice(1)}</button
-    >
+    <button type="submit">
+      {formType.charAt(0).toUpperCase() + formType.slice(1)}
+    </button>
   </form>
 </main>
 

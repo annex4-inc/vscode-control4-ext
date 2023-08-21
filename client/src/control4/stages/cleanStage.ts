@@ -1,6 +1,5 @@
 import { BuildStage } from '../builder';
 import * as fs from 'fs';
-import * as fse from 'fs-extra';
 
 export default class CleanStage implements BuildStage {
   Execute(_source: string, intermediate: string, _destination: string): Promise<any> {

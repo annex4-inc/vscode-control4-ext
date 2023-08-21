@@ -14,6 +14,7 @@ export class C4Event {
     }) id: number
     @jsonMember name: string
     @jsonMember description: string
+    @jsonMember sort_order?: number
 
     toXml() {
         let node = builder.create("event").root();

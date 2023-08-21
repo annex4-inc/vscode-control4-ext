@@ -7,10 +7,16 @@ import { ReadFileContents, WriteFileContents } from './utility';
 
 const fsPromises = fs.promises;
 
+export class Control4Package {
+    agent: boolean
+}
+
 export default class Package {
     name: string
     watcher: vscode.FileSystemWatcher
     textDocument: vscode.TextDocument
+
+    control4: Control4Package
 
     constructor() {
         /*this.watcher = vscode.workspace.createFileSystemWatcher("package.json", false, false, true);
