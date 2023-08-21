@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { WriteIfNotExists } from '../utility';
+import { WriteIfNotExists, HasKeySetTo } from '../utility';
 import isMatch from 'lodash.ismatch';
 import { NavDisplayOptionType } from '../control4/capabilities/C4NavigatorDisplayOption';
 
@@ -70,16 +70,14 @@ export class Component {
 
     let items = this.data;
 
-    // Disallow more than one ProxyID for NavDisplayOptions.
-    if ( isMatch(item.type, NavDisplayOptionType.PROXY) ) {
-      return false;
-    }
-
     for (let i = 0; i < items.length; i++) {
       // Disallow duplicate State_Icon iconstates in NavDisplayOptions
+      // Disallow more than one ProxyID for NavDisplayOptions.
       if ((isMatch(items[i], item)) || 
-          (isMatch(items[i].iconstate, item.iconstate)
-         )) {
+          (HasKeySetTo(items[i], 'iconstate', item.iconstate)) ||
+          (HasKeySetTo(items[i], 'type', NavDisplayOptionType.PROXY) &&
+            HasKeySetTo(item, 'type', NavDisplayOptionType.PROXY))
+            ) {
         return false;
       }
     }
