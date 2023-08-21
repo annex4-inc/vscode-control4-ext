@@ -238,7 +238,7 @@
         </Tooltip>
       </div>
       <!-- svelte-ignore a11y-autofocus -->
-      <input autofocus name="iconstate" type="text" bind:value={value.iconstate} />
+      <input name="iconstate" type="text" bind:value={value.iconstate} />
     {/if}
     <!-- If the type is an icon the we need size fields and relative icon path-->
     {#if value.type == "DEFAULT_ICON" || value.type == "STATE_ICON"} 

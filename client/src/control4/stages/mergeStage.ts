@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { BuildStage } from '../builder';
-import { ReadFileContents, WriteFileContents, FileExists } from '../../utility';
+import { ReadFileContents, WriteFileContents } from '../../utility';
 
 export default class MergeStage implements BuildStage {
     static r = new RegExp(/require\s*?[\[\[]*?['"(]+(.+)['"]+\)/, "gm");
@@ -11,7 +11,7 @@ export default class MergeStage implements BuildStage {
         return literal_string.replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, '\\$&');
     }
 
-    async FindModule(_source: string, module: string) {
+/*     async FindModule(_source: string, module: string) {
         let file = path.join(_source, ... module.split('.')) + ".lua"
         let exists = await FileExists(file);
 
@@ -20,9 +20,9 @@ export default class MergeStage implements BuildStage {
         }
 
         return file
-    }
+    } */
 
-    async GetModules(_source: string, module: string) {
+ /*    async GetModules(_source: string, module: string) {
         let fileDocument = await ReadFileContents(await this.FindModule(_source, module));
         let modules = [];
 
@@ -41,9 +41,9 @@ export default class MergeStage implements BuildStage {
         }
 
         return modules
-    }
+    } */
 
-    async Execute(_source: string, intermediate: string, _destination: string): Promise<any> {
+/*     async Execute(_source: string, intermediate: string, _destination: string): Promise<any> {
         let srcFile = path.join(intermediate, "driver.lua")
         let srcDocument = await ReadFileContents(srcFile);
         let modules = "";
@@ -66,6 +66,30 @@ export default class MergeStage implements BuildStage {
 
             if (fileDocument) {
                 modules = modules + `package.preload['${match[1]}'] = (function(...)\n ${fileDocument}\n end)\n`
+            }            
+        }
+
+        srcDocument = modules + srcDocument;
+
+        await WriteFileContents(srcFile, srcDocument);
+    } */
+
+    async Execute(_source: string, intermediate: string, _destination: string): Promise<any> {
+        let srcFile = path.join(intermediate, "driver.lua")
+        let srcDocument = await ReadFileContents(srcFile);
+
+        let r = new RegExp(/require\s*?[\[\[]*?['"(]+(.+)['"]+\)/, "gm");
+        let matches = srcDocument.matchAll(r);
+        let modules = ""
+
+        // Create module data for each require statement
+        for (const match of matches) {
+            let fileDocument = await ReadFileContents(path.join(_source, ... match[1].split('.')) + ".lua");
+
+            // Check to make sure the library exists, if not don't include it.
+            // This could be caused by a package using its own require statements in which case it should handle the package preload.
+            if (fileDocument) {
+                modules = modules + `package.preload['${match[1]}'] = (function(...)\n ${fileDocument} end)\n`
             }            
         }
 

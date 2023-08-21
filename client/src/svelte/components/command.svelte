@@ -270,7 +270,6 @@
             </td>
           </tr>
         {/each}
-      {/if}
     </table>
     <button type="submit">
       {formType.charAt(0).toUpperCase() + formType.slice(1)}

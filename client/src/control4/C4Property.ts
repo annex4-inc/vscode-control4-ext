@@ -67,15 +67,6 @@ export class C4Property {
     }) readonly: boolean
     @jsonArrayMember(String) items?: string[]
     @jsonMember password?: boolean
-    @jsonMember({
-        deserializer: value => {
-            if (typeof (value) == "string") {
-                return value.toLowerCase() == "true"
-            } else {
-                return value;
-            }
-        }
-    }) multiselect: boolean
 
     toXml() {
         let node = builder.create("property").root();
