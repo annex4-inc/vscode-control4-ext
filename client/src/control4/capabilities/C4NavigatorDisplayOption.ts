@@ -31,8 +31,7 @@ export class C4NavigatorDisplayOption {
 
     constructor(options?, driverfilename: string = "new-driver", isinterface: boolean = false) {
         if (options && isinterface) {
-            // Can only be one ProxyBindingId so if there are multiple entries only return the first result.
-            // TODO - This can certainly be improved to prevent multiple entries or change NavOpt structure in interface.
+            // [ ] Possibly change NavOpt structure in interface to match original Annex4 NavOptions structure.
             let proxyId = options.find(function (p) {
                 return p.type === NavDisplayOptionType.PROXY;
             });

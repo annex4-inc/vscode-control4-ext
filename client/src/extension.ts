@@ -163,7 +163,7 @@ export function activate(context: vscode.ExtensionContext) {
       t.resource.Reload();
     } ));
 
-    // TODO - When a node is removed from the tree the Webview panel should either be disposed or updated to another exisitng node.
+    // [ ] - When a node is removed from the tree the Webview panel should either be disposed or updated to another exisitng node.
     context.subscriptions.push(vscode.commands.registerCommand(`control4.remove${t.name}`, (n) => {
       t.resource.Delete(n);
       t.provider.refresh();

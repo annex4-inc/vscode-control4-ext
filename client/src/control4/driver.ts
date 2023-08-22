@@ -213,17 +213,18 @@ export class Driver {
             })
         }
 
-        if (Object.keys(this.capabilities).length == 0) {
+        if (Object.keys(this.capabilities).length > 0) {
             var nCapabilities = root.ele("capabilities");
+            
+            if (this.navdisplayoptions.length > 0) {
+                let dOptions = new C4NavigatorDisplayOption(this.navdisplayoptions, this.filename, true);
+                nCapabilities.import(dOptions.toXml());
+            }
 
             Object.keys(this.capabilities).forEach((key) => {
                 let value = this.capabilities[key]
 
-                if (key == "navigator_display_option") {
-/*                     value.forEach((option : C4NavigatorDisplayOption) => {
-                        nCapabilities.import(option.toXml())
-                    }); */
-                } else if (key == "web_view_url") {
+                if (key == "web_view_url") {
                     value.forEach((url : C4WebviewUrl) => {
                         nCapabilities.import(url.toXml())
                     })
@@ -252,7 +253,7 @@ export class Driver {
         } else if (this.navdisplayoptions.length > 0) {
             var nCapabilities = root.ele("capabilities");
             let dOptions = new C4NavigatorDisplayOption(this.navdisplayoptions, this.filename, true);
-            nCapabilities.import(dOptions.toXml())
+            nCapabilities.import(dOptions.toXml());
 
         }
 
@@ -521,25 +522,13 @@ export class Driver {
                 try {
                     let value: any = devicedata.capabilities[key];
 
-                // TODO - Implement import from XML
                     if (key == "navigator_display_option") {
-                        if (!d.capabilities[key]) {
-                            d.capabilities[key] = [];
-                        }
-                    let c4navdisplayoptions = C4NavigatorDisplayOption.fromXml(value);
-                    d.navdisplayoptions = C4NavDisplayOption.toInterface(c4navdisplayoptions);
-/*                     const navdisplayoptions = this.CleanXmlArray(devicedata.capabilities.navigator_display_option, "navigator_display_option")
-    
-                    if (navdisplayoptions) {
-                        navdisplayoptions.forEach(function (i) {
-                                d.navdisplayoptions.push(C4NavDisplayOption.fromXml(i))
-                        })
-                    } */
+                        let c4navdisplayoptions = C4NavigatorDisplayOption.fromXml(value);
+                        d.navdisplayoptions = C4NavDisplayOption.toInterface(c4navdisplayoptions);
                     } else if (key == "web_view_url") {
                         if (!d.capabilities[key]) {
                             d.capabilities[key] = [];
                         }
-    
                         d.capabilities[key].push(C4WebviewUrl.fromXml(value))
                     } else if (key == "schedule_default") {
                         d.capabilities[key] = C4Schedule.fromXml(value)
