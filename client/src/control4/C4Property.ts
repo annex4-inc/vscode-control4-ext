@@ -92,7 +92,7 @@ export class C4Property {
 
         a.name = obj.name;
         a.type = obj.type;
-        a.items = obj.items ? obj.items.item : undefined;
+        a.items = obj.items ? [].concat(obj.items.item) : undefined;
         a.multiselect = obj.multiselect != null ? asBoolean(obj.multiselect) : false;
         a.default = typeof (obj.default) == "object" ? "" : obj.default;
         a.maximum = typeof (obj.maximum) == 'string' ? Number.parseInt(obj.maximum) : obj.maximum;

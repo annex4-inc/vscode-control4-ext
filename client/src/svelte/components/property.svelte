@@ -188,7 +188,7 @@
     </select>
 
     <!-- If the type is a list the default and items need to be shown-->
-    {#if (value.type == "LIST" || value.type == "DEVICE_SELECTOR") && value.items}
+    {#if value.type == "LIST" && value.items}
       <ul>
         {#each value.items as item}
           <li class="list-item">

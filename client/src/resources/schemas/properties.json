@@ -63,8 +63,7 @@
       },
       "required": [
         "name",
-        "type",
-        "default"
+        "type"
       ],
       "allOf": [
         {
@@ -109,6 +108,23 @@
               "type": {
                 "enum": [
                   "DEVICE_SELECTOR"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "items",
+              "multiselect"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "enum": [
+                  "DYNAMIC_LIST"
                 ]
               }
             }
