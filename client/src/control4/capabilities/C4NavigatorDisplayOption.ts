@@ -1,8 +1,7 @@
 import 'reflect-metadata';
-import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
+import { jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
-import { asInt, Driver } from '../driver';
-import C4InterfaceIcon from '../interface/C4InterfaceIcon';
+import { asInt } from '../driver';
 import { C4DisplayIcons } from './C4DisplayIcons';
 
 @jsonObject

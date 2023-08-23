@@ -19,7 +19,6 @@ import pjson from "./resources/package.json";
 import sjson from "./resources/.vscode/settings.json";
 import tjson from "./resources/.vscode/tasks.json";
 
-import { Builder, BuildVersion } from './control4/builder';
 import { FileExists, ForceWrite, ReadFileContents, WriteFileContents, WriteIfNotExists } from './utility';
 
 import AdmZip from 'adm-zip'
