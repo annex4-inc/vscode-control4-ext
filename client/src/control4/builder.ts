@@ -31,13 +31,13 @@ export interface BuildStage {
 }
 
 export class Builder {
-  static async* Build(version: BuildVersion, encrypted: boolean, templated: boolean, development: boolean, merge: boolean, deploy: {ip: string, port: number}, context: vscode.ExtensionContext) {
-    const pkg = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, 'package.json');
+  static async* Build(rootPath: string, version: BuildVersion, encrypted: boolean, templated: boolean, development: boolean, merge: boolean, deploy: {ip: string, port: number}, context: vscode.ExtensionContext) {
+    const pkg = path.join(rootPath, 'package.json');
 
     // Establish working directories
-    const src = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, 'src');
-    const int = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, 'intermediate', version);
-    const dst = path.join(vscode.workspace.workspaceFolders[0].uri.fsPath, 'output', version);
+    const src = path.join(rootPath, 'src');
+    const int = path.join(rootPath, 'intermediate', version);
+    const dst = path.join(rootPath, 'output', version);
 
     const versionStage = new IncrementVersionStage();
 

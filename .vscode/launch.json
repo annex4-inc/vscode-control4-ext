@@ -34,14 +34,27 @@
 			"outFiles": ["${workspaceFolder}/client/out/test/**/*.js"]
 		},
         {
-			"name": "Run Extension Tests",
+			"name": "Run Tests",
 			"type": "extensionHost",
 			"request": "launch",
 			"runtimeExecutable": "${execPath}",
 			"args": [
-                "--disable-extensions",
 				"--extensionDevelopmentPath=${workspaceFolder}",
-                "--extensionTestsPath=${workspaceFolder}/client/out/test/suite"
+                "--extensionTestsPath=${workspaceFolder}/client/out/test/suite",
+				"${workspaceFolder}/client/src/test/fixtures/fixture_1/"
+            ],
+            "outFiles": ["${workspaceFolder}/client/out/test/**/*.js"],
+			"preLaunchTask": "npm: watch"
+		},
+        {
+			"name": "Run Extensive Tests",
+			"type": "extensionHost",
+			"request": "launch",
+			"runtimeExecutable": "${execPath}",
+			"args": [
+				"--extensionDevelopmentPath=${workspaceFolder}",
+                "--extensionTestsPath=${workspaceFolder}/client/out/test/suite_complete",
+				"${workspaceFolder}/client/src/test/fixtures/fixture_1/"
             ],
             "outFiles": ["${workspaceFolder}/client/out/test/**/*.js"],
 			"preLaunchTask": "npm: watch"

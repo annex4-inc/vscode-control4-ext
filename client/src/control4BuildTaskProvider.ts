@@ -108,7 +108,8 @@ class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
     return new Promise<void>(async (resolve) => {
       this.writeEmitter.fire(`[${new Date().toLocaleString()}] Starting ${this.version} build...\r\n`);
 
-      let iterator = Builder.Build(this.version, this.encryption, this.template, this.development, this.merge, this.deploy, this.context);
+      let iterator = Builder.Build(vscode.workspace.workspaceFolders[0].uri.fsPath, 
+        this.version, this.encryption, this.template, this.development, this.merge, this.deploy, this.context);
 
       let value = null
 

@@ -35,8 +35,11 @@ export class Component {
 
       return this.data;
     } catch (exception) {
-      //WriteIfNotExists(this._resourceUri.fsPath, "[]");
-
+      switch (exception.name) {
+        case "CodeExpectedError":
+          WriteIfNotExists(this._resourceUri.fsPath, "[]");
+      }
+      
       return [];
     }
   }

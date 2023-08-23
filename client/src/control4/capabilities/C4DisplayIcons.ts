@@ -1,4 +1,3 @@
-
 import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
@@ -19,7 +18,6 @@ export class C4DisplayIcons {
             this.defaults = options.defaults.map((v) => { return new C4InterfaceIcon(v)} );
             this.states = {}
             
-
             if (options.states) {
                 Object.entries(options.states).forEach((v: any) => {
                     this.states[v[0]] = [];

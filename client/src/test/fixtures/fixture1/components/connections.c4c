@@ -1,0 +1,27 @@
+[
+  {
+    "id": 1,
+    "connectionname": "RS-232 Input",
+    "type": 1,
+    "consumer": true,
+    "classes": [
+      {
+        "classname": "RS_232"
+      }
+    ],
+    "facing": 6
+  },
+  {
+    "id": 2,
+    "connectionname": "RS-232 Output %INDEX%",
+    "type": 1,
+    "consumer": false,
+    "classes": [
+      {
+        "classname": "RS_232"
+      }
+    ],
+    "facing": 6,
+    "total": 10
+  }
+]

@@ -11,19 +11,19 @@ export default class MergeStage implements BuildStage {
         return literal_string.replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, '\\$&');
     }
 
-    async FindModule(_source: string, module: string) {
-        let file = path.join(_source, ... module.split('.')) + ".lua"
+    async FindModule(source: string, module: string) {
+        let file = path.join(source, ... module.split('.')) + ".lua"
         let exists = await FileExists(file);
 
         if (!exists) {
-            file = path.join(_source, "../", ... module.split('.')) + ".lua"
+            file = path.join(source, "../", ... module.split('.')) + ".lua"
         }
 
         return file
     }
 
-    async GetModules(_source: string, module: string) {
-        let fileDocument = await ReadFileContents(await this.FindModule(_source, module));
+    async GetModules(source: string, module: string) {
+        let fileDocument = await ReadFileContents(await this.FindModule(source, module));
         let modules = [];
 
         // Get the modules for this dependency
@@ -31,7 +31,7 @@ export default class MergeStage implements BuildStage {
 
         // Recursively retrieve all nested modules
         for (const match of moduleMatches) {
-            let nested = await this.GetModules(_source, match[1])
+            let nested = await this.GetModules(source, match[1])
 
             if (nested && nested.length > 0) {
                 modules.push(nested)
@@ -43,7 +43,7 @@ export default class MergeStage implements BuildStage {
         return modules
     }
 
-    async Execute(_source: string, intermediate: string, _destination: string): Promise<any> {
+    async Execute(source: string, intermediate: string, _destination: string): Promise<any> {
         let srcFile = path.join(intermediate, "driver.lua")
         let srcDocument = await ReadFileContents(srcFile);
         let modules = "";
@@ -52,12 +52,18 @@ export default class MergeStage implements BuildStage {
 
         // Create module data for each require statement
         for (const match of matches) {
-            let file = await this.FindModule(_source, match[1])
+            let file = await this.FindModule(source, match[1])
             let fileDocument = await ReadFileContents(file);
-            let nestedPackages = await this.GetModules(_source, match[1])
+
+            // This will automatically skip nested 'require' dependencies, libraries should be built with squish.
+            if (!fileDocument){
+                continue;
+            }
+            
+            let nestedPackages = await this.GetModules(source, match[1])
 
             for (const nested of nestedPackages) {
-                let doc = await ReadFileContents(path.join(_source, ... nested.split('.')) + ".lua");
+                let doc = await ReadFileContents(path.join(source, ... nested.split('.')) + ".lua");
 
                 if (doc) {
                     modules = modules + `package.preload['${nested}'] = (function(...)\n ${doc}\n end)\n`

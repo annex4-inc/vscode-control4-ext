@@ -12,5 +12,9 @@ export function HasNode(document: Document, tag: string) {
 export function HasNodeValue(document: Document, tag: string, value: any) {
     const nodes = xpath.select("//" + tag, document, false);
 
+    if (nodes == undefined || !nodes[0]) {
+        assert.fail("Node " + tag + " does not exist");
+    }
+    
     assert.equal(nodes[0].firstChild.data, value, "Invalid value for " + tag);
 }

@@ -105,9 +105,22 @@ export function activate(context: vscode.ExtensionContext) {
   client.start();
 
   // Register the global commands for the extension
-  context.subscriptions.push(vscode.commands.registerCommand('control4.create', control4Create, context));
-  context.subscriptions.push(vscode.commands.registerCommand('control4.import', control4Import, context));
   context.subscriptions.push(vscode.commands.registerCommand('control4.rebuildTestDependencies', rebuildTestDependencies, context));
+  context.subscriptions.push(vscode.commands.registerCommand('control4.create', async () => { 
+    const input = await vscode.window.showInputBox();
+
+    await control4Create.apply(context, [vscode.workspace.workspaceFolders[0].uri.fsPath, input])
+  }, context));
+  context.subscriptions.push(vscode.commands.registerCommand('control4.import', async () => { 
+    let paths = await vscode.window.showOpenDialog();
+
+    if (paths && paths.length > 0) {
+      let result = await control4Import.apply(context, [paths[0]])
+
+      vscode.window.showInformationMessage(`Imported ${paths[0].fsPath}`);
+    }
+    
+  }, context));
 
   let types = [
     { name: "Property", plural: "Properties", resource: PropertiesResource, provider: propertiesProvider, panel: undefined },
@@ -161,6 +174,8 @@ export function activate(context: vscode.ExtensionContext) {
       t.provider.refresh();
     }));
   })
+
+  return context;
 }
 
 export function deactivate() {

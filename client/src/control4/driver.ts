@@ -25,7 +25,6 @@ import { C4NavigatorDisplayOption } from './capabilities/C4NavigatorDisplayOptio
 import { C4WebviewUrl } from './capabilities/C4WebviewUrl';
 import { C4State } from './C4State';
 import { C4Schedule } from './capabilities/C4Schedule';
-import { C4Tab } from './C4Tab';
 
 function getEnumKeyByEnumValue<T extends { [index: string]: string }>(myEnum: T, enumValue: string): keyof T | null {
     let keys = Object.keys(myEnum).filter(x => myEnum[x] == enumValue);
@@ -84,7 +83,6 @@ export class Driver {
     events: C4Event[]
     proxies: C4Proxy[]
     states: C4State[]
-    tabs: C4Tab[]
     UI: C4UI[]
     capabilities: any
 
@@ -347,14 +345,6 @@ export class Driver {
         // Documentation is mandatory, even if empty
         config.ele("documentation", { file: this.documentation })
 
-        if (this.tabs && this.tabs.length > 0) {
-            let tabs = config.ele("tabs");
-            
-            this.tabs.forEach((t: C4Tab) => {
-                tabs.import(t.toXml())
-            })
-        }
-
         if (this.commands && this.commands.length > 0) {
             let commands = config.ele("commands");
 
@@ -401,12 +391,6 @@ export class Driver {
                 if (driver.states) {
                     driver.states = driver.states.map((state) => {
                         return new C4State(state);
-                    })
-                }
-
-                if (driver.tabs) {
-                    driver.tabs = driver.tabs.map((tab) => {
-                        return new C4Tab(tab)
                     })
                 }
                 
@@ -595,20 +579,6 @@ export class Driver {
                 commands.forEach(function (c) {
                     try {
                         d.commands.push(C4Command.fromXml(c))
-                    } catch (err) {
-                        console.log(err.message)
-                    }
-                })
-            }
-        }
-
-        if (devicedata.config.tabs) {
-            const tabs = this.CleanXmlArray(devicedata.config.tabs, "tab")
-
-            if (tabs) {
-                tabs.forEach(function (t) {
-                    try {
-                        t.tabs.push(C4Tab.fromXml(t))
                     } catch (err) {
                         console.log(err.message)
                     }

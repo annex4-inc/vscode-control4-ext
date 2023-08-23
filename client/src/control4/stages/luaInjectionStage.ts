@@ -30,7 +30,7 @@ export default class LuaInjectionStage implements BuildStage {
     }
 
     OnFailure(result: any): String {
-        return "[Lua Injection] Failed to inject lua source";
+        return "[Lua Injection] Failed to inject allow execute";
     }
 }
 

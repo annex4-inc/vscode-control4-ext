@@ -1,4 +1,3 @@
-
 import 'reflect-metadata';
 import { jsonArrayMember, jsonMember } from 'typedjson';
 import { Driver } from '../driver';

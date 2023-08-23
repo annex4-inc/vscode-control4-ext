@@ -1,0 +1,42 @@
+{
+  "name": "serial_shim",
+  "description": "",
+  "version": "0.0.11",
+  "main": "src/driver.lua",
+  "scripts": {
+    "test": "wsl busted tests/test.lua"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/annex4/serial_shim.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/annex4/serial_shim/issues"
+  },
+  "homepage": "https://github.com/annex4/serial_shim",
+  "control4": {
+    "name": "Serial Shim",
+    "model": "Utility",
+    "manufacturer": "annex4 Inc.",
+    "created": "2/22/2023, 3:28:37 PM",
+    "icon": {
+      "small": "images/device_sm.png",
+      "large": "images/device_lg.png",
+      "image_source": "c4z"
+    },
+    "serialsettings": "9600 8 none 1 none 232",
+    "control": "lua_gen",
+    "controlmethod": "serial",
+    "combo": true
+  },
+  "devDependencies": {
+    "@annex4/test.control4": "^1.1.4"
+  },
+  "dependencies": {
+    "@annex4/hooks": "^1.0.3",
+    "@annex4/logger": "^1.0.0"
+  }
+}

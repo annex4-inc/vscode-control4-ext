@@ -535,8 +535,7 @@
         "compile:server": "tsc -b ./server/tsconfig.json",
         "watch": "tsc -b -w",
         "postinstall": "cd client && npm install && cd ../server && npm install && cd ..",
-        "clean": "rimraf client/out && rimraf server/out",
-        "test": "node ./node_modules/vscode/bin/test"
+        "clean": "rimraf client/out && rimraf server/out"
     },
     "devDependencies": {
         "@types/mocha": "^8.0.0",

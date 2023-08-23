@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Driver Version",
+    "type": "STRING",
+    "default": "",
+    "readonly": true
+  },
+  {
+    "name": "Debug Mode",
+    "type": "LIST",
+    "default": "Off",
+    "readonly": false,
+    "items": [
+      "Off",
+      "Debug",
+      "Trace",
+      "Info",
+      "Warning",
+      "Error",
+      "Fatal"
+    ]
+  }
+]
