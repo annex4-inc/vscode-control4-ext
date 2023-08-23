@@ -26,7 +26,8 @@ export class PanelManager {
       retainContextWhenHidden: true,
       localResourceRoots: [
         vscode.Uri.joinPath(extensionUri, "client", "out"),
-        vscode.Uri.joinPath(extensionUri, "client", "media")
+        vscode.Uri.joinPath(extensionUri, "client", "media"),
+        vscode.Uri.joinPath(extensionUri, "client", "node_modules", "@vscode/codicons")
       ]
     })
 
@@ -34,6 +35,7 @@ export class PanelManager {
   }
 
   protected subscribe() {
+    console.log("SUBSCRIBE INSTANCE")
     this.currentPanel._panel.webview.onDidReceiveMessage(async (message) => {
       switch (message.type) {
         case 'update':
@@ -55,15 +57,27 @@ export class PanelManager {
         case 'create':
           let created = await this.resource.Create(message.value);
 
-          if (!created) {
+          if (created) {
+            this.currentEntity = message.value;
+            this.currentPanel._panel.title = `Update ${this.type}`;
+            this.currentPanel._panel.webview.postMessage({ command: "update", value: this.currentEntity })
+            vscode.window.showInformationMessage("Entity created");
+          } else {
             vscode.window.showErrorMessage(`The entity already exists`);
           }
 
           break;
       }
     }, null, this.currentPanel._disposables);
-  }
 
+    // Listen for when the panel is disposed and set instance of class to null
+    // This happens when the user closes the panel or when the panel is closed programatically
+    this.currentPanel._panel.onDidDispose(async (e) => {
+      this.currentPanel.dispose();
+      this.currentPanel = null;
+    }, null, this.currentPanel._disposables);
+
+  }
   public revive(panel: vscode.WebviewPanel, extensionUri: vscode.Uri) {
     this.currentPanel = new ComponentPanel(panel, extensionUri, this.script);
 

@@ -29,6 +29,8 @@
   let first;
   let formType = vscode.getState()?.formType || "create";
   let value = vscode.getState()?.value || d;
+  // Allows us to bind to the new input element in the list array and set focus to it once created for better UX
+  let newInput;
 
   onMount(async () => {
     let state = vscode.getState();
@@ -124,7 +126,7 @@
 
       event.target.value = "";
     }
-
+    newInput.focus();
     // This will cause a reactive update on the interface.
     value.params = value.params;
   }
@@ -178,12 +180,17 @@
         <th>Default</th>
         <th style="width:32px">Actions</th>
       </tr>
-      {#if value.params}
-        {#each value.params as param}
-          <tr>
-            <td>
+      {#each value.params as param, index}
+        <tr>
+          <td>
+            {#if (index=(value.params.length-1))}
+              <!-- svelte-ignore a11y-autofocus -->
+              <input autofocus name="name" type="text" bind:value={param.name} />
+            {:else}
               <input name="name" type="text" bind:value={param.name} />
-            </td>
+            {/if}
+            
+          </td>
 
             <td>
               <!-- svelte-ignore a11y-no-onchange -->
@@ -201,34 +208,30 @@
               </select>
             </td>
 
-            <td>
-              <!-- If the type is a list the default and items need to be shown-->
-              {#if param.type == "LIST" && param.items}
-                <ul>
-                  {#each param.items as item}
-                    <li class="list-item">
-                      <input type="text" group={param.items} bind:value={item} />
-                      <button type="button" on:click|preventDefault={removeItem(param, item)}>Remove</button>
-                    </li>
-                  {/each}
+          <td>
+            <!-- If the type is a list the default and items need to be shown-->
+            {#if param.type == "LIST" && param.items}
+              <ul>
+                {#each param.items as item}
                   <li class="list-item">
-                    <input
-                      type="text"
-                      group={param.items}
-                      on:change={(event) => addItem(param, event)}
-                    />
+                    <input type="text" group={param.items} bind:value={item} />
+                    <button type="button" on:click={removeItem(param, item)}>Remove</button>
                   </li>
-                </ul>
-              {:else if param.type == "RANGED_INTEGER" || param.type == "RANGED_FLOAT"}
-                <div class="range">
-                  <div>
-                    <label for="minimum">Minimum</label>
-                    <input
-                      name="minimum"
-                      type="number"
-                      bind:value={param.minimum}
-                    />
-                  </div>
+                {/each}
+                <li class="list-item">
+                  <input bind:this={newInput} type="text" group={param.items} on:change={(event) => addItem(param, event)} />
+                </li>
+              </ul>
+            {:else if param.type == "RANGED_INTEGER" || param.type == "RANGED_FLOAT"}
+              <div class="range">
+                <div>
+                  <label for="minimum">Minimum</label>
+                  <input
+                    name="minimum"
+                    type="number"
+                    bind:value={param.minimum}
+                  />
+                </div>
 
                   <div class="maximum">
                     <label for="maximum">Maximum</label>
@@ -267,7 +270,6 @@
             </td>
           </tr>
         {/each}
-      {/if}
     </table>
     <button type="submit">
       {formType.charAt(0).toUpperCase() + formType.slice(1)}

@@ -2,10 +2,11 @@
 node_modules
 .vscode-test/
 
-**/node_mmodules
+**/node_modules
 **/tool
 **/out
-**/src/**/**.js
+#Not sure why the svelte js files in pages were excluded
+#**/src/**/**.js
 
 *.vsix
 

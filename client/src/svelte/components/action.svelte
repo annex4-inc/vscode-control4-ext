@@ -71,10 +71,11 @@
         return;
     }
   });
+
 </script>
 
 <main>
-  <form class="page" on:submit|preventDefault={submit} >
+  <form class="page" on:submit|preventDefault={submit}>
     <label for="name">Name</label>
     <input bind:this={first} name="name" type="text" bind:value={value.name} />
     <label for="command">Command</label>

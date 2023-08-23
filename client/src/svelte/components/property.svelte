@@ -23,6 +23,7 @@
     type: "STRING",
     default: "",
     readonly: false,
+    multiselect: false,
     items: [],
   };
 
@@ -31,8 +32,8 @@
   let first;
   let formType = vscode.getState()?.formType || "create";
   let value = vscode.getState()?.value || d;
-
-  //Object.assign(value, d);
+  // Allows us to bind to the new input element in the list array and set focus to it once created for better UX
+  let newInput;
 
   onMount(async () => {
     let state = vscode.getState();
@@ -98,10 +99,12 @@
 
         event.target.value = "";
       }
+      newInput.focus();
     } catch (err) {
       console.log(err)
     }
 
+    newInput.focus();
   }
 
   function removeItem(item) {
@@ -132,21 +135,28 @@
 
     switch (v.type) {
       case "STRING":
+        delete v.multiselect;
+        break;
       case "PASSWORD":
+        delete v.multiselect;
+        break; 
       case "LABEL":
+        delete v.multiselect;
+        break; 
+      case "DEVICE_SELECTOR":
+        delete v.default;
+        break; 
+      case "DYNAMIC_LIST":
+        delete v.multiselect;
+        break; 
       case "LINK":
         delete v.minimum;
         delete v.maximum;
-      case "RANGED_INTEGER":
-      case "RANGED_FLOAT":
-      case "TRACK":
-      case "SCROLL":
-        delete v.items;
-        break;
-      case "DYNAMIC_LIST":
-      case "DEVICE_SELECTOR":
-        delete v.minimum;
-        delete v.maximum;
+        delete v.multiselect;
+        break; 
+      case "LIST":
+        delete v.multiselect;
+        break;  
     }
 
     vscode.postMessage({ type: formType, value: v });
@@ -178,7 +188,7 @@
     </select>
 
     <!-- If the type is a list the default and items need to be shown-->
-    {#if (value.type == "LIST" || value.type == "DEVICE_SELECTOR") && value.items}
+    {#if value.type == "LIST" && value.items}
       <ul>
         {#each value.items as item}
           <li class="list-item">
@@ -187,7 +197,7 @@
           </li>
         {/each}
         <li class="list-item">
-          <input type="text" group={value.items} on:change|preventDefault={addItem} />
+          <input bind:this={newInput} type="text" group={value.items} on:change={addItem} />
         </li>
       </ul>
       <label for="default">Default</label>
@@ -198,7 +208,19 @@
           </option>
         {/each}
       </select>
-    {:else if value.type == "RANGED_INTEGER" || value.type == "RANGED_FLOAT" || value.type == "SCROLL" || value.type == "TRACK"}
+    {:else if value.type == "DEVICE_SELECTOR" && value.items}
+      <ul>
+        {#each value.items as item}
+          <li class="list-item">
+            <input type="text" group={value.items} bind:value={item} />
+            <button type="button" on:click={removeItem(item)}>Remove</button>
+          </li>
+        {/each}
+        <li class="list-item">
+          <input bind:this={newInput} type="text" group={value.items} on:change={addItem} />
+        </li>
+      </ul>          
+    {:else if value.type == "RANGED_INTEGER" || value.type == "RANGED_FLOAT"}
       <div class="range">
         <div>
           <label for="minimum">Minimum</label>
@@ -224,13 +246,14 @@
       <input name="default" type="text" bind:value={value.default} />
     {/if}
 
-    <label for="readonly">Readonly</label>
-    <input type="checkbox" bind:checked={value.readonly} />
-
-    {#if value.type == "DEVICE_SELECTOR"}
-    <label for="multiselect">Multiselect</label>
-    <input type="checkbox" bind:checked={value.multiselect} />
+    {#if (value.type == "DEVICE_SELECTOR") }
+      <label for="multiselect">Multiselect</label>
+      <input type="checkbox" bind:checked={value.multiselect} />
+    {:else}
+      <label for="readonly">Readonly</label>
+      <input type="checkbox" bind:checked={value.readonly} />
     {/if}
+
 
     <button type="submit">
       {formType.charAt(0).toUpperCase() + formType.slice(1)}

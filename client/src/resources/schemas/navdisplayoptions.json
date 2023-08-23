@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JSON schema for Control4 default and display icons",
+  "definitions": {
+    "navdisplayoption": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "The ID of the icon",
+          "type": "string"
+        },
+        "type": {
+          "id": "propertyType",
+          "type": "string",
+          "enum": [
+            "DEFAULT_ICON",
+            "STATE_ICON",
+            "PROXY_ID",
+            "TRANSLATIONS_URL"
+          ]
+        },
+        "iconstate": {
+          "description": "The state of the icon",
+          "type": "string"
+        },
+        "sizes": {
+          "type": "array",
+          "description": "An array of image sizes",
+          "items": {
+            "type": "number"
+          }
+        },
+        "relpath": {
+          "description": "The relative path from the root dir to icons without leading or trailing /",
+          "examples": ["icons/driver"],
+          "type": "string"
+        },
+        "proxybindingid": {
+          "description": "The Proxy Id for Nav Options",
+          "type": "number"
+        },
+        "translation_url": {
+          "description": "The relative path from the root dir to translations without leading or trailing /",
+          "examples": ["translations"],
+          "type": "string"
+        }
+      },
+      "required": ["id", "type"]
+    }
+  },
+  "type": "array",
+  "minItems": 0,
+  "uniqueItems": true,
+  "items": {
+    "allOf": [
+      {
+        "$ref": "#/definitions/navdisplayoption"
+      }
+    ]
+  }
+}

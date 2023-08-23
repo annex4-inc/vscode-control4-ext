@@ -8,6 +8,8 @@ import { CommandNodeProvider } from './providers/tree/CommandNodeProvider';
 import { ActionNodeProvider } from './providers/tree/ActionNodeProvider';
 import { ConnectionNodeProvider } from './providers/tree/ConnectionNodeProvider';
 import { UINodeProvider } from './providers/tree/UINodeProvider';
+import { NavDisplayOptionNodeProvider } from './providers/tree/NavDisplayOptionNodeProvider';
+
 
 import * as path from 'path';
 import { workspace } from 'vscode';
@@ -18,6 +20,7 @@ import PropertiesResource from "./components/properties"
 import EventsResource from "./components/events"
 import CommandsResource from "./components/commands"
 import ConnectionsResource from "./components/connections"
+import NavDisplayOptionsResource from "./components/navdisplayoptions"
 //import ProxiesResource from "./components/proxies"
 
 import { Views, Commands } from './constants/tree';
@@ -54,6 +57,7 @@ export function activate(context: vscode.ExtensionContext) {
   const actionsProvider = new ActionNodeProvider(workspacePath);
   const connectionsProvider = new ConnectionNodeProvider(workspacePath);
   const uiProvider = new UINodeProvider(workspacePath);
+  const navdisplayoptionsProvider = new NavDisplayOptionNodeProvider(workspacePath);
 
   // Register the disposables of the tree node providers
   Register(context, propertiesProvider.register(Views.Properties, Commands.Properties.Select, Commands.Properties.Remove));
@@ -62,6 +66,7 @@ export function activate(context: vscode.ExtensionContext) {
   Register(context, actionsProvider.register(Views.Actions, Commands.Actions.Select, Commands.Actions.Remove));
   Register(context, connectionsProvider.register(Views.Connections, Commands.Connections.Select, Commands.Connections.Remove));
   Register(context, uiProvider.register(Views.UI, Commands.UI.Select, Commands.UI.Remove));
+  Register(context, navdisplayoptionsProvider.register(Views.NavDisplayOptions, Commands.NavDisplayOptions.Select, Commands.NavDisplayOptions.Remove));
   //Register(context, parametersProvider.register(Views.Parameters, Commands.Parameters.Select, Commands.Parameters.Rmeove))
 
   context.subscriptions.push(vscode.tasks.registerTaskProvider(Control4BuildTaskProvider.BuildType, new Control4BuildTaskProvider(workspacePath, context)));
@@ -114,7 +119,9 @@ export function activate(context: vscode.ExtensionContext) {
     { name: "Action", plural: "Actions", resource: ActionsResource, provider: actionsProvider, panel: undefined },
     { name: "Command", plural: "Commands", resource: CommandsResource, provider: commandsProvider, panel: undefined },
     { name: "Event", plural: "Events", resource: EventsResource, provider: eventsProvider, panel: undefined},
-    { name: "Connection", plural: "Connections", resource: ConnectionsResource, provider: connectionsProvider, panel: undefined }
+    { name: "Connection", plural: "Connections", resource: ConnectionsResource, provider: connectionsProvider, panel: undefined },
+    { name: "NavDisplayOption", plural: "NavDisplayOptions", resource: NavDisplayOptionsResource, provider: navdisplayoptionsProvider, panel: undefined }
+
   ]
 
   types.forEach(t => {
@@ -156,6 +163,7 @@ export function activate(context: vscode.ExtensionContext) {
       t.resource.Reload();
     } ));
 
+    // [ ] - When a node is removed from the tree the Webview panel should either be disposed or updated to another exisitng node.
     context.subscriptions.push(vscode.commands.registerCommand(`control4.remove${t.name}`, (n) => {
       t.resource.Delete(n);
       t.provider.refresh();

@@ -99,22 +99,103 @@
                     "type": "string"
                 },
                 "display_icons": {
-                    "description": "The icons for the webview",
-                    "type": "object",
+                    "description": "Object containing both default and state display icons",
+                    "type": "object", 
                     "properties": {
-                        "defaults": { 
-                            "description": "The default icon that appears for the webview when it has no state",
-                            "$ref": "#/definitions/display_icon"
+                        "default_icons": {
+                            "description": "An array of default display icons",
+                            "type": "array",
+                            "items": {
+                                "oneOf":[
+                                    { "required": ["height", "width", "path"] },
+                                    { "required": ["repeat"] }
+                                ],
+                                "properties": {
+                                    "height": {
+                                        "type": "number"
+                                    },
+                                    "width": {
+                                        "type": "number"
+                                    },
+                                    "path": {
+                                        "type": "string"
+                                    },
+                                    "repeat": {
+                                        "type": "object",
+                                        "required": ["start_size", "end_size", "increment", "path"],
+                                        "properties": {
+                                            "start_size": {
+                                                "type": "number"
+                                            },
+                                            "end_size": {
+                                                "type": "number"
+                                            },
+                                            "increment": {
+                                                "type": "number"
+                                            },
+                                            "path": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         },
-                        "states": { 
-                            "description": "The various state icons that appear for the webview",
-                            "type": "object",
-                            "additionalProperties": {
-                                "description": "The ID of the state",
-                                "$ref": "#/definitions/display_icon"
+                        "state_icons": {
+                            "description": "An array of state icons",
+                            "type": "array",
+                            "states": {
+                                "required": ["id", "icons"],
+                                "description": "State icons",
+                                "type": "object", 
+                                "properties": {
+                                    "id": {
+                                        "description": "Button State",
+                                        "type": "string"
+                                    },
+                                    "icons": {
+                                        "description": "An array of display icons",
+                                        "type": "array",
+                                        "items": {
+                                            "oneOf":[
+                                                { "required": ["height", "width", "path"] },
+                                                { "required": ["repeat"] }
+                                            ],
+                                            "properties": {
+                                                "height": {
+                                                    "type": "number"
+                                                },
+                                                "width": {
+                                                    "type": "number"
+                                                },
+                                                "path": {
+                                                    "type": "string"
+                                                },
+                                                "repeat": {
+                                                    "type": "object",
+                                                    "required": ["start_size", "end_size", "increment", "path"],
+                                                    "properties": {
+                                                        "start_size": {
+                                                            "type": "number"
+                                                        },
+                                                        "end_size": {
+                                                            "type": "number"
+                                                        },
+                                                        "increment": {
+                                                            "type": "number"
+                                                        },
+                                                        "path": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
-                    }
+                    }                  
                 }
             }
         },

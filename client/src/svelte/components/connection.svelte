@@ -35,6 +35,8 @@
   let first;
   let formType = vscode.getState()?.formType || "create";
   let value = vscode.getState()?.value || d;
+  // Allows us to bind to the new input element in the list array and set focus to it once created for better UX
+  let newInput;
 
   onMount(async () => {
     let state = vscode.getState();
@@ -101,6 +103,7 @@
 
       item.target.value = "";
     }
+    newInput.focus();
   }
 
   function removeItem(item) {
@@ -121,6 +124,7 @@
 </script>
 
 <main>
+  <form class="page" on:submit|preventDefault={submit}>
   <form class="page" on:submit|preventDefault={submit}>
     <label for="id">ID</label>
     <input bind:this={first} name="id" type="number" bind:value={value.id} />
@@ -159,7 +163,7 @@
         </li>
       {/each}
       <li class="list-item">
-        <input type="text" group={value.classes} on:change={addItem} />
+        <input bind:this={newInput} type="text" group={value.classes} on:change={addItem} />
       </li>
     </ul>
 

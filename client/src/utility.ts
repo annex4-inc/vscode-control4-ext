@@ -112,3 +112,8 @@ export function StartProcess(command: string, args: string[]) {
         })
     })
 }
+
+export function HasKeySetTo(obj, key, value)
+{
+    return obj.hasOwnProperty(key) && obj[key]==value;
+}

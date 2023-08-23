@@ -15,5 +15,7 @@
     "typescript.preferences.quoteStyle": "single",
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
-    }
+    },
+    "debug.allowBreakpointsEverywhere": true,
+    "workbench.settings.openDefaultSettings": true
 }
