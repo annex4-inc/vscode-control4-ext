@@ -4,6 +4,7 @@ import path from 'path';
 import { before, suiteSetup } from 'mocha';
 import { control4Create } from '../../commands';
 import * as vscode from 'vscode';
+import { Control4BuildTaskProvider } from '../../control4BuildTaskProvider';
 
 suite('Driver Build', () => {
     let root = path.resolve("./temp/test");
@@ -29,7 +30,15 @@ suite('Driver Build', () => {
     test('Builds a c4z file', async () => {
         console.log(context)
 
-        let iterator = Builder.Build(root, BuildVersion.Debug, false, false, false, null, null, context);
+        let iterator = Builder.Build(root, {
+            version: BuildVersion.Debug,
+            development: false,
+            merge: false,
+            template: false,
+            encryption: false,
+            deploy: {ip: "", port: 0},
+            type: "control4"
+        }, context);
 
         let value : IteratorResult<any> = null;
 

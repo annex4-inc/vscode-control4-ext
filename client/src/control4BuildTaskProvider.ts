@@ -2,7 +2,8 @@
 import * as vscode from 'vscode';
 
 import { Builder, BuildVersion } from './control4/builder';
-interface Control4BuildTaskDefinition extends vscode.TaskDefinition {
+
+export interface Control4BuildTaskDefinition extends vscode.TaskDefinition {
   version: BuildVersion;
   encryption: boolean;
   template: boolean;
@@ -64,10 +65,12 @@ export class Control4BuildTaskProvider implements vscode.TaskProvider {
         deploy
       };
     }
+
     return new vscode.Task(definition, vscode.TaskScope.Workspace, `Package Driver - ${version}`,
       Control4BuildTaskProvider.BuildType, new vscode.CustomExecution(async (): Promise<vscode.Pseudoterminal> => {
-        return new CustomBuildTaskTerminal(this.workspaceRoot, version, encryption, template, development, merge, deploy, () => this.sharedState, (state: string) => this.sharedState = state, this.context);
-      }));
+        return new CustomBuildTaskTerminal(this.workspaceRoot, definition, () => this.sharedState, (state: string) => this.sharedState, this.context);
+      })
+    );
   }
 }
 
@@ -83,12 +86,7 @@ class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
   private fileWatcher: vscode.FileSystemWatcher | undefined;
 
   constructor(private workspaceRoot: string, 
-    private version: BuildVersion, 
-    private encryption: boolean, 
-    private template: boolean, 
-    private development: boolean, 
-    private merge: boolean,
-    private deploy: {ip: string, port: number},
+    private task: Control4BuildTaskDefinition,
     private getSharedState: () => string | undefined, private setSharedState: (state: string) => void, context: vscode.ExtensionContext) {
       this.context = context;
   }
@@ -106,16 +104,15 @@ class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
 
   private async doBuild(): Promise<void> {
     return new Promise<void>(async (resolve) => {
-      this.writeEmitter.fire(`[${new Date().toLocaleString()}] Starting ${this.version} build...\r\n`);
+      this.writeEmitter.fire(`[${new Date().toLocaleTimeString()}] Starting ${this.task.version} build...\r\n`);
 
-      let iterator = Builder.Build(vscode.workspace.workspaceFolders[0].uri.fsPath, 
-        this.version, this.encryption, this.template, this.development, this.merge, this.deploy, this.context);
+      let iterator = Builder.Build(vscode.workspace.workspaceFolders[0].uri.fsPath, this.task, this.context);
 
       let value = null
 
       try {
         while (value = await iterator.next(), !value.done) {
-          this.writeEmitter.fire(`[${new Date().toLocaleString()}] ${value.value.message}\r\n`);
+          this.writeEmitter.fire(`${value.value.message}\r\n`);
         }
 
         this.closeEmitter.fire();
@@ -124,7 +121,7 @@ class CustomBuildTaskTerminal implements vscode.Pseudoterminal {
       } catch (err) {
         console.log(err);
         
-        this.writeEmitter.fire(`[${new Date().toLocaleString()}] ${err.message}\r\n`);
+        this.writeEmitter.fire(`${err.message}\r\n`);
 
         this.closeEmitter.fire();
 

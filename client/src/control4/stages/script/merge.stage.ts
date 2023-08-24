@@ -1,11 +1,11 @@
 import * as path from 'path';
-import { BuildStage } from '../builder';
-import { ReadFileContents, WriteFileContents, FileExists } from '../../utility';
+import { BuildStage } from '../../builder';
+import { ReadFileContents, WriteFileContents, FileExists } from '../../../utility';
 
-export default class MergeStage implements BuildStage {
+export default class MergeStage extends BuildStage {
     static r = new RegExp(/require\s*?[\[\[]*?['"(]+(.+)['"]+\)/, "gm");
 
-    constructor() { }
+    constructor(task, pkg, ctx) { super("Merge", task, pkg, ctx) }
 
     regExpEscape(literal_string) {
         return literal_string.replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, '\\$&');
@@ -47,6 +47,7 @@ export default class MergeStage implements BuildStage {
         let srcFile = path.join(intermediate, "driver.lua")
         let srcDocument = await ReadFileContents(srcFile);
         let modules = "";
+        let merged = [];
 
         let matches = srcDocument.matchAll(MergeStage.r);
 
@@ -61,6 +62,11 @@ export default class MergeStage implements BuildStage {
             }
             
             let nestedPackages = await this.GetModules(source, match[1])
+
+            merged.push(match[1])
+            if (nestedPackages.length > 0) {
+                merged.push(nestedPackages)
+            }
 
             for (const nested of nestedPackages) {
                 let doc = await ReadFileContents(path.join(source, ... nested.split('.')) + ".lua");
@@ -78,18 +84,24 @@ export default class MergeStage implements BuildStage {
         srcDocument = modules + srcDocument;
 
         await WriteFileContents(srcFile, srcDocument);
+
+        return merged
     }
 
     OnSuccess(result: any): String {
         if (typeof(result) === "string") {
             return result;
         } else {
-            return `[Lua Merge   ] Injected lua source from files`;
+            return `${result.join(", ")}`;
         }
     }
 
     OnFailure(result: any): String {
-        return "[Lua Merge   ] Failed to inject lua source";
+        return "Failed to inject lua source";
+    }
+    
+    IsEnabled(): Boolean {
+        return this.task.merge || this.task.encryption;
     }
 }
 

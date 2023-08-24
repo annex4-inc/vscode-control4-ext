@@ -1,24 +1,20 @@
 import * as path from 'path';
 
-import { BuildStage } from '../builder';
-import { ReadFileContents } from '../../utility';
+import { BuildStage } from '../../builder';
+import { ReadFileContents } from '../../../utility';
 import axios from 'axios';
 
-export default class LuaDeploymentStage implements BuildStage {
-    deploy: {ip: string, port: number}
-
-    constructor(deploy: {ip: string, port: number}) {
-        this.deploy = deploy;
-    }
+export default class LuaDeploymentStage extends BuildStage {
+    constructor(task, pkg, ctx) { super("Deploy", task, pkg, ctx) }
 
     async Execute(_source: string, intermediate: string, _destination: string): Promise<any> {
         let srcFile = path.join(intermediate, "driver.lua")
         let srcDocument = await ReadFileContents(srcFile);
 
-        if (this.deploy && this.deploy.port && this.deploy.ip) {
+        if (this.task.deploy && this.task.deploy.port && this.task.deploy.ip) {
             let result = await axios({
                 method: 'POST',
-                url: `http://${this.deploy.ip}:${this.deploy.port}/lua/update`,
+                url: `http://${this.task.deploy.ip}:${this.task.deploy.port}/lua/update`,
                 data: srcDocument,
                 timeout: 10000
             })
@@ -31,12 +27,16 @@ export default class LuaDeploymentStage implements BuildStage {
         if (typeof(result) === "string") {
             return result;
         } else {
-            return `[Lua Deploy]: Updated Lua Code`;
+            return `Updated Lua Code`;
         }
     }
 
     OnFailure(result: any): String {
-        return `[Lua Deploy] Failed to deploy ${result.message}`;
+        return `Failed to deploy ${result.message}`;
+    }
+
+    IsEnabled(): Boolean {
+        return this.task.deploy && !!(this.task.deploy.port && this.task.deploy.ip)
     }
 }
 
