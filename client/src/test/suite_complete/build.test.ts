@@ -1,10 +1,11 @@
 import * as assert from 'assert';
-import { BuildVersion, Builder } from '../../control4/builder';
+import * as vscode from 'vscode';
+
 import path from 'path';
+
+import { BuildVersion, Builder } from '../../build/builder';
 import { before, suiteSetup } from 'mocha';
 import { control4Create } from '../../commands';
-import * as vscode from 'vscode';
-import { Control4BuildTaskProvider } from '../../control4BuildTaskProvider';
 
 suite('Driver Build', () => {
     let root = path.resolve("./temp/test");
@@ -12,8 +13,7 @@ suite('Driver Build', () => {
 
     suiteSetup(async () => {
         try {
-            const ext = vscode.extensions.getExtension('annex4-inc.vscode-control4');
-            //const ext = vscode.extensions.getExtension('vscode.vscode-control4-ext-client');
+            const ext = vscode.extensions.getExtension('annex4-inc.vscode-control4');            
             
             if (ext) {
                 context = await ext.activate();

@@ -22,7 +22,7 @@ import ConnectionsResource from "./components/connections"
 
 import { Views, Commands } from './constants/tree';
 
-import { Control4BuildTaskProvider } from './control4BuildTaskProvider'
+import { Control4BuildTaskProvider } from './build/control4BuildTaskProvider'
 
 import {
   LanguageClient,

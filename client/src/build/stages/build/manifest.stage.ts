@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 
 import { BuildStage } from '../../builder';
-import Manifest from '../../manifest';
+import Manifest from '../../../control4/manifest';
 
 export default class ManifestStage extends BuildStage {
     constructor(task, pkg, ctx) { super("Manifest", task, pkg, ctx) }

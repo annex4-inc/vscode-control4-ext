@@ -1,5 +1,5 @@
 import { BuildStage } from '../../builder';
-import { Driver } from '../../driver';
+import { Driver } from '../../../control4/driver';
 import { WriteFileContents } from '../../../utility';
 import * as path from 'path';
 
