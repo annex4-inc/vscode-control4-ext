@@ -1,17 +1,19 @@
 import * as vscode from 'vscode';
 import { WriteIfNotExists } from '../utility';
 import isMatch from 'lodash.ismatch';
+import { EventEmitter } from 'events';
 
 export class Component {
   protected _textDocument: vscode.TextDocument;
   protected _resourceUri: vscode.Uri;
   public data: any;
+  public emitter: EventEmitter;
 
   constructor(resource) {
     if (vscode.workspace.workspaceFolders !== undefined) {
-        this._resourceUri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, 'components', resource);
+      this._resourceUri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, 'components', resource);
     }
-    
+
     //this._resourceUri = vscode.Uri.joinPath(vscode.workspace.name, 'components', resource);
 
     let watcher = vscode.workspace.createFileSystemWatcher(`**/${resource}`);
@@ -39,18 +41,18 @@ export class Component {
         case "CodeExpectedError":
           WriteIfNotExists(this._resourceUri.fsPath, "[]");
       }
-      
+
       return [];
     }
   }
 
   async save(data) {
     if (!this._textDocument || this._textDocument.isClosed) {
-        try {
-            await vscode.workspace.fs.stat(this._resourceUri);
-        } catch (err) {
-            await WriteIfNotExists(this._resourceUri.fsPath, "[]");
-        }
+      try {
+        await vscode.workspace.fs.stat(this._resourceUri);
+      } catch (err) {
+        await WriteIfNotExists(this._resourceUri.fsPath, "[]");
+      }
     }
 
     this._textDocument = await vscode.workspace.openTextDocument(this._resourceUri);
@@ -103,6 +105,8 @@ export class Component {
 
     if (changed) {
       await this.save(items);
+
+      this.emitter.emit('changed', items)
     }
 
     return changed;
