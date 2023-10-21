@@ -40,6 +40,6 @@ export default class OpenSSLStage extends BuildStage {
     }
 
     IsEnabled(): Boolean {
-        return this.task.encryption && vscode.workspace.getConfiguration('control4').get<string>('buildMethod') == "OpenSSL"
+        return (this.task.encryption && vscode.workspace.getConfiguration('control4').get<string>('buildMethod') == "OpenSSL") && !this.task.template
     }
 }

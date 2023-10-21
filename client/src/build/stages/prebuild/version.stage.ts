@@ -7,7 +7,12 @@ export default class IncrementVersionStage extends BuildStage {
     constructor(task, pkg, ctx) { super("Version", task, pkg, ctx) }
 
     async Execute(_source: string, _intermediate: string, _destination: string): Promise<any> {
-        return await StartProcess("npm", ["version", "--no-git-tag-version", "patch"])
+        let result = await StartProcess("npm", ["version", "--no-git-tag-version", "patch"]) as string;
+        
+        //@ts-ignore
+        this.pkg.version = result.slice(1);
+
+        return result;
     }
 
     OnSuccess(result: any): String {

@@ -7,7 +7,6 @@ export default class IntermediateStage extends BuildStage {
     Execute(source: string, intermediate: string, _destination: string): Promise<any> {
         return new Promise(async (resolve, reject) => {
             try {
-                // Copy from source to intermediate
                 fse.copy(source, intermediate, {
                     filter: (i: string) => {
                         if (!this.task.merge && !this.task.encryption) {
@@ -16,7 +15,7 @@ export default class IntermediateStage extends BuildStage {
 
                         return i.indexOf("\\src\\lib") == -1;
                     }
-                }, async (err, data) => {
+                }, async (err) => {
                     if (err) {
                         reject(err)
                     } else {
@@ -26,7 +25,6 @@ export default class IntermediateStage extends BuildStage {
             } catch (err) {
                 reject(err)
             }
-            
         })
     }
 

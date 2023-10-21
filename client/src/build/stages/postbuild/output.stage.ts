@@ -1,8 +1,8 @@
-import { BuildStage } from '../../builder';
-
 import * as path from 'path';
 import * as vscode from 'vscode';
 import * as fs from 'fs';
+
+import { BuildStage } from '../../builder';
 
 export default class CopyToOutputStage extends BuildStage {
     constructor(task, pkg, ctx) { super("Output", task, pkg, ctx) }

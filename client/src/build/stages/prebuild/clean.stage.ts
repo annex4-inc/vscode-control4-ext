@@ -1,5 +1,6 @@
-import { BuildStage } from '../../builder';
 import * as fs from 'fs';
+
+import { BuildStage } from '../../builder';
 
 export default class CleanStage extends BuildStage {
   constructor(task, pkg, ctx) { super("Clean", task, pkg, ctx) }

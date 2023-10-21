@@ -1,8 +1,9 @@
-import { BuildStage } from '../../builder';
-import * as path from 'path';
-import AdmZip from 'adm-zip'
-import { ForceWrite } from '../../../utility';
 import * as vscode from 'vscode';
+import * as path from 'path';
+
+import { BuildStage } from '../../builder';
+import { ForceWrite } from '../../../utility';
+import AdmZip from 'adm-zip'
 
 export default class ZipStage extends BuildStage {
     constructor(task, pkg, ctx) { super("Zip", task, pkg, ctx) }
@@ -35,8 +36,6 @@ export default class ZipStage extends BuildStage {
     }
 
     OnFailure(result: any): String {
-        vscode.window.showErrorMessage(result.message);
-
         return `${result.message}`;
     }
 

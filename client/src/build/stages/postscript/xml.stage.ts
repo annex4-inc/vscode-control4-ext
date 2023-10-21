@@ -1,7 +1,8 @@
+import * as path from 'path';
+
 import { BuildStage } from '../../builder';
 import { Driver } from '../../../control4/driver';
 import { WriteFileContents } from '../../../utility';
-import * as path from 'path';
 
 export default class DriverXmlBuildStage extends BuildStage {
     constructor(task, pkg, ctx) { super("XML", task, pkg, ctx) }
