@@ -20,6 +20,8 @@ import CommandsResource from "./components/commands"
 import ConnectionsResource from "./components/connections"
 //import ProxiesResource from "./components/proxies"
 
+import './autocomplete/index'
+
 import { Views, Commands } from './constants/tree';
 
 import { Control4BuildTaskProvider } from './build/control4BuildTaskProvider'

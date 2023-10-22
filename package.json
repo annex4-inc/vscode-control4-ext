@@ -419,10 +419,6 @@
                 "control4.publish.author": {
                     "type": "string",
                     "default": "${env:USERNAME}"
-                },
-                "control4.publish.company": {
-                    "type": "string",
-                    "default": "vscode-control4"
                 }
             }
         },

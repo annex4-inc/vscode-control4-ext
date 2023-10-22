@@ -53,6 +53,10 @@ export class DriverIcon {
     image_source: string
 }
 
+function GetEnvironmentVariable(variable) {
+    return process.env[variable]
+}
+
 /**
  * Manages all data in a Control4 driver
  */
@@ -86,6 +90,9 @@ export class Driver {
     UI: C4UI[]
     capabilities: any
 
+    composer_categories: []
+    navigator_categories: []
+    
     serialsettings: string
     notification_attachment_provider: Boolean
     schedule_default: C4Schedule
@@ -105,7 +112,7 @@ export class Driver {
         this.filename = filename;
         this.copyright = `Copyright ${new Date().getFullYear()}`;
         this.creator = vscode.workspace.getConfiguration('control4.publish').get<string>('author');
-        this.manufacturer = vscode.workspace.getConfiguration('control4.publish').get<string>('company');
+        this.manufacturer = "";
         this.name = "";
         this.model = "";
         this.created = new Date();

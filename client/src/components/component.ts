@@ -7,7 +7,7 @@ export class Component {
   protected _textDocument: vscode.TextDocument;
   protected _resourceUri: vscode.Uri;
   public data: any;
-  public emitter: EventEmitter;
+  public emitter: EventEmitter = new EventEmitter();
 
   constructor(resource) {
     if (vscode.workspace.workspaceFolders !== undefined) {
@@ -20,6 +20,13 @@ export class Component {
 
     watcher.onDidChange(() => {
       this.load();
+
+      try {
+        this.emitter.emit('changed', this.data)  
+      } catch (err) {
+        console.log(err)
+      }
+      
     })
   }
 
