@@ -3,34 +3,7 @@ import ActionsResource from '../components/actions';
 import { C4Action } from '../control4/C4Action';
 import { ForceWrite } from '../utility';
 import vscode from 'vscode';
-
-const Parameter_Map = {
-    //"LIST": "", // Handled by the Enumerate function
-    "STRING": "string",
-    "RANGED_INTEGER": "number",
-    "RANGED_FLOAT": "number",
-    "PASSWORD": "string",
-    "LABEL": "string",
-    "SCROLL": "number",
-    "TRACK": "number",
-    "DEVICE": "string[]",
-    "COLOR": "string",
-    "DYNAMIC": "string",
-    "LINK": "string",
-    "CUSTOM": "string",
-}
-
-const Enumerate = (name: string, values: any[]) => {
-    let e = [`---@alias ${name}`]
-
-    values.forEach((v) => {
-        e.push(`---| "${v}"`)
-    })
-
-    e.push("")
-
-    return e;
-}
+import { Parameter_Map, Enumerate } from './_shared';
 
 ActionsResource.emitter.on("changed", async (items: C4Action[]) => {
     const workspacePath = vscode.workspace.workspaceFolders[0].uri.fsPath;

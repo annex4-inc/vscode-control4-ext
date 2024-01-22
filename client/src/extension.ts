@@ -20,7 +20,9 @@ import CommandsResource from "./components/commands"
 import ConnectionsResource from "./components/connections"
 //import ProxiesResource from "./components/proxies"
 
-import './autocomplete/index'
+import './autocomplete/actions'
+import './autocomplete/properties'
+import './autocomplete/commands'
 
 import { Views, Commands } from './constants/tree';
 
