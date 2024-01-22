@@ -4,6 +4,10 @@ import * as fs from 'fs';
 
 import { BuildStage } from '../../builder';
 
+const GetUserPath = () => {
+    return process.platform === "win32" ? process.env.USERPROFILE : process.env.USER;
+}
+
 export default class CopyToOutputStage extends BuildStage {
     constructor(task, pkg, ctx) { super("Output", task, pkg, ctx) }
 
@@ -12,8 +16,8 @@ export default class CopyToOutputStage extends BuildStage {
             try {
                 if (vscode.workspace.getConfiguration('control4.build').get<boolean>('exportToDriverLocation')) {
                     let root = (this.pkg.control4 && this.pkg.control4.agent) ? 
-                        path.join(process.env.USERPROFILE, "Documents", "Control4", "Agents") :
-                        path.join(process.env.USERPROFILE, "Documents", "Control4", "Drivers")
+                        path.join(GetUserPath(), "Documents", "Control4", "Agents") :
+                        path.join(GetUserPath(), "Documents", "Control4", "Drivers")
             
                     let dst_file = path.join(root, this.pkg.name + ".c4z")
                     let src_file = path.join(destination, this.pkg.name + ".c4z")

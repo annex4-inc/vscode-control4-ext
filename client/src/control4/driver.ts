@@ -229,6 +229,8 @@ export class Driver {
                     })
                 } else if (key == "schedule_default") {
                     nCapabilities.import((value as C4Schedule).toXml())
+                } else if (Array.isArray(value)) {
+                    nCapabilities.ele(key).txt(value.join(","))
                 } else if (typeof (value) == "object") {
                     if (value.attributes) {
                         if (typeof (value.value) == "object") {
@@ -245,6 +247,7 @@ export class Driver {
                             nCapabilities.ele(key).txt(value.value)
                         }
                     }
+
                 } else {
                     nCapabilities.ele(key).txt(this.capabilities[key]);
                 }
@@ -327,6 +330,22 @@ export class Driver {
                 }
             })
         }
+
+        if (this.composer_categories && this.composer_categories.length > 0) {
+            var composerCategory = root.ele("composer_categories");
+
+            this.composer_categories.forEach((c) => {
+                composerCategory.ele("category").txt(c);
+            })
+        }
+
+        if (this.navigator_categories && this.navigator_categories.length > 0) {
+            var navigatorCategory = root.ele("navigator_categories");
+
+            this.navigator_categories.forEach((c) => {
+                navigatorCategory.ele("category").txt(c);
+            })
+        }        
 
         if (this.events && this.events.length > 0) {
             var nEvents = root.ele("events")

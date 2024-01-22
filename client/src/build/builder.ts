@@ -32,15 +32,36 @@ export abstract class BuildStage {
 }
 
 const BuildStages =  ["prebuild", "prescript", "script", "postscript", "build", "postbuild"]
+const Stages : Array<any> = [];
 
-const GetBuildStages = async(stage: string, task: Control4BuildTaskDefinition, pkg: Package, context: vscode.ExtensionContext) => {
+const Initialize = async () => {
+    Stages.push(await import('./stages/prebuild/clean.stage'))
+    Stages.push(await import('./stages/prebuild/version.stage'))
+
+    Stages.push(await import('./stages/prescript/intermediate.stage'))
+
+    Stages.push(await import('./stages/script/dependency.stage'))
+    Stages.push(await import('./stages/script/inject.stage'))
+    Stages.push(await import('./stages/script/merge.stage'))
+
+    Stages.push(await import('./stages/postscript/openssl.stage'))
+    Stages.push(await import('./stages/postscript/xml.stage'))
+
+    Stages.push(await import('./stages/build/manifest.stage'))
+    Stages.push(await import('./stages/build/zip.stage'))
+
+    Stages.push(await import('./stages/postbuild/output.stage'))
+    Stages.push(await import('./stages/postbuild/deploy.stage'))
+}
+
+Initialize();
+
+const GetBuildStages = async(stage: string) => {
     let files = await glob("**/**.stage.[tj]s", {cwd: path.join(__dirname, `./stages/${stage}`)})
-    let stages : Array<BuildStage> = [];
+    let stages : Array<any> = [];
 
     for (let i = 0; i < files.length; i++) {
-        let module = await import(path.join(__dirname, `./stages/${stage}`, files[i]))
-
-        stages.push(new module.default(task, pkg, context))
+        stages.push(await import(`./stages/${stage}/${files[i]}`));
     }
 
     return stages
@@ -59,11 +80,9 @@ export class Builder {
 
     let stages = new Array<BuildStage>();
 
-    for (let i = 0; i < BuildStages.length; i++) {
-        let nested = await GetBuildStages(BuildStages[i], task, pkg, context);
-        for (let i = 0; i < nested.length; i++) {
-            stages.push(nested[i])
-        }
+    for (let i = 0; i < Stages.length; i++) {
+        //@ts-ignore
+        stages.push(new Stages[i].default(task, pkg, context))
     }
 
     let success = 0;
