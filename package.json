@@ -11,7 +11,7 @@
         "url": "https://github.com/annex4-inc/vscode-control4-ext.git"
     },
     "engines": {
-        "vscode": "^1.74.0"
+        "vscode": "^1.80.0"
     },
     "extensionKind": [
         "ui",
