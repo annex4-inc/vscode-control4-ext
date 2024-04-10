@@ -11,10 +11,10 @@
     },
     "scripts": {
         "web": "rollup --config ./build/rollup.config.mjs",
-        "test": "node ./out/test/runTest.js --disable-extensions"
+        "test": "tsc -b && node out/test/runTest.js"
     },
     "engines": {
-        "vscode": "^1.52.0"
+        "vscode": "^1.86.0"
     },
     "dependencies": {
         "adm-zip": "^0.5.10",
@@ -40,7 +40,8 @@
         "@types/vscode": "^1.76.0",
         "@types/xml": "^1.0.8",
         "@vscode/codicons": "^0.0.33",
-        "@vscode/test-electron": "^2.3.4",
+        "@vscode/test-electron": "^2.3.9",
+        "@vscode/test-cli": "0.0.6",
         "glob": "^10.3.3",
         "mocha": "^10.2.0",
         "rollup": "^3.26.3",

@@ -40,21 +40,8 @@
 			"runtimeExecutable": "${execPath}",
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}",
-                "--extensionTestsPath=${workspaceFolder}/client/out/test/suite",
-				"${workspaceFolder}/client/src/test/fixtures/fixture_1/"
-            ],
-            "outFiles": ["${workspaceFolder}/client/out/test/**/*.js"],
-			"preLaunchTask": "npm: watch"
-		},
-        {
-			"name": "Run Extensive Tests",
-			"type": "extensionHost",
-			"request": "launch",
-			"runtimeExecutable": "${execPath}",
-			"args": [
-				"--extensionDevelopmentPath=${workspaceFolder}",
-                "--extensionTestsPath=${workspaceFolder}/client/out/test/suite_complete",
-				"${workspaceFolder}/client/src/test/fixtures/fixture_1/"
+                "--extensionTestsPath=${workspaceFolder}/client/out/test/suite/index",
+				"${workspaceFolder}/client/out/test/fixtures/fixture_1/"
             ],
             "outFiles": ["${workspaceFolder}/client/out/test/**/*.js"],
 			"preLaunchTask": "npm: watch"

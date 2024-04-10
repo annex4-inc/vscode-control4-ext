@@ -1,5 +1,5 @@
 import { DOMParserImpl as dom } from 'xmldom-ts'
-import { Driver } from '../../control4/driver';
+import { Driver } from '../../src/control4/driver';
 import { HasNode, HasNodeValue } from '../utils';
 
 suite('Driver Test Suite', () => {

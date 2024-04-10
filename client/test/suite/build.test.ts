@@ -3,9 +3,7 @@ import * as vscode from 'vscode';
 
 import path from 'path';
 
-import { BuildVersion, Builder } from '../../build/builder';
-import { before, suiteSetup } from 'mocha';
-import { control4Create } from '../../commands';
+import { BuildVersion, Builder } from '../../src/build/builder';
 
 suite('Driver Build', () => {
     let root = path.resolve("./temp/test");
@@ -13,23 +11,21 @@ suite('Driver Build', () => {
 
     suiteSetup(async () => {
         try {
-            const ext = vscode.extensions.getExtension('annex4-inc.vscode-control4');            
+            const ext = vscode.extensions.getExtension('annex4-inc.vscode-control4');
             
-            if (ext) {
+            if (ext && !ext.isActive) {
                 context = await ext.activate();
             }
         } catch (err) {
-            console.log(err)
+            assert.fail(err.message);
         }
     })
 
-    before(async () => {
-        await control4Create(root, "test")
+    setup(async () => {
+        //await control4Create(root, "test")
     })
 
     test('Builds a c4z file', async () => {
-        console.log(context)
-
         let iterator = Builder.Build(root, {
             version: BuildVersion.Debug,
             development: false,
