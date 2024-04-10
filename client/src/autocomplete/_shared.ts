@@ -15,7 +15,7 @@ export const Parameter_Map = {
 }
 
 export const Enumerate = (name: string, values: any[]) => {
-    let e = [`---@alias ${name}`]
+    let e = [`---@alias ${CleanName(name)}`]
 
     values.forEach((v) => {
         e.push(`---| "${v}"`)
@@ -28,4 +28,8 @@ export const Enumerate = (name: string, values: any[]) => {
 
 export const CleanName = (name: string) => {
     return name.replace(/ /g, "").replace(/-/g, "")
+    .replace(/\[/g, "")
+    .replace(/\]/g, "")
+    .replace(/\)/g, "")
+    .replace(/\(/g, "")
 }

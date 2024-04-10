@@ -19,8 +19,12 @@ CommandsResource.emitter.on("changed", async (items: C4Command[]) => {
         lines.push(`---@class Command.Params.${CleanName(command.name)}`)
         if (command.params) {
             command.params.forEach((param) => {
-                let name = `${CleanName(command.name)+CleanName(param.name)}Param`
-                lines.push(`---@field ${CleanName(param.name)} ${Parameter_Map[param.type] || name}`)
+                if(param.type.includes("CUSTOM_SELECT")) {
+                    lines.push(`---@field ${CleanName(param.name)} unknown`);
+                } else {
+                    let name = `${CleanName(command.name)+CleanName(param.name)}Param`
+                    lines.push(`---@field ${CleanName(param.name)} ${Parameter_Map[param.type] || name}`)
+                }
             })
 
             lines.push("")
