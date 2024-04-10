@@ -21,10 +21,6 @@ suite('Driver Build', () => {
         }
     })
 
-    setup(async () => {
-        //await control4Create(root, "test")
-    })
-
     test('Builds a c4z file', async () => {
         let iterator = Builder.Build(root, {
             version: BuildVersion.Debug,

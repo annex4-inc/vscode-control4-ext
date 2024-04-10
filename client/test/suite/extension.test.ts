@@ -18,10 +18,6 @@ suite('Extension Test Suite', () => {
         }
     })
 
-    teardown(() => {
-        vscode.window.showInformationMessage('All tests done!');
-    })
-
     test("It initializes control4.import command", async () => {
         let result = await vscode.commands.getCommands(true)
         
