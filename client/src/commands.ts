@@ -41,7 +41,7 @@ async function control4Create(rootPath: string, name: string) {
 
       var handler = await fsPromises.open(path.join(rootPath, "package.json"), 'wx');
 
-      templatePackage.name = name.toLowerCase().replace(" ", "_");
+      templatePackage.name = name.toLowerCase().replace(/ /g, "_");
       templatePackage.control4.name = name;
       templatePackage.control4.created = new Date().toLocaleString('en-US', { timeZone: 'UTC' });
 
