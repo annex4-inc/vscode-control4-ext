@@ -1,5 +1,5 @@
 import path from 'path';
-import ActionsResource from '../components/actions';
+import { ActionsResource } from '../components';
 import { C4Action } from '../control4/C4Action';
 import { ForceWrite } from '../utility';
 import vscode from 'vscode';

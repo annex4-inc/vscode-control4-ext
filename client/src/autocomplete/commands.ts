@@ -1,5 +1,5 @@
 import path from 'path';
-import CommandsResource from '../components/commands';
+import { CommandsResource } from '../components';
 import { C4Command } from '../control4/C4Command';
 import { ForceWrite } from '../utility';
 import vscode from 'vscode';

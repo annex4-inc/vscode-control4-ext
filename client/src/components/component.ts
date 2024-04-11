@@ -2,19 +2,23 @@ import * as vscode from 'vscode';
 import { WriteIfNotExists } from '../utility';
 import isMatch from 'lodash.ismatch';
 import { EventEmitter } from 'events';
+import { Serializable, TypedJSON } from 'typedjson';
 
-export class Component {
+export class Component<T> {
   protected _textDocument: vscode.TextDocument;
   protected _resourceUri: vscode.Uri;
   public data: any;
+  public values: T[];
+  public type: Serializable<T>;
   public emitter: EventEmitter = new EventEmitter();
 
-  constructor(resource) {
-    if (vscode.workspace.workspaceFolders !== undefined) {
-      this._resourceUri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, 'components', resource);
+  constructor(resource, type: Serializable<T>) {
+    if (vscode.workspace.workspaceFolders == undefined) {
+      return;
     }
 
-    //this._resourceUri = vscode.Uri.joinPath(vscode.workspace.name, 'components', resource);
+    this.type = type;
+    this._resourceUri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, 'components', resource);
 
     let watcher = vscode.workspace.createFileSystemWatcher(`**/${resource}`);
 
@@ -26,7 +30,6 @@ export class Component {
       } catch (err) {
         console.log(err)
       }
-      
     })
   }
 
@@ -41,6 +44,7 @@ export class Component {
       var text = this._textDocument.getText();
 
       this.data = JSON.parse(text);
+      this.values = TypedJSON.parseAsArray<T>(this.data, this.type);
 
       return this.data;
     } catch (exception) {
@@ -72,6 +76,16 @@ export class Component {
     await vscode.workspace.applyEdit(edit);
 
     return await this._textDocument.save();
+  }
+
+  Get() {
+    return this.values;
+  }  
+
+  async Reload() {
+    await this.load()
+    this.values = TypedJSON.parseAsArray<T>(this.data, this.type);
+    return this.values;
   }
 
   async Create(item): Promise<boolean> {

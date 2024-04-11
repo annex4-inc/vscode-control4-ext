@@ -12,12 +12,14 @@ import { C4Property } from './C4Property';
 import { C4Connection, C4ConnectionClass, Direction } from './C4Connection';
 import { C4Proxy, C4ProxyClass, C4ProxyType } from './C4Proxy';
 
-import ActionsResource from '../components/actions';
-import CommandsResource from '../components/commands';
-import ConnectionsResource from '../components/connections';
-import EventsResource from '../components/events';
-import PropertiesResource from '../components/properties';
-import ProxiesResource from '../components/proxies';
+import {
+    ActionsResource, 
+    CommandsResource,
+    ConnectionsResource,
+    EventsResource,
+    PropertiesResource,
+    ProxiesResource
+} from '../components'
 
 import { TypedJSON } from 'typedjson';
 import { C4UI } from '.';
@@ -492,8 +494,6 @@ export class Driver {
     static Parse(xml): Driver {
         const doc = builder.create({parser: { comment: () => undefined }}, xml).root();
         const driver = doc.toObject();
-
-        console.log(driver);
 
         //@ts-ignore
         const devicedata = driver.devicedata;

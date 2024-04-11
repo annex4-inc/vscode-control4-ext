@@ -8,10 +8,10 @@ export class PanelManager {
   private script: string;
 
   public type : string;
-  public resource: Component;
+  public resource: Component<unknown>;
   public extensionUri : vscode.Uri;
   
-  constructor(extensionUri: vscode.Uri, script: string, type: string, resource: Component) {
+  constructor(extensionUri: vscode.Uri, script: string, type: string, resource: Component<unknown>) {
     this.extensionUri = extensionUri;
     this.script = script;
     this.type = type;

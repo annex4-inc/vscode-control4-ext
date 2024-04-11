@@ -6,13 +6,15 @@ import * as path from 'path';
 import * as fs from 'fs';
 import { Driver } from './control4/driver';
 
-import ActionsResource from './components/actions';
-import PropertiesResource from './components/properties';
-import EventsResource from './components/events';
-import CommandsResource from './components/commands';
-import ConnectionsResource from './components/connections';
-import ProxiesResource from './components/proxies';
-import UIResource from "./components/ui";
+import {
+  ActionsResource, 
+  CommandsResource,
+  ConnectionsResource,
+  EventsResource,
+  PropertiesResource,
+  ProxiesResource,
+  UIResource
+} from './components'
 
 // Retrieve the package, settings, and tasks from json template
 import pjson from "./resources/package.json";

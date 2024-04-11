@@ -1,5 +1,5 @@
 import path from 'path';
-import PropertiesResource from '../components/properties';
+import { PropertiesResource } from '../components';
 import { C4Property } from '../control4/C4Property';
 import { ForceWrite } from '../utility';
 import vscode from 'vscode';

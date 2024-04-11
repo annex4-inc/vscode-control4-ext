@@ -13,12 +13,13 @@ import * as path from 'path';
 import { workspace } from 'vscode';
 import { control4Create, control4Import, rebuildTestDependencies } from './commands';
 
-import ActionsResource from "./components/actions"
-import PropertiesResource from "./components/properties"
-import EventsResource from "./components/events"
-import CommandsResource from "./components/commands"
-import ConnectionsResource from "./components/connections"
-//import ProxiesResource from "./components/proxies"
+import {
+  ActionsResource, 
+  CommandsResource,
+  ConnectionsResource,
+  EventsResource,
+  PropertiesResource,
+} from './components'
 
 import './autocomplete/actions'
 import './autocomplete/properties'
