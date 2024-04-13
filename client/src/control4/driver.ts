@@ -27,6 +27,7 @@ import { C4NavigatorDisplayOption } from './capabilities/C4NavigatorDisplayOptio
 import { C4WebviewUrl } from './capabilities/C4WebviewUrl';
 import { C4State } from './C4State';
 import { C4Schedule } from './capabilities/C4Schedule';
+import { asBoolean, cleanXmlArray } from './utility';
 
 function getEnumKeyByEnumValue<T extends { [index: string]: string }>(myEnum: T, enumValue: string): keyof T | null {
     let keys = Object.keys(myEnum).filter(x => myEnum[x] == enumValue);
@@ -449,48 +450,6 @@ export class Driver {
         })
     }
 
-    static CleanXmlArray(object, expectedTag): Array<any> {
-        let root = object;
-
-        if (Object.keys(root).length === 0) {
-            return null;
-        }
-
-        if (!Array.isArray(object)) {
-            if (object['#']) {
-                root = object['#']
-            }
-
-            if (object[expectedTag]) {
-                root = object[expectedTag]
-            }
-        }
-
-        let ret = [];
-
-        if (Array.isArray(root)) {
-            for (let i = 0; i < root.length; i++) {
-                let element = root[i];
-
-                if (element[expectedTag]) {
-                    if (Array.isArray(element[expectedTag])) {
-                        for (let j = 0; j < element[expectedTag].length; j++) {
-                            ret.push(element[expectedTag][j])
-                        }
-                    } else {
-                        ret.push(element[expectedTag])
-                    }
-                } else if (element["!"] == undefined) {
-                    ret.push(element)
-                }
-            }
-        } else {
-            ret.push(root)
-        }
-
-        return ret;
-    }
-
     static Parse(xml): Driver {
         const doc = builder.create({parser: { comment: () => undefined }}, xml).root();
         const driver = doc.toObject();
@@ -561,7 +520,7 @@ export class Driver {
         }
 
         if (devicedata.connections) {
-            const connections = this.CleanXmlArray(devicedata.connections, "connection")
+            const connections = cleanXmlArray(devicedata.connections, "connection")
 
             if (connections) {
                 connections.forEach(function (c) {
@@ -571,7 +530,7 @@ export class Driver {
         }
 
         if (devicedata.events) {
-            const events = this.CleanXmlArray(devicedata.events, "event")
+            const events = cleanXmlArray(devicedata.events, "event")
 
             if (events) {
                 d.events = TypedJSON.parseAsArray<C4Event>(events, C4Event);
@@ -579,7 +538,7 @@ export class Driver {
         }
 
         if (devicedata.config.properties) {
-            const properties = this.CleanXmlArray(devicedata.config.properties, "property")
+            const properties = cleanXmlArray(devicedata.config.properties, "property")
 
             if (properties) {
                 properties.forEach(function (p) {
@@ -589,7 +548,7 @@ export class Driver {
         }
 
         if (devicedata.config.actions) {
-            const actions = this.CleanXmlArray(devicedata.config.actions, "action")
+            const actions = cleanXmlArray(devicedata.config.actions, "action")
 
             if (actions) {
                 actions.forEach(function (a) {
@@ -599,7 +558,7 @@ export class Driver {
         }
 
         if (devicedata.config.commands) {
-            const commands = this.CleanXmlArray(devicedata.config.commands, "command")
+            const commands = cleanXmlArray(devicedata.config.commands, "command")
 
             if (commands) {
                 commands.forEach(function (c) {
@@ -613,7 +572,7 @@ export class Driver {
         }
 
         if (devicedata.proxies) {
-            const proxies = this.CleanXmlArray(devicedata.proxies, "proxy")
+            const proxies = cleanXmlArray(devicedata.proxies, "proxy")
 
             if (proxies) {
                 proxies.forEach(function (p) {
@@ -628,12 +587,4 @@ export class Driver {
 
         return d;
     }
-}
-
-export const asInt = function (v: string) {
-    return typeof (v) == "string" ? Number.parseInt(v) : v
-}
-
-export const asBoolean = function (v: string): boolean {
-    return typeof (v) == "string" ? v.toLowerCase() == "true" : v
 }

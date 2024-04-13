@@ -10,8 +10,6 @@ suite('Extension Test Suite', () => {
             
             if (ext && !ext.isActive) {
                 context = await ext.activate();
-
-                console.log(JSON.stringify(context))
             }
         } catch (err) {
             assert.fail(err.message);

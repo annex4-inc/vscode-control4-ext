@@ -13,6 +13,7 @@ export default class DriverXmlBuildStage extends BuildStage {
         
         let content = driver.build();
         
+
         return await WriteFileContents(path.join(intermediate, "driver.xml"), content);
     }
 

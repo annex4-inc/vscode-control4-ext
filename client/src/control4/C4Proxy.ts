@@ -1,6 +1,7 @@
+import 'reflect-metadata';
 import { jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
-import { asInt, asBoolean } from './driver';
+import { asInt, asBoolean } from './utility';
 
 export enum C4ImageSource {
     Driver = "c4z",

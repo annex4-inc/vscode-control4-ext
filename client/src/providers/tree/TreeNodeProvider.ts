@@ -33,7 +33,6 @@ export abstract class TreeNodeProvider<T> implements vscode.TreeDataProvider<T>,
   }
 
   public register(treeView, selectCommand, removeCommand): vscode.Disposable[] {
-    console.log(`${treeView} - ${selectCommand} - ${removeCommand}`);
     return [
       vscode.window.registerTreeDataProvider(treeView, this),
       vscode.commands.registerCommand(selectCommand, this.onSelect, this),

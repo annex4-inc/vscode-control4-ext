@@ -1,4 +1,4 @@
-import { C4Action, C4Command, C4Connection, C4Event, C4Property, C4Proxy, C4UI } from '../control4';
+import { C4Property, C4Action, C4Command, C4Connection, C4Event, C4Proxy, C4UI } from '../control4';
 import { Component } from './component';
 
 export const ActionsResource     = new Component<C4Action>('actions.c4c', C4Action);

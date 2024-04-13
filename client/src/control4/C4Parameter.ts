@@ -1,8 +1,7 @@
-
 import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
-import { asBoolean, Driver } from "./driver";
+import { asBoolean, cleanXmlArray } from './utility';
 
 export class ParameterType {
     static readonly STRING: string = "STRING";
@@ -94,7 +93,7 @@ export class C4Parameter {
 
         a.name = obj.name;
         a.type = obj.type;
-        a.items = obj.items ? Driver.CleanXmlArray(obj.items, "item") : undefined;
+        a.items = obj.items ? cleanXmlArray(obj.items, "item") : undefined;
         a.default = typeof (obj.default) == "object" ? "" : obj.default;
         a.maximum = typeof (obj.maximum) == 'string' ? Number.parseInt(obj.maximum) : obj.maximum;
         a.minimum = typeof (obj.minimum) == 'string' ? Number.parseInt(obj.minimum) : obj.minimum;

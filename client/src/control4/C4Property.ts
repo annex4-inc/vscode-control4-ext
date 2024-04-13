@@ -1,29 +1,16 @@
-
 import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
-import { asBoolean } from './driver';
-
-export class PropertyType {
-    static readonly STRING: string = "STRING";
-    static readonly LIST: string = "LIST";
-    static readonly RANGED_INTEGER: string = "RANGED_INTEGER";
-    static readonly RANGED_FLOAT: string = "RANGED_FLOAT";
-    static readonly PASSWORD: string = "PASSWORD";
-    static readonly LABEL: string = "LABEL";
-    static readonly SCROLL: string = "SCROLL";
-    static readonly TRACK: string = "TRACK";
-    static readonly DEVICE: string = "DEVICE_SELECTOR";
-    static readonly COLOR: string = "COLOR_SELECTOR";
-    static readonly DYNAMIC: string = "DYNAMIC_LIST";
-    static readonly LINK: string = "LINK";
-    static readonly CUSTOM: string = "CUSTOM_SELECT";
-}
+import { asBoolean } from './utility';
 
 @jsonObject
 export class C4Property {
-    @jsonMember name: string
-    @jsonMember type: string
+    @jsonMember
+    name: string
+
+    @jsonMember
+    type: string
+    
     @jsonMember({
         deserializer: value => {
             if (typeof(value) == "string") {
@@ -65,8 +52,12 @@ export class C4Property {
             }
         }
     }) readonly: boolean
-    @jsonArrayMember(String) items?: string[]
-    @jsonMember password?: boolean
+
+    @jsonArrayMember(String)
+    items?: string[]
+
+    @jsonMember
+    password?: boolean
 
     toXml() {
         let node = builder.create("property").root();
@@ -103,3 +94,22 @@ export class C4Property {
         return a
     }
 }
+
+/*
+@jsonObject
+export class PropertyType {
+    static readonly STRING: string = "STRING";
+    static readonly LIST: string = "LIST";
+    static readonly RANGED_INTEGER: string = "RANGED_INTEGER";
+    static readonly RANGED_FLOAT: string = "RANGED_FLOAT";
+    static readonly PASSWORD: string = "PASSWORD";
+    static readonly LABEL: string = "LABEL";
+    static readonly SCROLL: string = "SCROLL";
+    static readonly TRACK: string = "TRACK";
+    static readonly DEVICE: string = "DEVICE_SELECTOR";
+    static readonly COLOR: string = "COLOR_SELECTOR";
+    static readonly DYNAMIC: string = "DYNAMIC_LIST";
+    static readonly LINK: string = "LINK";
+    static readonly CUSTOM: string = "CUSTOM_SELECT";
+}
+*/

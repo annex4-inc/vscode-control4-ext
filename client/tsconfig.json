@@ -4,7 +4,7 @@
 		"module": "commonjs",
 		"target": "es2020",
 		"outDir": "out",
-		"rootDir": ".",
+		"rootDir": "src",
 		"lib": [ "es2020",  "DOM" ],
         "resolveJsonModule": true,
         "esModuleInterop": true,
@@ -14,6 +14,7 @@
 		"sourceMap": true
 	},
 	"exclude": [
+		"test",
         "node_modules",
         "src/svelte",
         "src/resources"

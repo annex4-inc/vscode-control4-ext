@@ -5,7 +5,7 @@ import * as builder from 'xmlbuilder2';
 import C4InterfaceDataCommand from './C4InterfaceDataCommand';
 import C4InterfaceList from './C4InterfaceList';
 
-import { asBoolean } from "../driver";
+import { asBoolean } from "../utility";
 import C4InterfaceTrait from './C4InterfaceTrait';
 
 @jsonObject

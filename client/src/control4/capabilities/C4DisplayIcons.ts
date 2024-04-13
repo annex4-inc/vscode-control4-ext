@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
-import { Driver } from '../driver';
 import C4InterfaceIcon from '../interface/C4InterfaceIcon';
 import C4StateIcon from './C4StateIcon';
+import { cleanXmlArray } from '../utility';
 
 @jsonObject
 export class C4DisplayIcons {
@@ -66,8 +66,8 @@ export class C4DisplayIcons {
         let option = new C4DisplayIcons();
             option.states = {}
 
-        let defaults = Driver.CleanXmlArray(value.display_icons, "Icon")
-        let states = Driver.CleanXmlArray(value.display_icons, "state")
+        let defaults = cleanXmlArray(value.display_icons, "Icon")
+        let states = cleanXmlArray(value.display_icons, "state")
 
         option.defaults = defaults.map((d) => {
             return C4InterfaceIcon.fromXml(d)
