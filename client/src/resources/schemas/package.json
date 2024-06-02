@@ -291,6 +291,14 @@
                     "type": "string",
                     "description": "The path to the documentation file to load"
                 },
+                "identifyImage": {
+                    "type": "string",
+                    "description": "The image used in the identify dialog"
+                },
+                "identifyText": {
+                    "type": "string",
+                    "description": "The text shown in the identify dialog"
+                },
                 "capabilities": {
                     "description": "Determines if the driver supports notifications",
                     "type": "object",
