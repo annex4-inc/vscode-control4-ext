@@ -89,8 +89,8 @@ export default class MergeStage implements BuildStage {
             // Check to make sure the library exists, if not don't include it.
             // This could be caused by a package using its own require statements in which case it should handle the package preload.
             if (fileDocument) {
-                modules = modules + `package.preload['${match[1]}'] = (function(...)\n ${fileDocument} end)\n`
-            }            
+                modules = modules + `package.preload['${match[1]}'] = (function(...)\n  local fn = load([[\n\n${fileDocument}\n\n]])\n\n  return fn()\nend)()\n`
+            }
         }
 
         srcDocument = modules + srcDocument;
