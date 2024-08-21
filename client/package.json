@@ -36,7 +36,7 @@
         "@types/adm-zip": "^0.5.5",
         "@types/glob": "^8.1.0",
         "@types/mocha": "10.0.1",
-        "@types/node": "18.14.6",
+        "@types/node": "22.4.2",
         "@types/vscode": "^1.92.0",
         "@types/xml": "^1.0.8",
         "@vscode/codicons": "^0.0.33",
