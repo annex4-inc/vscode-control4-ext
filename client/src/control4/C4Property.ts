@@ -5,12 +5,10 @@ import { asBoolean } from './utility';
 
 @jsonObject
 export class C4Property {
-    @jsonMember
-    name: string
-
-    @jsonMember
-    type: string
-    
+    @jsonMember name: string
+    @jsonMember type: string
+    @jsonMember description: string
+    @jsonMember tooltip: string
     @jsonMember({
         deserializer: value => {
             if (typeof(value) == "string") {

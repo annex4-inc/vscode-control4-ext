@@ -67,6 +67,8 @@ export class Driver {
     creator: string
     manufacturer: string
     documentation: string
+    identifyImage: string
+    identifyText: string
     name: string
     model: string
     created: Date
@@ -381,6 +383,22 @@ export class Driver {
         // Documentation is mandatory, even if empty
         config.ele("documentation", { file: this.documentation })
 
+        if(this.identifyImage) {
+            config.ele("identify_image").txt(this.identifyImage);
+        }
+
+        if(this.identifyText) {
+            config.ele("identify_text").txt(this.identifyText);
+        }
+
+        if (this.tabs && this.tabs.length > 0) {
+            let tabs = config.ele("tabs");
+            
+            this.tabs.forEach((t: C4Tab) => {
+                tabs.import(t.toXml())
+            })
+        }
+
         if (this.commands && this.commands.length > 0) {
             let commands = config.ele("commands");
 
@@ -480,6 +498,8 @@ export class Driver {
         d.icon = icon
         d.control = devicedata.control
         d.controlmethod = devicedata.controlmethod
+        d.identifyImage = devicedata.identify_image
+        d.identifyText = devicedata.identify_text
         d.driver = devicedata.driver
 
         if (devicedata.capabilities) {
