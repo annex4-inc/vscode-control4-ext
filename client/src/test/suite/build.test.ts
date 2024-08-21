@@ -3,7 +3,7 @@ import * as vscode from 'vscode';
 
 import path from 'path';
 
-import { BuildVersion, Builder } from '../../src/build/builder';
+import { BuildVersion, Builder } from '../../build/builder';
 
 suite('Driver Build', () => {
     let root = path.resolve("./temp/test");

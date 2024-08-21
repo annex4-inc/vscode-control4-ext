@@ -14,7 +14,6 @@
 		"sourceMap": true
 	},
 	"exclude": [
-		"test",
         "node_modules",
         "src/svelte",
         "src/resources"
