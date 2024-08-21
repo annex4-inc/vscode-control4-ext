@@ -4,6 +4,6 @@ module.exports = defineConfig({
     label: 'Tests',
     workspaceFolder: './tmp',
     files: 'out/test/**/*.test.js', 
-    version: '1.86.0', 
+    version: '1.92.0', 
     mocha: { ui: 'tdd', timeout: 20000 }
 });
