@@ -6,7 +6,7 @@ import path from 'path';
 import { BuildVersion, Builder } from '../../build/builder';
 
 suite('Driver Build', () => {
-    let root = path.resolve("./temp/test");
+    let root = path.resolve("../../src/test/fixtures/fixture1");
     let context : vscode.ExtensionContext
 
     suiteSetup(async () => {
