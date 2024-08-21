@@ -268,6 +268,7 @@
                             "Lighting",
                             "User Interface",
                             "Audio/Video",
+                            "Blinds/Shades",
                             "Motorization",
                             "Sensors",
                             "HVAC",
@@ -278,6 +279,10 @@
                             "Unknown"
                         ]
                     }
+                },
+                "navigator_categories": {
+                    "type": "array",
+                    "items": { "type": "string"}
                 },
                 "combo": {
                     "type": "boolean",

@@ -1,8 +1,7 @@
-
 import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
-import { asBoolean, Driver } from "./driver";
+import { asBoolean, cleanXmlArray } from './utility';
 
 export class ParameterType {
     static readonly STRING: string = "STRING";

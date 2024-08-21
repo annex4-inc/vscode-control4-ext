@@ -1,6 +1,7 @@
+import 'reflect-metadata';
 import { jsonObject, jsonMember, jsonArrayMember } from 'typedjson';
 import * as builder from 'xmlbuilder2';
-import { Driver, asInt, asBoolean } from './driver';
+import { asInt, asBoolean, cleanXmlArray } from './utility';
 
 export enum Direction {
     Front,
@@ -122,7 +123,7 @@ export class C4ConnectionClass {
         c.classname = obj.classname;
 
         if (obj.ports) {
-            let ports = Driver.CleanXmlArray(obj.ports, "port")
+            let ports = cleanXmlArray(obj.ports, "port")
 
             c.ports = ports.map((e): C4Port => {
                 return C4Port.fromXml(e)
@@ -190,7 +191,7 @@ export class C4Connection {
         c.idautobind = typeof (obj.idautobind) == "string" ? Number.parseInt(obj.idautobind) : obj.idautobind
 
         if (obj.classes) {
-            let classes = Driver.CleanXmlArray(obj.classes, "class")
+            let classes = cleanXmlArray(obj.classes, "class")
 
             c.classes = classes.map((e): C4ConnectionClass => {
                 return C4ConnectionClass.fromXml(e)

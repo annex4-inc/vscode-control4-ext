@@ -29,8 +29,6 @@ export class UINodeProvider extends TreeNodeProvider<UINode> {
       }
 
       try {
-          console.log(element)
-
           if (element) {
               var nodes = [];
               

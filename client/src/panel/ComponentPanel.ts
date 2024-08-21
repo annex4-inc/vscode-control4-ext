@@ -76,7 +76,6 @@ export class ComponentPanel {
   }
 
   public async show(entity) {
-    console.log(entity)
     try {
       this._panel.webview.postMessage({ command: "update", value: entity })
     } catch (err) {

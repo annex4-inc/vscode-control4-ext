@@ -2,7 +2,7 @@
 import 'reflect-metadata';
 import { jsonArrayMember, jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
-import { Driver } from '../driver';
+import { cleanXmlArray } from '../utility';
 
 export class C4ScheduleEntry {
     @jsonMember
@@ -69,7 +69,7 @@ export class C4ScheduleDayInfo {
 
         s.DefaultCool = value["@DefaultCool"]
         s.DefaultHeat = value["@DefaultHeat"]
-        s.Entries = Driver.CleanXmlArray(value.schedule_entry, "schedule_entry").map((e) => {
+        s.Entries = cleanXmlArray(value.schedule_entry, "schedule_entry").map((e) => {
             return C4ScheduleEntry.fromXml(e);
         })
 

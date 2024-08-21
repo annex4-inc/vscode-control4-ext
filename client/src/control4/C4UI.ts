@@ -7,7 +7,7 @@ import C4InterfaceIcons from './interface/C4InterfaceIcons';
 import C4InterfaceScreen from './interface/C4InterfaceScreen';
 import C4InterfaceTab from './interface/C4InterfaceTab';
 
-import { asInt } from "./driver"
+import { asInt } from "./utility"
 
 @jsonObject
 export class C4UI {

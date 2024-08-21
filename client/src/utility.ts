@@ -62,6 +62,16 @@ export async function WriteFileContents(file: string, data: string | Uint8Array)
     }
 }
 
+export async function FileExists(file: string) {
+    try {
+        let result = await fsPromises.stat(file);
+
+        return result.isFile();
+    } catch(err) {
+        return false;
+    }    
+}
+
 export async function GetDirents(dir: string): Promise<string[]> {
     const dirents = await fsPromises.readdir(dir, { withFileTypes: true });
     const files = await Promise.all(dirents.map(async (d) => {

@@ -24,8 +24,6 @@ export class ActionNodeProvider extends TreeNodeProvider<ActionNode> {
         }
 
         try {
-            console.log(element)
-
             if (element) {
                 var params = [];
                 

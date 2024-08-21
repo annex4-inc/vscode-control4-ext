@@ -15,17 +15,22 @@ import * as path from 'path';
 import { workspace } from 'vscode';
 import { control4Create, control4Import, rebuildTestDependencies } from './commands';
 
-import ActionsResource from "./components/actions"
-import PropertiesResource from "./components/properties"
-import EventsResource from "./components/events"
-import CommandsResource from "./components/commands"
-import ConnectionsResource from "./components/connections"
+import {
+  ActionsResource, 
+  CommandsResource,
+  ConnectionsResource,
+  EventsResource,
+  PropertiesResource,
+} from './components'
 import NavDisplayOptionsResource from "./components/navdisplayoptions"
-//import ProxiesResource from "./components/proxies"
+
+import './autocomplete/actions'
+import './autocomplete/properties'
+import './autocomplete/commands'
 
 import { Views, Commands } from './constants/tree';
 
-import { Control4BuildTaskProvider } from './control4BuildTaskProvider'
+import { Control4BuildTaskProvider } from './build/control4BuildTaskProvider'
 
 import {
   LanguageClient,
@@ -48,7 +53,7 @@ let client: LanguageClient;
  * Entry into the extension when activated
  */
 export function activate(context: vscode.ExtensionContext) {
-  const workspacePath = vscode.workspace.workspaceFolders[0].uri.path;
+  const workspacePath = vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0 ? vscode.workspace.workspaceFolders[0].uri.path : '';
 
   // Tree node providers
   const propertiesProvider = new PropertyNodeProvider(workspacePath);
@@ -69,16 +74,63 @@ export function activate(context: vscode.ExtensionContext) {
   Register(context, navdisplayoptionsProvider.register(Views.NavDisplayOptions, Commands.NavDisplayOptions.Select, Commands.NavDisplayOptions.Remove));
   //Register(context, parametersProvider.register(Views.Parameters, Commands.Parameters.Select, Commands.Parameters.Rmeove))
 
+  // Register the global commands for the extension
+  context.subscriptions.push(vscode.commands.registerCommand('control4.activate', () => { }))
+  context.subscriptions.push(vscode.commands.registerCommand('control4.rebuildTestDependencies', rebuildTestDependencies, context));
+  context.subscriptions.push(vscode.commands.registerCommand('control4.create', async () => {
+    const input = await vscode.window.showInputBox();
+
+    await control4Create.apply(context, [vscode.workspace.workspaceFolders[0].uri.fsPath, input])
+  }, context));
+  context.subscriptions.push(vscode.commands.registerCommand('control4.import', async () => {
+    let paths = await vscode.window.showOpenDialog({
+      openLabel: 'Select Driver',
+      canSelectFiles: true,
+      canSelectFolders: false,
+      canSelectMany: false,
+      filters: {
+        'C4Z': ["c4z", "c4i"]
+      }
+    });
+
+    if (!paths || paths.length === 0) {
+      return;
+    }
+
+    let destinationPath : vscode.Uri; 
+
+    if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length >= 1) {
+      destinationPath = vscode.workspace.workspaceFolders[0].uri;
+    } else {
+      const destinationPaths = await vscode.window.showOpenDialog({
+        openLabel: 'Select Destination',
+        canSelectFiles: false,
+        canSelectFolders: true,
+        canSelectMany: false
+      })
+
+      if (!destinationPaths || destinationPaths.length === 0) {
+        return;
+      }
+
+      destinationPath = destinationPaths[0];
+    }
+
+    if (paths && paths.length > 0) {
+      await control4Import.apply(context, [paths[0], destinationPath.fsPath])
+
+      vscode.window.showInformationMessage(`Imported ${paths[0].fsPath}`);
+
+      if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length === 0) {
+        await vscode.commands.executeCommand('vscode.openFolder', destinationPath);
+        await vscode.workspace.openTextDocument('./src/driver.lua');
+      }
+    }
+  }, context));
+
   context.subscriptions.push(vscode.tasks.registerTaskProvider(Control4BuildTaskProvider.BuildType, new Control4BuildTaskProvider(workspacePath, context)));
 
-  /* Parameter window
-  context.subscriptions.push(vscode.commands.registerCommand("select.C4Parameter", function (e, p) {
-  }, this))
-  */
-
-  // The server is implemented in node
   let serverModule = context.asAbsolutePath(path.join('server', 'out', 'server.js'));
-
   let serverOptions: ServerOptions = {
     run: { module: serverModule, transport: TransportKind.ipc },
     debug: {
@@ -109,11 +161,6 @@ export function activate(context: vscode.ExtensionContext) {
   // Start the client. This will also launch the server
   client.start();
 
-  // Register the global commands for the extension
-  context.subscriptions.push(vscode.commands.registerCommand('control4.create', control4Create, context));
-  context.subscriptions.push(vscode.commands.registerCommand('control4.import', control4Import, context));
-  context.subscriptions.push(vscode.commands.registerCommand('control4.rebuildTestDependencies', rebuildTestDependencies, context));
-
   let types = [
     { name: "Property", plural: "Properties", resource: PropertiesResource, provider: propertiesProvider, panel: undefined },
     { name: "Action", plural: "Actions", resource: ActionsResource, provider: actionsProvider, panel: undefined },
@@ -125,11 +172,10 @@ export function activate(context: vscode.ExtensionContext) {
   ]
 
   types.forEach(t => {
-    t.panel = new PanelManager(context.extensionUri, `${t.name.toLowerCase()}.js`, t.name, t.resource) 
+    t.panel = new PanelManager(context.extensionUri, `${t.name.toLowerCase()}.js`, t.name, t.resource)
 
     //@ts-ignore
     t.provider.onSelectNode((e) => { vscode.commands.executeCommand(`control4.view${t.name}`, e); })
-    //@ts-ignore
     t.provider.onRemoveNode((e) => { vscode.commands.executeCommand(`control4.remove${t.name}`, e); })
 
     context.subscriptions.push(vscode.commands.registerCommand(`control4.add${t.name}`, () => {
@@ -141,7 +187,7 @@ export function activate(context: vscode.ExtensionContext) {
         t.panel.createOrShow(context.extensionUri, e);
       })
     );
-  
+
     vscode.window.registerWebviewPanelSerializer(`control4.${t.name.toLowerCase()}`, {
       async deserializeWebviewPanel(webviewPanel: vscode.WebviewPanel, state: any) {
         t.panel.revive(webviewPanel, context.extensionUri);
@@ -161,7 +207,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(vscode.commands.registerCommand(`control4.refresh${t.plural}`, () => {
       t.provider.refresh()
       t.resource.Reload();
-    } ));
+    }));
 
     // [ ] - When a node is removed from the tree the Webview panel should either be disposed or updated to another exisitng node.
     context.subscriptions.push(vscode.commands.registerCommand(`control4.remove${t.name}`, (n) => {

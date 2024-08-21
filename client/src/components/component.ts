@@ -2,28 +2,42 @@ import * as vscode from 'vscode';
 import { WriteIfNotExists, HasKeySetTo } from '../utility';
 import isMatch from 'lodash.ismatch';
 import { NavDisplayOptionType } from '../control4/capabilities/C4NavigatorDisplayOption';
+import { EventEmitter } from 'events';
+import { Serializable, TypedJSON } from 'typedjson';
 
-export class Component {
+export class Component<T> {
   protected _textDocument: vscode.TextDocument;
   protected _resourceUri: vscode.Uri;
   public data: any;
+  public values: T[];
+  public type: Serializable<T>;
+  public emitter: EventEmitter = new EventEmitter();
 
-  constructor(resource) {
-    if (vscode.workspace.workspaceFolders !== undefined) {
-        this._resourceUri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, 'components', resource);
+  constructor(resource, type: Serializable<T>) {
+    if (vscode.workspace.workspaceFolders == undefined || vscode.workspace.workspaceFolders.length == 0) {
+      return;
     }
-    
-    //this._resourceUri = vscode.Uri.joinPath(vscode.workspace.name, 'components', resource);
+
+    this.type = type;
+    this._resourceUri = vscode.Uri.joinPath(vscode.workspace.workspaceFolders[0].uri, 'components', resource);
 
     let watcher = vscode.workspace.createFileSystemWatcher(`**/${resource}`);
 
     watcher.onDidChange(() => {
       this.load();
+
+      try {
+        this.emitter.emit('changed', this.data)  
+      } catch (err) {
+        console.log(err)
+      }
     })
   }
 
   async initialize() {
-    await WriteIfNotExists(this._resourceUri.fsPath, "[]");
+    if (this._resourceUri) {
+      await WriteIfNotExists(this._resourceUri.fsPath, "[]");
+    }
   }
 
   async load() {
@@ -33,10 +47,14 @@ export class Component {
       var text = this._textDocument.getText();
 
       this.data = JSON.parse(text);
+      this.values = TypedJSON.parseAsArray<T>(this.data, this.type);
 
       return this.data;
     } catch (exception) {
-      //WriteIfNotExists(this._resourceUri.fsPath, "[]");
+      switch (exception.name) {
+        case "CodeExpectedError":
+          WriteIfNotExists(this._resourceUri.fsPath, "[]");
+      }
 
       return [];
     }
@@ -44,11 +62,11 @@ export class Component {
 
   async save(data) {
     if (!this._textDocument || this._textDocument.isClosed) {
-        try {
-            await vscode.workspace.fs.stat(this._resourceUri);
-        } catch (err) {
-            await WriteIfNotExists(this._resourceUri.fsPath, "[]");
-        }
+      try {
+        await vscode.workspace.fs.stat(this._resourceUri);
+      } catch (err) {
+        await WriteIfNotExists(this._resourceUri.fsPath, "[]");
+      }
     }
 
     this._textDocument = await vscode.workspace.openTextDocument(this._resourceUri);
@@ -61,6 +79,16 @@ export class Component {
     await vscode.workspace.applyEdit(edit);
 
     return await this._textDocument.save();
+  }
+
+  Get() {
+    return this.values;
+  }  
+
+  async Reload() {
+    await this.load()
+    this.values = TypedJSON.parseAsArray<T>(this.data, this.type);
+    return this.values;
   }
 
   async Create(item): Promise<boolean> {
@@ -107,6 +135,8 @@ export class Component {
 
     if (changed) {
       await this.save(items);
+
+      this.emitter.emit('changed', items)
     }
 
     return changed;
@@ -199,7 +229,3 @@ export class Component {
     return await this.save(json);
   }
 }
-
-
-
-

@@ -34,14 +34,14 @@
 			"outFiles": ["${workspaceFolder}/client/out/test/**/*.js"]
 		},
         {
-			"name": "Run Extension Tests",
+			"name": "Run Tests",
 			"type": "extensionHost",
 			"request": "launch",
 			"runtimeExecutable": "${execPath}",
 			"args": [
-                "--disable-extensions",
 				"--extensionDevelopmentPath=${workspaceFolder}",
-                "--extensionTestsPath=${workspaceFolder}/client/out/test/suite"
+                "--extensionTestsPath=${workspaceFolder}/client/out/test/suite/index",
+				"${workspaceFolder}/client/out/test/fixtures/fixture_1/"
             ],
             "outFiles": ["${workspaceFolder}/client/out/test/**/*.js"],
 			"preLaunchTask": "npm: watch"

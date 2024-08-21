@@ -1,8 +1,7 @@
-
 import 'reflect-metadata';
 import { jsonMember, jsonObject } from 'typedjson';
 import * as builder from 'xmlbuilder2';
-import { asInt } from '../driver';
+import { asInt } from '../utility';
 import { C4DisplayIcons } from './C4DisplayIcons';
 
 export class NavDisplayOptionType {
@@ -65,12 +64,14 @@ export class C4NavigatorDisplayOption {
         let node = builder.create("navigator_display_option").root();
 
         node.att("proxybindingid", this.proxybindingid.toString())
-        node.import(this.display_icons.toXml())
 
         if (this.translation_url) {
-            node.ele("translation_url").txt(this.translation_url)
+            node.ele("translation_url", this.translation_url)
         }
-
+        if (this.display_icons) {
+            node.import(this.display_icons.toXml())
+        }
+        
         return node;
     }
 

@@ -1,0 +1,10 @@
+[
+    {
+        "id": 5001,
+        "name": "Serial Shim",
+        "proxy": "serial_shim",
+        "image_source": "c4z",
+        "large_image": "images/device_sm",
+        "small_image": "images/device_sm"
+      }
+]

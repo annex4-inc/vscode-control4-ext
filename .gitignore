@@ -11,3 +11,6 @@ node_modules
 *.vsix
 
 package-lock.json
+
+**/intermediate
+**/output

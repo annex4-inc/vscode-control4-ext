@@ -81,11 +81,13 @@
           "url"
         ],
         "default": "c4z"
-      }
+        }
     },
     "required": [
+      "id",
       "name",
       "proxy"
-    ]
+    ],
+    "additionalProperties": false
   }
 }

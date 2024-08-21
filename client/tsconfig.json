@@ -13,9 +13,6 @@
         "skipLibCheck": true,
 		"sourceMap": true
 	},
-	"include": [
-		"src"
-	],
 	"exclude": [
         "node_modules",
         "src/svelte",

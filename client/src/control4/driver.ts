@@ -13,13 +13,15 @@ import { C4NavDisplayOption } from './capabilities/C4NavDisplayOption';
 import { C4Connection, C4ConnectionClass, Direction } from './C4Connection';
 import { C4Proxy, C4ProxyClass, C4ProxyType } from './C4Proxy';
 
-import ActionsResource from '../components/actions';
-import CommandsResource from '../components/commands';
-import ConnectionsResource from '../components/connections';
-import EventsResource from '../components/events';
-import PropertiesResource from '../components/properties';
+import {
+    ActionsResource, 
+    CommandsResource,
+    ConnectionsResource,
+    EventsResource,
+    PropertiesResource,
+    ProxiesResource
+} from '../components'
 import NavDisplayOptionsResource from '../components/navdisplayoptions';
-import ProxiesResource from '../components/proxies';
 
 import { TypedJSON } from 'typedjson';
 import { C4UI } from '.';
@@ -27,7 +29,7 @@ import { C4NavigatorDisplayOption } from './capabilities/C4NavigatorDisplayOptio
 import { C4WebviewUrl } from './capabilities/C4WebviewUrl';
 import { C4State } from './C4State';
 import { C4Schedule } from './capabilities/C4Schedule';
-import { C4Tab } from './C4Tab';
+import { asBoolean, cleanXmlArray } from './utility';
 
 function getEnumKeyByEnumValue<T extends { [index: string]: string }>(myEnum: T, enumValue: string): keyof T | null {
     let keys = Object.keys(myEnum).filter(x => myEnum[x] == enumValue);
@@ -86,11 +88,13 @@ export class Driver {
     events: C4Event[]
     proxies: C4Proxy[]
     states: C4State[]
-    tabs: C4Tab[]
     UI: C4UI[]
     navdisplayoptions: C4NavDisplayOption[]
     capabilities: any
 
+    composer_categories: []
+    navigator_categories: []
+    
     serialsettings: string
     notification_attachment_provider: Boolean
     schedule_default: C4Schedule
@@ -110,7 +114,7 @@ export class Driver {
         this.filename = filename;
         this.copyright = `Copyright ${new Date().getFullYear()}`;
         this.creator = vscode.workspace.getConfiguration('control4.publish').get<string>('author');
-        this.manufacturer = vscode.workspace.getConfiguration('control4.publish').get<string>('company');
+        this.manufacturer = "";
         this.name = "";
         this.model = "";
         this.created = new Date();
@@ -230,6 +234,8 @@ export class Driver {
                     })
                 } else if (key == "schedule_default") {
                     nCapabilities.import((value as C4Schedule).toXml())
+                } else if (Array.isArray(value)) {
+                    nCapabilities.ele(key).txt(value.join(","))
                 } else if (typeof (value) == "object") {
                     if (value.attributes) {
                         if (typeof (value.value) == "object") {
@@ -246,6 +252,7 @@ export class Driver {
                             nCapabilities.ele(key).txt(value.value)
                         }
                     }
+
                 } else {
                     nCapabilities.ele(key).txt(this.capabilities[key]);
                 }
@@ -334,6 +341,22 @@ export class Driver {
             })
         }
 
+        if (this.composer_categories && this.composer_categories.length > 0) {
+            var composerCategory = root.ele("composer_categories");
+
+            this.composer_categories.forEach((c) => {
+                composerCategory.ele("category").txt(c);
+            })
+        }
+
+        if (this.navigator_categories && this.navigator_categories.length > 0) {
+            var navigatorCategory = root.ele("navigator_categories");
+
+            this.navigator_categories.forEach((c) => {
+                navigatorCategory.ele("category").txt(c);
+            })
+        }        
+
         if (this.events && this.events.length > 0) {
             var nEvents = root.ele("events")
 
@@ -357,14 +380,6 @@ export class Driver {
 
         // Documentation is mandatory, even if empty
         config.ele("documentation", { file: this.documentation })
-
-        if (this.tabs && this.tabs.length > 0) {
-            let tabs = config.ele("tabs");
-            
-            this.tabs.forEach((t: C4Tab) => {
-                tabs.import(t.toXml())
-            })
-        }
 
         if (this.commands && this.commands.length > 0) {
             let commands = config.ele("commands");
@@ -414,12 +429,6 @@ export class Driver {
                         return new C4State(state);
                     })
                 }
-
-                if (driver.tabs) {
-                    driver.tabs = driver.tabs.map((tab) => {
-                        return new C4Tab(tab)
-                    })
-                }
                 
                 if (driver.capabilities) {
                     if (driver.capabilities.web_view_url) {
@@ -442,53 +451,9 @@ export class Driver {
         })
     }
 
-    static CleanXmlArray(object, expectedTag): Array<any> {
-        let root = object;
-
-        if (Object.keys(root).length === 0) {
-            return null;
-        }
-
-        if (!Array.isArray(object)) {
-            if (object['#']) {
-                root = object['#']
-            }
-
-            if (object[expectedTag]) {
-                root = object[expectedTag]
-            }
-        }
-
-        let ret = [];
-
-        if (Array.isArray(root)) {
-            for (let i = 0; i < root.length; i++) {
-                let element = root[i];
-
-                if (element[expectedTag]) {
-                    if (Array.isArray(element[expectedTag])) {
-                        for (let j = 0; j < element[expectedTag].length; j++) {
-                            ret.push(element[expectedTag][j])
-                        }
-                    } else {
-                        ret.push(element[expectedTag])
-                    }
-                } else if (element["!"] == undefined) {
-                    ret.push(element)
-                }
-            }
-        } else {
-            ret.push(root)
-        }
-
-        return ret;
-    }
-
     static Parse(xml): Driver {
         const doc = builder.create({parser: { comment: () => undefined }}, xml).root();
         const driver = doc.toObject();
-
-        console.log(driver);
 
         //@ts-ignore
         const devicedata = driver.devicedata;
@@ -552,7 +517,7 @@ export class Driver {
         }
 
         if (devicedata.connections) {
-            const connections = this.CleanXmlArray(devicedata.connections, "connection")
+            const connections = cleanXmlArray(devicedata.connections, "connection")
 
             if (connections) {
                 connections.forEach(function (c) {
@@ -562,7 +527,7 @@ export class Driver {
         }
 
         if (devicedata.events) {
-            const events = this.CleanXmlArray(devicedata.events, "event")
+            const events = cleanXmlArray(devicedata.events, "event")
 
             if (events) {
                 d.events = TypedJSON.parseAsArray<C4Event>(events, C4Event);
@@ -570,7 +535,7 @@ export class Driver {
         }
 
         if (devicedata.config.properties) {
-            const properties = this.CleanXmlArray(devicedata.config.properties, "property")
+            const properties = cleanXmlArray(devicedata.config.properties, "property")
 
             if (properties) {
                 properties.forEach(function (p) {
@@ -580,7 +545,7 @@ export class Driver {
         }
 
         if (devicedata.config.actions) {
-            const actions = this.CleanXmlArray(devicedata.config.actions, "action")
+            const actions = cleanXmlArray(devicedata.config.actions, "action")
 
             if (actions) {
                 actions.forEach(function (a) {
@@ -590,7 +555,7 @@ export class Driver {
         }
 
         if (devicedata.config.commands) {
-            const commands = this.CleanXmlArray(devicedata.config.commands, "command")
+            const commands = cleanXmlArray(devicedata.config.commands, "command")
 
             if (commands) {
                 commands.forEach(function (c) {
@@ -603,22 +568,8 @@ export class Driver {
             }
         }
 
-        if (devicedata.config.tabs) {
-            const tabs = this.CleanXmlArray(devicedata.config.tabs, "tab")
-
-            if (tabs) {
-                tabs.forEach(function (t) {
-                    try {
-                        t.tabs.push(C4Tab.fromXml(t))
-                    } catch (err) {
-                        console.log(err.message)
-                    }
-                })
-            }
-        }
-
         if (devicedata.proxies) {
-            const proxies = this.CleanXmlArray(devicedata.proxies, "proxy")
+            const proxies = cleanXmlArray(devicedata.proxies, "proxy")
 
             if (proxies) {
                 proxies.forEach(function (p) {
@@ -633,12 +584,4 @@ export class Driver {
 
         return d;
     }
-}
-
-export const asInt = function (v: string) {
-    return typeof (v) == "string" ? Number.parseInt(v) : v
-}
-
-export const asBoolean = function (v: string): boolean {
-    return typeof (v) == "string" ? v.toLowerCase() == "true" : v
 }

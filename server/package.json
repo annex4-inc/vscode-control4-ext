@@ -12,13 +12,13 @@
 		"url": "https://github.com/annex4/vscode-control4-ext"
 	},
 	"dependencies": {
-		"fs-extra": "^10.1.0",
-		"vscode-languageserver": "^7.0.0",
-		"vscode-languageserver-textdocument": "^1.0.10"
+		"fs-extra": "^11.2.0",
+		"vscode-languageserver": "^9.0.1",
+		"vscode-languageserver-textdocument": "^1.0.12"
 	},
 	"scripts": {},
 	"devDependencies": {
-		"@types/fs-extra": "^9.0.13",
-		"vscode-uri": "^3.0.7"
+		"@types/fs-extra": "^11.0.4",
+		"vscode-uri": "^3.0.8"
 	}
 }
