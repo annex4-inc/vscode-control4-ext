@@ -13,7 +13,7 @@ export class Component<T> {
   public emitter: EventEmitter = new EventEmitter();
 
   constructor(resource, type: Serializable<T>) {
-    if (vscode.workspace.workspaceFolders == undefined) {
+    if (vscode.workspace.workspaceFolders == undefined || vscode.workspace.workspaceFolders.length == 0) {
       return;
     }
 
@@ -34,7 +34,9 @@ export class Component<T> {
   }
 
   async initialize() {
-    await WriteIfNotExists(this._resourceUri.fsPath, "[]");
+    if (this._resourceUri) {
+      await WriteIfNotExists(this._resourceUri.fsPath, "[]");
+    }
   }
 
   async load() {
@@ -220,7 +222,3 @@ export class Component<T> {
     return await this.save(json);
   }
 }
-
-
-
-

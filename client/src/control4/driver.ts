@@ -56,10 +56,6 @@ export class DriverIcon {
     image_source: string
 }
 
-function GetEnvironmentVariable(variable) {
-    return process.env[variable]
-}
-
 /**
  * Manages all data in a Control4 driver
  */

@@ -83,7 +83,7 @@ async function control4Create(rootPath: string, name: string) {
   }
 }
 
-async function control4Import(rootPath: vscode.Uri) {
+async function control4Import(rootPath: vscode.Uri, destinationPath: string) {
   // Initialize all component files
   await ActionsResource.initialize();
   await PropertiesResource.initialize();
@@ -95,9 +95,7 @@ async function control4Import(rootPath: vscode.Uri) {
 
   let c4z = rootPath;
   let zip = new AdmZip(c4z.fsPath);
-
   let entries = zip.getEntries();
-  let root = vscode.workspace.workspaceFolders[0].uri.fsPath;
 
   for (const entry of entries) {
     if (entry.entryName.startsWith("www")) {
@@ -105,7 +103,7 @@ async function control4Import(rootPath: vscode.Uri) {
       try {
         let contents = zip.readFile(entry)
 
-        await ForceWrite(path.join(root, "src", entry.entryName), contents)
+        await ForceWrite(path.join(destinationPath, "src", entry.entryName), contents)
       } catch (err) {
         console.log(err.message)
       }
@@ -126,10 +124,10 @@ async function control4Import(rootPath: vscode.Uri) {
         ])
 
         // Initialize vscode settings
-        await WriteIfNotExists(path.join(root, ".vscode", "settings.json"), JSON.stringify(templateSettings, null, 2));
-        await WriteIfNotExists(path.join(root, ".vscode", "tasks.json"), JSON.stringify(templateTasks, null, 2));
-        await WriteIfNotExists(path.join(root, ".gitignore"), await ReadFileContents(path.join(this.extensionUri.fsPath, "client", "src", "resources", "templates", ".gitignore")));
-        await WriteIfNotExists(path.join(root, ".npmrc"), "@annex4:registry=https://npm.pkg.github.com" );
+        await WriteIfNotExists(path.join(destinationPath, ".vscode", "settings.json"), JSON.stringify(templateSettings, null, 2));
+        await WriteIfNotExists(path.join(destinationPath, ".vscode", "tasks.json"), JSON.stringify(templateTasks, null, 2));
+        await WriteIfNotExists(path.join(destinationPath, ".gitignore"), await ReadFileContents(path.join(this.extensionUri.fsPath, "client", "src", "resources", "templates", ".gitignore")));
+        await WriteIfNotExists(path.join(destinationPath, ".npmrc"), "@annex4:registry=https://npm.pkg.github.com" );
 
         templatePackage.name = path.basename(c4z.path, ".c4z");
         templatePackage.control4.name = driver.name;
@@ -140,20 +138,20 @@ async function control4Import(rootPath: vscode.Uri) {
         templatePackage.control4.capabilities = driver.capabilities;
         templatePackage.control4.icon = driver.icon;
 
-        var handler = await fsPromises.open(path.join(root, "package.json"), 'wx');
+        var handler = await fsPromises.open(path.join(destinationPath, "package.json"), 'wx');
         await handler.writeFile(JSON.stringify(templatePackage, null, 2));
         await handler.close()
 
         let tests = await ReadFileContents(path.join(this.extensionUri.fsPath, "client", "src", "resources", "templates", "test.lua"));
 
-        await WriteIfNotExists(path.join(root, "tests", "test.lua"), tests);
+        await WriteIfNotExists(path.join(destinationPath, "tests", "test.lua"), tests);
       } catch (err) {
           return vscode.window.showInformationMessage(`${err.message}`);
       }
     } else {
       let contents = zip.readFile(entry)
 
-      await ForceWrite(path.join(root, "src", entry.entryName), contents)
+      await ForceWrite(path.join(destinationPath, "src", entry.entryName), contents)
     }
   }
 }

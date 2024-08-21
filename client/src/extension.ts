@@ -78,14 +78,49 @@ export function activate(context: vscode.ExtensionContext) {
     await control4Create.apply(context, [vscode.workspace.workspaceFolders[0].uri.fsPath, input])
   }, context));
   context.subscriptions.push(vscode.commands.registerCommand('control4.import', async () => {
-    let paths = await vscode.window.showOpenDialog();
+    let paths = await vscode.window.showOpenDialog({
+      openLabel: 'Select Driver',
+      canSelectFiles: true,
+      canSelectFolders: false,
+      canSelectMany: false,
+      filters: {
+        'C4Z': ["c4z", "c4i"]
+      }
+    });
 
-    if (paths && paths.length > 0) {
-      let result = await control4Import.apply(context, [paths[0]])
-
-      vscode.window.showInformationMessage(`Imported ${paths[0].fsPath}`);
+    if (!paths || paths.length === 0) {
+      return;
     }
 
+    let destinationPath : vscode.Uri; 
+
+    if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length >= 1) {
+      destinationPath = vscode.workspace.workspaceFolders[0].uri;
+    } else {
+      const destinationPaths = await vscode.window.showOpenDialog({
+        openLabel: 'Select Destination',
+        canSelectFiles: false,
+        canSelectFolders: true,
+        canSelectMany: false
+      })
+
+      if (!destinationPaths || destinationPaths.length === 0) {
+        return;
+      }
+
+      destinationPath = destinationPaths[0];
+    }
+
+    if (paths && paths.length > 0) {
+      await control4Import.apply(context, [paths[0], destinationPath.fsPath])
+
+      vscode.window.showInformationMessage(`Imported ${paths[0].fsPath}`);
+
+      if (!vscode.workspace.workspaceFolders || vscode.workspace.workspaceFolders.length === 0) {
+        await vscode.commands.executeCommand('vscode.openFolder', destinationPath);
+        await vscode.workspace.openTextDocument('./src/driver.lua');
+      }
+    }
   }, context));
 
   context.subscriptions.push(vscode.tasks.registerTaskProvider(Control4BuildTaskProvider.BuildType, new Control4BuildTaskProvider(workspacePath, context)));
