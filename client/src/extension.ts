@@ -21,8 +21,8 @@ import {
   ConnectionsResource,
   EventsResource,
   PropertiesResource,
+  NavDisplayOptionsResource
 } from './components'
-import NavDisplayOptionsResource from "./components/navdisplayoptions"
 
 import './autocomplete/actions'
 import './autocomplete/properties'

@@ -11,8 +11,7 @@ export default class DriverXmlBuildStage extends BuildStage {
         let driver = await Driver.From(this.pkg);
             driver.encrypted = this.task.encryption;
         
-        let content = driver.build();
-        
+        let content = driver.build();     
 
         return await WriteFileContents(path.join(intermediate, "driver.xml"), content);
     }

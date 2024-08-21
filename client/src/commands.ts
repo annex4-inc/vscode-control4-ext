@@ -13,9 +13,9 @@ import {
   EventsResource,
   PropertiesResource,
   ProxiesResource,
+  NavDisplayOptionsResource,
   UIResource
 } from './components'
-import NavDisplayOptionsResource from "./components/navdisplayoptions";
 
 // Retrieve the package, settings, and tasks from json template
 import pjson from "./resources/package.json";

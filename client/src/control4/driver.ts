@@ -19,9 +19,9 @@ import {
     ConnectionsResource,
     EventsResource,
     PropertiesResource,
-    ProxiesResource
+    ProxiesResource,
+    NavDisplayOptionsResource
 } from '../components'
-import NavDisplayOptionsResource from '../components/navdisplayoptions';
 
 import { TypedJSON } from 'typedjson';
 import { C4UI } from '.';
@@ -30,6 +30,7 @@ import { C4WebviewUrl } from './capabilities/C4WebviewUrl';
 import { C4State } from './C4State';
 import { C4Schedule } from './capabilities/C4Schedule';
 import { asBoolean, cleanXmlArray } from './utility';
+import { C4Tab } from './C4Tab';
 
 function getEnumKeyByEnumValue<T extends { [index: string]: string }>(myEnum: T, enumValue: string): keyof T | null {
     let keys = Object.keys(myEnum).filter(x => myEnum[x] == enumValue);
@@ -90,6 +91,7 @@ export class Driver {
     events: C4Event[]
     proxies: C4Proxy[]
     states: C4State[]
+    tabs: C4Tab[]
     UI: C4UI[]
     navdisplayoptions: C4NavDisplayOption[]
     capabilities: any
